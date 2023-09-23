@@ -48,7 +48,7 @@ Sau đây là hình ảnh của chương trình sau khi thực thi:
 
 Giải thích về cấu trúc mã nguồn:
 
-Đây là một chương trình MVC đơn giản, bao gồm 3 thành phần chính: Model (`CalculatorModel.java`), View (`CalculatorView/CalculatorView.java`) và Controller (`CalculatorController.java`).
+Đây là một chương trình MVC đơn giản, bao gồm 3 thành phần chính: Model (`CalculatorModel.java`), View (`CalculatorView.java`) và Controller (`CalculatorController.java`).
 
 - **Model**: Chứa các phép tính cộng/trừ/nhân/chia/modulus cũng như hàm lấy kết quả của phép tính bằng hàm `getCalculationValue()`.
 
