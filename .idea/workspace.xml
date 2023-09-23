@@ -1,29 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="77ac40e1-1d45-477d-8ab3-002222851262" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/2023.1-143801-06.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Homework01/20200336-NguyenThanhLam/HelloWorld/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Homework01/20200336-NguyenThanhLam/HelloWorld/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Homework01/20200336-NguyenThanhLam/HelloWorld/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Homework01/20200336-NguyenThanhLam/HelloWorld/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Homework01/20200336-NguyenThanhLam/HelloWorld/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Homework01/20200336-NguyenThanhLam/HelloWorld/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Homework01/20200336-NguyenThanhLam/HelloWorld/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Homework01/20200336-NguyenThanhLam/HelloWorld/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Homework01/20200336-NguyenThanhLam/MVC/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Homework01/20200336-NguyenThanhLam/MVC/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Homework01/20200336-NguyenThanhLam/MVC/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Homework01/20200336-NguyenThanhLam/MVC/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Homework01/20200336-NguyenThanhLam/MVC/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Homework01/20200336-NguyenThanhLam/MVC/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Homework01/20200336-NguyenThanhLam/MVC/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Homework01/20200336-NguyenThanhLam/MVC/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Homework01/20200336-NguyenThanhLam/MVC/src/main/java/org/example/CalculatorController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Homework01/20200336-NguyenThanhLam/MVC/src/main/java/org/example/CalculatorModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Homework01/20200336-NguyenThanhLam/MVC/src/main/java/org/example/CalculatorView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Homework01/20200336-NguyenThanhLam/MVC/src/main/java/org/example/MVCCalculator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Homework01/20200336-NguyenThanhLam/README.md" afterDir="false" />
+    <list default="true" id="77ac40e1-1d45-477d-8ab3-002222851262" name="Changes" comment="finish homework day 1">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,6 +47,14 @@
       <option name="presentableId" value="Default" />
       <updated>1695479263793</updated>
     </task>
+    <task id="LOCAL-00001" summary="finish homework day 1">
+      <created>1695482589287</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1695482589287</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -80,5 +67,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="finish homework day 1" />
+    <option name="LAST_COMMIT_MESSAGE" value="finish homework day 1" />
   </component>
 </project>
