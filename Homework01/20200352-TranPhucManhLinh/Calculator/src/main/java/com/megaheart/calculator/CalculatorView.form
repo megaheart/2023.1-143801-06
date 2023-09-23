@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.megaheart.calculator.CalculatorViewPanel">
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.megaheart.calculator.CalculatorView">
   <grid id="27dc6" binding="panel" layout-manager="GridLayoutManager" row-count="6" column-count="2" same-size-horizontally="true" same-size-vertically="false" hgap="10" vgap="10">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
@@ -67,12 +67,10 @@
       </component>
       <component id="d4229" class="javax.swing.JButton" binding="button1" default-binding="true">
         <constraints>
-          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="196" height="30"/>
-          </grid>
+          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Button"/>
+          <text value="+"/>
         </properties>
       </component>
       <component id="77c24" class="javax.swing.JButton" binding="button2" default-binding="true">
@@ -80,17 +78,15 @@
           <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Button"/>
+          <text value="-"/>
         </properties>
       </component>
       <component id="da106" class="javax.swing.JButton" binding="button3" default-binding="true">
         <constraints>
-          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="196" height="30"/>
-          </grid>
+          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Button"/>
+          <text value="*"/>
         </properties>
       </component>
       <component id="d8cd0" class="javax.swing.JButton" binding="button4" default-binding="true">
@@ -98,25 +94,23 @@
           <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Button"/>
+          <text value="/"/>
         </properties>
       </component>
       <component id="1cd2d" class="javax.swing.JButton" binding="button5" default-binding="true">
         <constraints>
-          <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="196" height="30"/>
-          </grid>
+          <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Button"/>
+          <text value="%"/>
         </properties>
       </component>
-      <component id="5323a" class="javax.swing.JButton" binding="button6" default-binding="true">
+      <component id="5323a" class="javax.swing.JButton" binding="clearButton" default-binding="true">
         <constraints>
           <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Button"/>
+          <text value="Clear"/>
         </properties>
       </component>
     </children>
