@@ -1,8 +1,8 @@
 # BTVN Tuần 1
 
-Họ và tên: Trần Phúc Mạnh Linh
+Họ và tên: Lê Đức Minh
 
-MSSV: 20200352
+MSSV: 20200395
 
 Lớp: 143801 - IT4490 - Thiết kế và xây dựng phần mềm
 
