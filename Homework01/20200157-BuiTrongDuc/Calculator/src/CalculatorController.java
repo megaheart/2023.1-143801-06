@@ -1,8 +1,6 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-// The Controller coordinates interactions
-// between the View and Model
 
 public class CalculatorController {
 
