@@ -1,2 +1,4 @@
-package com.groupsix.attendance;public interface IOfficerAttendanceRepository {
+package com.groupsix.attendance;
+
+public interface IOfficerAttendanceRepository {
 }
