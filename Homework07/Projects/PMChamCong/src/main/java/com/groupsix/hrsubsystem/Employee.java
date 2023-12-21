@@ -1,5 +1,9 @@
 package com.groupsix.hrsubsystem;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
+@DatabaseTable(tableName = "Employee")
 public class Employee {
 
 	public String getFullName() {
@@ -26,10 +30,11 @@ public class Employee {
 		this.departmentCode = departmentCode;
 	}
 
+	@DatabaseField()
 	private String fullName;
-
+	@DatabaseField(id = true)
 	private String employeeCode;
-
+	@DatabaseField()
 	private String departmentCode;
 
 }

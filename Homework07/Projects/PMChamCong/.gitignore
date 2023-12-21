@@ -36,3 +36,6 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+*.db
+/src/main/java/com/groupsix/pmchamcong/TestApp.java

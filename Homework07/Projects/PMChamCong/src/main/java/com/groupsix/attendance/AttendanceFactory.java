@@ -6,10 +6,13 @@ public class AttendanceFactory {
 
 	private static AttendanceFactory instance = new AttendanceFactory();
 
+	private AttendanceFactory() {
+	}
+
 	public IOfficerAttendanceRepository createRepository() {
 		try {
-			return repoClass.newInstance();
-		} catch (InstantiationException | IllegalAccessException e) {
+			return repoClass.getDeclaredConstructor().newInstance();
+		} catch (NoSuchMethodException | InstantiationException | IllegalAccessException | java.lang.reflect.InvocationTargetException e) {
 			e.printStackTrace();
 			return null;
 		}

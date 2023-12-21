@@ -1,17 +1,18 @@
 package com.groupsix.user;
 
-import com.groupsix.attendance.SqliteOfficerAttendanceRepository;
-
 public class UserFactory {
 
 	private Class<IUserRepository> repoClass;
 
 	private static UserFactory instance = new UserFactory();
 
+	private UserFactory() {
+	}
+
 	public IUserRepository createRepository() {
 		try {
-			return repoClass.newInstance();
-		} catch (InstantiationException | IllegalAccessException e) {
+			return repoClass.getDeclaredConstructor().newInstance();
+		} catch (NoSuchMethodException | InstantiationException | IllegalAccessException | java.lang.reflect.InvocationTargetException e) {
 			e.printStackTrace();
 			return null;
 		}
