@@ -10,8 +10,16 @@ public class HRSubsystemFactory {
 
 	private static HRSubsystemFactory instance = new HRSubsystemFactory();
 
+	private HRSubsystemFactory() {
+	}
+
 	public IDepartmentRepository createDepartmentRepository() {
-		return null;
+		try{
+			return departmentRepoClass.getDeclaredConstructor().newInstance();
+		}
+		catch (Exception e){
+			throw new RuntimeException(e);
+		}
 	}
 
 	public IEmployeeRepository createEmployeeRepository() {
@@ -35,28 +43,5 @@ public class HRSubsystemFactory {
 		return instance;
 	}
 
-	public ArrayList<Employee> getEmployees() {
-		return null;
-	}
-
-	public ArrayList<Employee> getEmployeesInDepartment(Department department) {
-		return null;
-	}
-
-	public Employee getEmployeeByCode(String code) {
-		return null;
-	}
-
-	public ArrayList<Employee> filterEmployeeByCode(String code, Department department) {
-		return null;
-	}
-
-	public ArrayList<Department> getDepartments() {
-		return null;
-	}
-
-	public Department getDepartmentByCode(String code) {
-		return null;
-	}
 
 }

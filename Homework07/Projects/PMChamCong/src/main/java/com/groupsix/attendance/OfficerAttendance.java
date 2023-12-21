@@ -1,7 +1,13 @@
 package com.groupsix.attendance;
 
-import java.time.LocalDate;
+import com.j256.ormlite.field.DataType;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 
+import java.time.LocalDate;
+import java.util.Date;
+
+@DatabaseTable(tableName = "OfficerAttendance")
 public class OfficerAttendance {
 
 	public double getHoursEarlyLeave() {
@@ -28,11 +34,11 @@ public class OfficerAttendance {
 		this.hoursLate = hoursLate;
 	}
 
-	public LocalDate getDate() {
+	public Date getDate() {
 		return date;
 	}
 
-	public void setDate(LocalDate date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 
@@ -52,16 +58,22 @@ public class OfficerAttendance {
 		this.afternoonSession = afternoonSession;
 	}
 
+	@DatabaseField()
 	private double hoursEarlyLeave;
 
+	@DatabaseField(id = true)
 	private String employeeCode;
 
+	@DatabaseField()
 	private double hoursLate;
 
-	private LocalDate date;
+	@DatabaseField(dataType = DataType.DATE, id = true)
+	private Date date;
 
+	@DatabaseField()
 	private boolean morningSession;
 
+	@DatabaseField()
 	private boolean afternoonSession;
 
 }
