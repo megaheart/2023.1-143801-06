@@ -1,5 +1,7 @@
 package com.groupsix.pmchamcong;
 
+import com.groupsix.hrsubsystem.EmployeeAdapter;
+import com.groupsix.hrsubsystem.HRSubsystemFactory;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -18,6 +20,11 @@ public class HelloApplication extends Application {
     }
 
     public static void main(String[] args) {
-        launch();
+//        launch();
+        HRSubsystemFactory.getInstance().registerEmployeeRepository(EmployeeAdapter.class);
+
+        var factory = HRSubsystemFactory.getInstance();
+        var repo = factory.createEmployeeRepository();
+        var employees = repo.getEmployees();
     }
 }
