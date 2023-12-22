@@ -1,18 +1,21 @@
 package com.groupsix.pages.officerattendancedetail;
 
+import com.groupsix.attendance.OfficerAttendance;
+import com.groupsix.pages.importexcel.ImportLogHistory;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.util.Callback;
 
 import java.util.Date;
 
 public class OfficerHomeView {
-    @FXML
-    public AnchorPane root;
     @FXML
     public ComboBox<String> loaiComboBox;
     @FXML
@@ -30,7 +33,7 @@ public class OfficerHomeView {
     public Label labelSoGioVeSom;
 
     @FXML
-//    public TableView<OfficerAttendance> tableLog;
+    public TableView<OfficerAttendance> tableLog;
 
 //    public TableColumn<OfficerAttendance, Date> dateCol;
 //    public TableColumn<OfficerAttendance, String> morningCol;
@@ -41,6 +44,58 @@ public class OfficerHomeView {
 
 //    public void insertTable(OfficerAttendance obj){
 //        dateCol
+//    }
+
+//    public void insertTable(OfficerAttendance obj){
+//        tableLog.getItems().add(obj);}
+//
+//        Callback<TableColumn<ImportLogHistory, String>, TableCell<ImportLogHistory, String>> cellFactory
+//                = //
+//                new Callback<TableColumn<ImportLogHistory, String>, TableCell<ImportLogHistory, String>>() {
+//                    @Override
+//                    public TableCell call(final TableColumn<ImportLogHistory, String> param) {
+//                        final TableCell<ImportLogHistory, String> cell = new TableCell<ImportLogHistory, String>() {
+//
+//                            final Button btn = new Button("Chi tiết");
+//                            final Button btn2 = new Button("Xóa");
+//
+//                            @Override
+//                            public void updateItem(String item, boolean empty) {
+//                                super.updateItem(item, empty);
+//                                if (empty) {
+//                                    setGraphic(null);
+//                                    setText(null);
+//                                } else {
+//                                    setText(null);
+//                                    btn.setOnAction(event -> {
+//                                        ImportLogHistory person = getTableView().getItems().get(getIndex());
+//                                        System.out.println(person.getId()
+//                                                + "   " + person.getTime());
+//                                    });
+//                                    btn2.setOnAction(event -> {
+//                                        ImportLogHistory person = getTableView().getItems().get(getIndex());
+//                                        System.out.println(person.getId()
+//                                                + "   " + person.getTime());
+//                                    });
+//                                    btn.setStyle("-fx-background-color: #00ff00; -fx-text-fill: #000;-fx-cursor: hand;");
+//                                    btn2.setStyle("-fx-background-color: #ff0000; -fx-text-fill: #ffffff;-fx-cursor: hand;");
+//                                    // Add two buttons into a cell
+//                                    HBox pane = new HBox(btn, btn2);
+//                                    pane.alignmentProperty().set(javafx.geometry.Pos.CENTER);
+//                                    pane.setSpacing(10);
+//                                    setGraphic(pane);
+//                                }
+//                            }
+//                        };
+//                        return cell;
+//                    }
+//                };
+//
+//        TableColumn<ImportLogHistory, String> actionCol = new TableColumn<>("Action");
+//        actionCol.setCellFactory(cellFactory);
+//        actionCol.setStyle( "-fx-alignment: CENTER;");
+//        importLogTable.getColumns().add(actionCol);
+//        importLogTable.getItems().addAll(importLogHistories);
 //    }
 
     public void initialize() {
@@ -88,30 +143,7 @@ public class OfficerHomeView {
             }
         });
 
-        //Xử lý bảng
-//        dateCol.setCellValueFactory(cellData -> {
-//            OfficerAttendance attendance = cellData.getValue();
-//            Date date = attendance.getDate();
-//            return new SimpleObjectProperty<>(date);
-//        });
-//        morningCol.setCellValueFactory(cellData -> {
-//            boolean isMorningSession = cellData.getValue().isMorningSession();
-//            String result = isMorningSession ? "Có" : "Không";
-//            return new SimpleStringProperty(result);
-//        });
-//        afternoonCol.setCellValueFactory(cellData -> {
-//            boolean isAfternoonSession = cellData.getValue().isAfternoonSession();
-//            String result = isAfternoonSession ? "Có" : "Không";
-//            return new SimpleStringProperty(result);
-//        });
-//        selectionCol.setCellValueFactory(cellData -> {
-//            Button button = new Button("Chi tiết");
-//            button.setOnAction(event -> {
-//                System.out.print("Chi tiết");
-//            });
-//            return null;
-//        });
 
-
+    //insertTable(new OfficerAttendance(java.time.LocalDate.now() , true, false));
     }
 }
