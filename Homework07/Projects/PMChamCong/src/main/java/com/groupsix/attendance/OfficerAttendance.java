@@ -57,17 +57,27 @@ public class OfficerAttendance {
 	public void setAfternoonSession(boolean afternoonSession) {
 		this.afternoonSession = afternoonSession;
 	}
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	@DatabaseField()
 	private double hoursEarlyLeave;
 
-	@DatabaseField(id = true)
+	@DatabaseField(generatedId = true)
+	private int id;
+
+	@DatabaseField(uniqueCombo = true)
 	private String employeeCode;
 
 	@DatabaseField()
 	private double hoursLate;
 
-	@DatabaseField(dataType = DataType.DATE, id = true)
+	@DatabaseField(dataType = DataType.DATE, uniqueCombo = true)
 	private Date date;
 
 	@DatabaseField()

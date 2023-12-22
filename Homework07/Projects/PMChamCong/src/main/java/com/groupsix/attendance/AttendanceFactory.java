@@ -18,7 +18,7 @@ public class AttendanceFactory {
 		}
 	}
 
-	public void registerRepository(Class<IOfficerAttendanceRepository> repoClass) {
+	public void registerRepository(Class repoClass) {
 		this.repoClass = repoClass;
 	}
 
