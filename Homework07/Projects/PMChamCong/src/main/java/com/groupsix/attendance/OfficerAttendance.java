@@ -15,48 +15,25 @@ public class OfficerAttendance {
 		return employeeCode;
 	}
 
+
+	public void setHoursLate(double hoursLate) {
+		this.hoursLate = hoursLate;
+	}
+
+	public void setHoursEarlyLeave(double hoursEarlyLeave) {
+		this.hoursEarlyLeave = hoursEarlyLeave;
+	}
+
 	public void setEmployeeCode(String employeeCode) {
 		this.employeeCode = employeeCode;
 	}
 
 	public double getHoursLate() {
-		return morningHoursLate + afternoonHoursLate;
-	}
-	public double getHoursEarlyLeave(){
-		return morningHoursLate + afternoonHoursLate;
+		return hoursLate;
 	}
 
-
-	public double getMorningHoursEarlyLeave() {
-		return morningHoursEarlyLeave;
-	}
-
-	public double getMorningHoursLate() {
-		return morningHoursLate;
-	}
-
-	public double getAfternoonHoursEarlyLeave() {
-		return afternoonHoursEarlyLeave;
-	}
-
-	public void setMorningHoursEarlyLeave(double morningHoursEarlyLeave) {
-		this.morningHoursEarlyLeave = morningHoursEarlyLeave;
-	}
-
-	public void setMorningHoursLate(double morningHoursLate) {
-		this.morningHoursLate = morningHoursLate;
-	}
-
-	public void setAfternoonHoursEarlyLeave(double afternoonHoursEarlyLeave) {
-		this.afternoonHoursEarlyLeave = afternoonHoursEarlyLeave;
-	}
-
-	public void setAfternoonHoursLate(double afternoonHoursLate) {
-		this.afternoonHoursLate = afternoonHoursLate;
-	}
-
-	public double getAfternoonHoursLate() {
-		return afternoonHoursLate;
+	public double getHoursEarlyLeave() {
+		return hoursEarlyLeave;
 	}
 
 	public Date getDate() {
@@ -91,16 +68,11 @@ public class OfficerAttendance {
 	}
 
 	@DatabaseField()
-	private double morningHoursEarlyLeave;
+	private double hoursLate;
 
 	@DatabaseField()
-	private double morningHoursLate;
+	private double hoursEarlyLeave;
 
-	@DatabaseField()
-	private double afternoonHoursEarlyLeave;
-
-	@DatabaseField()
-	private double afternoonHoursLate;
 
 	@DatabaseField(generatedId = true)
 	private int id;
