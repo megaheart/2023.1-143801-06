@@ -1,8 +1,11 @@
 package com.groupsix.pmchamcong;
 
+import com.groupsix.attendance.AttendanceFactory;
 import com.groupsix.attendance.OfficerAttendance;
+import com.groupsix.attendance.SqliteOfficerAttendanceRepository;
 import com.groupsix.base.DatabaseHelper;
 import com.groupsix.hrsubsystem.*;
+import com.groupsix.user.SqliteUserRepository;
 import com.groupsix.user.User;
 import com.groupsix.user.UserFactory;
 import javafx.application.Application;
@@ -31,7 +34,8 @@ public class HelloApplication extends Application {
 
         HRSubsystemFactory.getInstance().registerEmployeeRepository(EmployeeAdapter.class);
         HRSubsystemFactory.getInstance().registerDepartmentRepository(DepartmentAdapter.class);
-        UserFactory.getInstance().registerRepository(User.class);
+        UserFactory.getInstance().registerRepository(SqliteUserRepository.class);
+        AttendanceFactory.getInstance().registerRepository(SqliteOfficerAttendanceRepository.class);
 
 
 
