@@ -1,4 +1,4 @@
-package com.groupsix.pmchamcong;
+package com.groupsix.pages.importexcel;
 
 public class AttendanceLogImport {
     private int index;

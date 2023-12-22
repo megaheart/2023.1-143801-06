@@ -1,5 +1,6 @@
-package com.groupsix.pmchamcong;
+package com.groupsix.pages.importexcel;
 
+import com.groupsix.pmchamcong.HelloApplication;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -35,7 +36,7 @@ public class ImportController implements Initializable {
     private void initImportButton()  {
         importButton.setOnAction(event -> {
             // Open import stage
-            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("choose-file-import.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(AttendanceLogImport.class.getResource("choose-file-import.fxml"));
             try {
                 Scene importStage = new Scene(fxmlLoader.load(), 500, 300);
                 Stage stage = new Stage();

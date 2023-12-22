@@ -9,7 +9,6 @@ module com.groupsix.pmchamcong {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
     requires com.almasb.fxgl.all;
-    requires org.apache.poi.poi;
 
     requires ormlite.jdbc;
     requires java.sql;
@@ -23,4 +22,6 @@ module com.groupsix.pmchamcong {
 
     opens com.groupsix.pmchamcong to javafx.fxml;
     exports com.groupsix.pmchamcong;
+    exports com.groupsix.pages.importexcel;
+    opens com.groupsix.pages.importexcel to javafx.fxml;
 }

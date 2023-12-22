@@ -1,4 +1,4 @@
-package com.groupsix.pmchamcong;
+package com.groupsix.pages.importexcel;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,7 +12,6 @@ import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
