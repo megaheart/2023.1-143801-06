@@ -4,8 +4,11 @@ import com.groupsix.base.DatabaseHelper;
 import com.groupsix.user.User;
 import com.groupsix.hrsubsystem.Employee;
 import com.j256.ormlite.dao.Dao;
+import org.apache.poi.ss.usermodel.DateUtil;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class SqliteOfficerAttendanceRepository implements IOfficerAttendanceRepository {
 
@@ -16,15 +19,14 @@ public class SqliteOfficerAttendanceRepository implements IOfficerAttendanceRepo
 	}
 
 	public ArrayList<OfficerAttendance> getAttendancesOfEmployee(User user, Employee employee, int month, int year, int monthCount) {
+		LocalDate fromDate = LocalDate.of(year, month, 1);
+		LocalDate toDate = fromDate.plusMonths(monthCount).minusDays(1);
+		var queryBuilder = dao.queryBuilder();
 		try {
-			var queryBuilder = dao.queryBuilder();
-			var query = queryBuilder.where()
+			queryBuilder.where()
 					.eq("employeeCode", employee.getEmployeeCode())
 					.and()
-					.eq("month", month)
-					.and()
-					.eq("year", year)
-					.prepare();
+					.between("date", fromDate, toDate);
 			return (ArrayList<OfficerAttendance>) dao.query(queryBuilder.prepare());
 		} catch (Exception e) {
 			throw new RuntimeException(e);
