@@ -22,4 +22,7 @@ module com.groupsix.pmchamcong {
 
     opens com.groupsix.pmchamcong to javafx.fxml;
     exports com.groupsix.pmchamcong;
+
+    opens com.groupsix.pages.officerattendancedetail to javafx.fxml;
+    exports com.groupsix.pages.officerattendancedetail;
 }
