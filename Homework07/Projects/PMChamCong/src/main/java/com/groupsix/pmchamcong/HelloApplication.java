@@ -1,5 +1,10 @@
 package com.groupsix.pmchamcong;
 
+import com.groupsix.attendance.OfficerAttendance;
+import com.groupsix.base.DatabaseHelper;
+import com.groupsix.hrsubsystem.*;
+import com.groupsix.user.User;
+import com.groupsix.user.UserFactory;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -18,6 +23,22 @@ public class HelloApplication extends Application {
     }
 
     public static void main(String[] args) {
-        launch();
+//        launch();
+        DatabaseHelper.EnsureTableExist(Employee.class);
+        DatabaseHelper.EnsureTableExist(Department.class);
+        DatabaseHelper.EnsureTableExist(User.class);
+        DatabaseHelper.EnsureTableExist(OfficerAttendance.class);
+
+        HRSubsystemFactory.getInstance().registerEmployeeRepository(EmployeeAdapter.class);
+        HRSubsystemFactory.getInstance().registerDepartmentRepository(DepartmentAdapter.class);
+        UserFactory.getInstance().registerRepository(User.class);
+
+
+
+        var factory = HRSubsystemFactory.getInstance();
+        var repo = factory.createEmployeeRepository();
+        var employees = repo.getEmployees();
+
+        System.exit(0);
     }
 }

@@ -1,22 +1,29 @@
 package com.groupsix.attendance;
 
-import java.util.HashMap;
-
 public class AttendanceFactory {
-    private static AttendanceFactory attendance = new AttendanceFactory();
-    public static AttendanceFactory getInstance() {
-        return attendance;
-    }
-    private Class<IOfficerAttendanceRepository> repoClass;
-    public void registerRepository(Class<IOfficerAttendanceRepository> repoClass) {
-        this.repoClass = repoClass;
-    }
-    public IOfficerAttendanceRepository createRepository(){
-        try {
-            return repoClass.getDeclaredConstructor().newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+
+	private Class<IOfficerAttendanceRepository> repoClass = null;
+
+	private static AttendanceFactory instance = new AttendanceFactory();
+
+	private AttendanceFactory() {
+	}
+
+	public IOfficerAttendanceRepository createRepository() {
+		try {
+			return repoClass.getDeclaredConstructor().newInstance();
+		} catch (NoSuchMethodException | InstantiationException | IllegalAccessException | java.lang.reflect.InvocationTargetException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public void registerRepository(Class<IOfficerAttendanceRepository> repoClass) {
+		this.repoClass = repoClass;
+	}
+
+	public static AttendanceFactory getInstance() {
+		return instance;
+	}
+
 }
