@@ -4,9 +4,19 @@ public class ImportLogHistory {
     private String id;
     private String time;
 
-    public ImportLogHistory(String id, String time) {
+    private String createdBy;
+
+    public ImportLogHistory(String id, String time, String createdBy) {
         this.id = id;
         this.time = time;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
     }
 
     public String getId() {

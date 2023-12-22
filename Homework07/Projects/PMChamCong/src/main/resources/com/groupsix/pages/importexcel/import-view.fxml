@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="509.0" prefWidth="739.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupsix.pages.importexcel.ImportController">
+<AnchorPane prefHeight="509.0" prefWidth="739.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupsix.pages.importexcel.ImportView">
    <children>
       <Label alignment="CENTER" layoutY="15.2" prefHeight="35.0" prefWidth="739.0" text="Nhập thông tin chấm công" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="15.0">
          <font>
