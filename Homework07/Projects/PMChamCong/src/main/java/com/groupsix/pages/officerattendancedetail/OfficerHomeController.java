@@ -1,5 +1,9 @@
 package com.groupsix.pages.officerattendancedetail;
 
+import com.groupsix.attendance.AttendanceFactory;
+import com.groupsix.attendance.OfficerAttendance;
+import com.groupsix.hrsubsystem.HRSubsystemFactory;
+import com.groupsix.user.UserService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +17,7 @@ import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 public class OfficerHomeController implements Initializable {
@@ -163,6 +168,11 @@ public class OfficerHomeController implements Initializable {
             alert.showAndWait();
         }else{
             //Thêm hàm thống kê vào đây
+            Date dateSearch = new Date(year, month, day);
+            OfficerAttendance attendance = getAttendanceDateRow(dateSearch);
+            if(attendance != null){
+                System.out.println(attendance.getHoursLate());
+            }
             clearTable();
             addRowTable();
             System.out.println("Ngày");
@@ -248,5 +258,41 @@ public class OfficerHomeController implements Initializable {
     private void clearTable(){
         this.officerHomeView.tableLog.getItems().clear();
     }
+
+/*    public void random(){
+        var repo = AttendanceFactory.getInstance().createRepository();
+        var users = UserService.getInstance().getCurrentUser();
+        var employee = HRSubsystemFactory.getInstance().createEmployeeRepository().getEmployeeByCode(users.getEmployeeCode());
+
+        int month = 12;
+        int year = 2023;
+        var attendances = repo.getAttendancesOfEmployee(users, employee, month, year, 6 );
+
+    }
+    public void authentication(){
+        UserService.getInstance().authenticate("officer","1234");
+
+    }*/
+
+    private OfficerAttendance getAttendanceDateRow(Date date){
+        var repo = AttendanceFactory.getInstance().createRepository();
+        UserService.getInstance().authenticate("officer","1234");
+        var user = UserService.getInstance().getCurrentUser();
+        var employee = HRSubsystemFactory.getInstance().createEmployeeRepository().getEmployeeByCode(user.getEmployeeCode());
+
+        int month = date.getMonth();
+        int year = date.getYear();
+        var attendances = repo.getAttendancesOfEmployee(user, employee, month, year, 1 );
+
+        for (OfficerAttendance attendance : attendances) {
+            if (attendance.getDate().equals(date)) {
+                return attendance;
+            }
+        }
+        return null;
+
+
+    }
+
 
 }
