@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupsix.pages.officerattendancedetail.OfficerHomeView">
+<AnchorPane prefHeight="541.0" prefWidth="801.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupsix.pages.officerattendancedetail.OfficerHomeView">
    <children>
       <Label layoutX="333.0" layoutY="90.0" style="-fx-font-weight: bold;" text="Thông tin tổng hợp">
          <font>
@@ -22,12 +22,12 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TableView cache="true" layoutX="41.333333333333336" layoutY="269.3333333333333" prefHeight="203.0" prefWidth="723.0" AnchorPane.bottomAnchor="78.0" AnchorPane.leftAnchor="41.0" AnchorPane.rightAnchor="37.0" AnchorPane.topAnchor="269.0">
+      <TableView fx:id="tableLog" cache="true" layoutX="39.0" layoutY="262.0" prefHeight="234.0" prefWidth="723.0" AnchorPane.bottomAnchor="24.0" AnchorPane.leftAnchor="39.0" AnchorPane.rightAnchor="39.0" AnchorPane.topAnchor="262.0">
          <columns>
             <TableColumn fx:id="dateCol" prefWidth="75.0" text="Ngày" />
             <TableColumn fx:id="morningCol" prefWidth="75.0" text="Sáng" />
             <TableColumn fx:id="afternoonCol" prefWidth="75.0" text="Chiều" />
-            <TableColumn prefWidth="75.0" text="Tùy chọn" />
+            <TableColumn fx:id="optionalCol" prefWidth="75.0" text="Tùy chọn" />
          </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -48,7 +48,7 @@
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="5.0" layoutY="12.0" prefHeight="40.0" prefWidth="148.0" style="-fx-font-weight: bold;" text="10">
+                  <Label fx:id="labelCaLamViec" alignment="CENTER" contentDisplay="CENTER" layoutX="5.0" layoutY="12.0" prefHeight="40.0" prefWidth="148.0" style="-fx-font-weight: bold;" text="10">
                      <font>
                         <Font size="28.0" />
                      </font>
@@ -62,7 +62,7 @@
                         <Font size="13.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="5.0" layoutY="10.0" prefHeight="40.0" prefWidth="148.0" style="-fx-font-weight: bold;" text="10">
+                  <Label fx:id="labelSoGioDiMuon" alignment="CENTER" contentDisplay="CENTER" layoutX="5.0" layoutY="10.0" prefHeight="40.0" prefWidth="148.0" style="-fx-font-weight: bold;" text="10">
                      <font>
                         <Font size="28.0" />
                      </font>
@@ -76,7 +76,7 @@
                         <Font size="13.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="3.0" layoutY="11.0" prefHeight="40.0" prefWidth="148.0" style="-fx-font-weight: bold;" text="10">
+                  <Label fx:id="labelSoGioVeSom" alignment="CENTER" contentDisplay="CENTER" layoutX="3.0" layoutY="11.0" prefHeight="40.0" prefWidth="148.0" style="-fx-font-weight: bold;" text="10">
                      <font>
                         <Font size="28.0" />
                      </font>
@@ -85,27 +85,17 @@
             </AnchorPane>
          </children>
       </HBox>
-      <DatePicker layoutX="591.0" layoutY="223.0" />
-      <Label layoutX="110.0" layoutY="501.0" text="Bản ghi">
+      <DatePicker fx:id="datePicker" layoutX="591.0" layoutY="223.0" />
+      <Label layoutX="110.0" layoutY="519.0" text="Bản ghi">
          <font>
             <Font size="13.0" />
          </font>
       </Label>
-      <Label layoutX="64.0" layoutY="501.0" text="200">
+      <Label layoutX="64.0" layoutY="519.0" text="200">
          <font>
             <Font size="13.0" />
          </font>
       </Label>
-      <Button layoutX="530.0" layoutY="496.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="90.0" text="Trang trước">
-         <font>
-            <Font size="13.0" />
-         </font>
-      </Button>
-      <Button layoutX="650.0" layoutY="496.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="90.0" text="Trang sau">
-         <font>
-            <Font size="13.0" />
-         </font>
-      </Button>
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="232.0" layoutY="18.0" style="-fx-font-weight: bold;" text="Xem thông tin chấm công nhân viên văn phòng">
          <font>
             <Font size="16.0" />

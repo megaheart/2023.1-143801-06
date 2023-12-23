@@ -10,42 +10,33 @@ import javafx.scene.control.TextField;
 
 public class OfficerDetailView {
     @FXML
-    public Label dateView;
+    public Label dateView = new Label();
     @FXML
-    public Label morningSession;
+    public Label morningSession = new Label();
     @FXML
-    public Label affternoonSession;
+    public Label affternoonSession = new Label();
     @FXML
-    public Label lateView;
+    public Label lateView = new Label();
     @FXML
-    public Label earlyLeaveView;
+    public Label earlyLeaveView = new Label();
     @FXML
-    public ComboBox<String> morningRequest;
+    public ComboBox<String> morningRequest = new ComboBox<>();
     @FXML
-    public ComboBox<String> affternoonRequest;
+    public ComboBox<String> affternoonRequest = new ComboBox<>();
 
     @FXML
-    public TextField lateRequest;
+    public TextField lateRequest = new TextField();
     @FXML
-    public TextField earlyLeaveRequest;
+    public TextField earlyLeaveRequest = new TextField();
 
     @FXML
-    public TextField reasonRequest;
+    public TextField reasonRequest = new TextField();
 
     @FXML
-    public Button closeBtn;
+    public Button closeBtn = new Button();
     @FXML
-    public Button requestBtn;
+    public Button requestBtn = new Button();
 
-    public void initialize() {
-        ObservableList<String> options =
-                FXCollections.observableArrayList(
-                        "Có",
-                        "Không"
-                );
-        morningRequest.setItems(options);
-        affternoonRequest.setItems(options);
-    }
 
 
 
