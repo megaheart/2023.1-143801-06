@@ -36,7 +36,6 @@ class SqliteUserRepositoryTest {
             user.setUsername("username" + i);
             user.setPassword("password" + i);
             user.setRole("role" + i);
-            user.setDepartmentCode("departmentCode" + i);
             user.setEmployeeCode("employeeCode" + i);
             users.add(user);
         }
