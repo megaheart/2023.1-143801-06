@@ -20,6 +20,8 @@ module com.groupsix.pmchamcong {
     opens com.groupsix.attendance to ormlite.jdbc;
     opens com.groupsix.user to ormlite.jdbc;
 
+    opens com.groupsix.pages to javafx.fxml;
+
     opens com.groupsix.pmchamcong to javafx.fxml;
     exports com.groupsix.pmchamcong;
 
