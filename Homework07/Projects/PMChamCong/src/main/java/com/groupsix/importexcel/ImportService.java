@@ -73,7 +73,11 @@ public class ImportService implements IImportService {
     }
 
     @Override
-    public void deleteHistoryImport(String id) {
+    public void deleteHistoryImport(int id) {
+        ImportHistory importHistory = historyImportRepository.getById(id);
+        if (importHistory == null) {
+            throw new NullPointerException("Không tìm thấy lịch sử import có id: " + id);
+        }
         historyImportRepository.deleteById(id);
     }
 
@@ -118,17 +122,17 @@ public class ImportService implements IImportService {
         return null;
     }
 
-    public boolean checkDuplicateCodes(List<String> codes){
-        try {
-            Set<String> codesSet = Set.copyOf(codes);
-            if (codesSet.size() != codes.size()) {
-                throw new Exception("Danh sách mã nhân viên có mã lặp lại");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
+//    public boolean checkDuplicateCodes(List<String> codes){
+//        try {
+//            Set<String> codesSet = Set.copyOf(codes);
+//            if (codesSet.size() != codes.size()) {
+//                throw new Exception("Danh sách mã nhân viên có mã lặp lại");
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return false;
+//    }
 
     public OfficerAttendance createOfficerAttendance(Employee employee, AttendanceLogImport attendanceLogImport){
         try {

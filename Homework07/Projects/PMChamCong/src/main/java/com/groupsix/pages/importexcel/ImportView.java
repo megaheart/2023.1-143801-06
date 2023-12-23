@@ -57,7 +57,7 @@ public class ImportView implements Initializable {
         // Lấy dữ liệu từ database
         ObservableList<ImportHistory> importLogHistories = FXCollections.observableArrayList();
         for(int i = 1; i< 100; i++) {
-            importLogHistories.add(new ImportHistory("1", "20/10/2020 10:10:10", "admin"));
+            importLogHistories.add(new ImportHistory(i, "20/10/2020 10:10:10", "admin"));
         }
         // Căn giữa các cột
         importLogTable.getColumns().stream().forEach(column -> {
