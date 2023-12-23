@@ -30,14 +30,6 @@ public class User {
 		this.role = role;
 	}
 
-	public String getDepartmentCode() {
-		return departmentCode;
-	}
-
-	public void setDepartmentCode(String departmentCode) {
-		this.departmentCode = departmentCode;
-	}
-
 	public String getEmployeeCode() {
 		return employeeCode;
 	}
@@ -54,9 +46,6 @@ public class User {
 
 	@DatabaseField
     private String role;
-
-	@DatabaseField
-    private String departmentCode;
 
 	@DatabaseField
 	private String employeeCode;
