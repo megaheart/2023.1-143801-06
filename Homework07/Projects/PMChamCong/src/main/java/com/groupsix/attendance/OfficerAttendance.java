@@ -10,18 +10,16 @@ import java.util.Date;
 @DatabaseTable(tableName = "OfficerAttendance")
 public class OfficerAttendance {
 
-
-	public String getEmployeeCode() {
-		return employeeCode;
-	}
-
-
-	public void setHoursLate(double hoursLate) {
-		this.hoursLate = hoursLate;
+	public double getHoursEarlyLeave() {
+		return hoursEarlyLeave;
 	}
 
 	public void setHoursEarlyLeave(double hoursEarlyLeave) {
 		this.hoursEarlyLeave = hoursEarlyLeave;
+	}
+
+	public String getEmployeeCode() {
+		return employeeCode;
 	}
 
 	public void setEmployeeCode(String employeeCode) {
@@ -32,8 +30,8 @@ public class OfficerAttendance {
 		return hoursLate;
 	}
 
-	public double getHoursEarlyLeave() {
-		return hoursEarlyLeave;
+	public void setHoursLate(double hoursLate) {
+		this.hoursLate = hoursLate;
 	}
 
 	public Date getDate() {
@@ -68,11 +66,7 @@ public class OfficerAttendance {
 	}
 
 	@DatabaseField()
-	private double hoursLate;
-
-	@DatabaseField()
 	private double hoursEarlyLeave;
-
 
 	@DatabaseField(generatedId = true)
 	private int id;
@@ -80,6 +74,8 @@ public class OfficerAttendance {
 	@DatabaseField(uniqueCombo = true)
 	private String employeeCode;
 
+	@DatabaseField()
+	private double hoursLate;
 
 	@DatabaseField(dataType = DataType.DATE, uniqueCombo = true)
 	private Date date;
