@@ -9,6 +9,7 @@ import org.apache.poi.ss.usermodel.DateUtil;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class SqliteOfficerAttendanceRepository implements IOfficerAttendanceRepository {
 
@@ -28,6 +29,15 @@ public class SqliteOfficerAttendanceRepository implements IOfficerAttendanceRepo
 					.and()
 					.between("date", fromDate, toDate);
 			return (ArrayList<OfficerAttendance>) dao.query(queryBuilder.prepare());
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
+	public void insertMany(List<OfficerAttendance> attendances) {
+		try {
+			dao.create(attendances);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}

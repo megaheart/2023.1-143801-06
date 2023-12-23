@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupsix.pages.importexcel.ChooseFileImportController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupsix.pages.importexcel.ChooseFileImportView">
    <children>
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="19.2" layoutY="8.0" prefHeight="32.0" prefWidth="560.0" text="Nhập dữ liệu chấm công" AnchorPane.leftAnchor="19.0" AnchorPane.rightAnchor="21.0" AnchorPane.topAnchor="8.0">
          <font>

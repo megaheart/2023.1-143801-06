@@ -1,4 +1,4 @@
-package com.groupsix;
+package com.groupsix.user;
 
 import com.groupsix.base.DatabaseHelper;
 import com.groupsix.user.*;
@@ -11,16 +11,38 @@ import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 
 
-public class ExampleTest {
+public class UserServiceTest {
 
     @BeforeAll
     public static void initAll() {
         DatabaseHelper.EnsureTableExist(User.class);
 
         UserFactory.getInstance().registerRepository(SqliteUserRepository.class);
+    }
+
+    @Test
+    @DisplayName("Test get instance")
+    public void testGetInstance(){
+        // Given
+        UserService userService = UserService.getInstance();
+
+        // Then
+        assertNotNull(userService);
+    }
+
+    @Test
+    @DisplayName("Test logout")
+    public void testLogout(){
+        // Given
+        UserService userService = UserService.getInstance();
+        userService.logout();
+
+        // Then
+        assertEquals(userService.getCurrentUser(), null);
     }
 
     @ParameterizedTest
@@ -32,12 +54,26 @@ public class ExampleTest {
     public void testAuthenticateFail(String username, String password){
         // Given
 
-        // When
-        UserService userService = UserService.getInstance();
-        boolean isSuccess = userService.authenticate(username, password);
+        // Mock repository
+        IUserRepository mockUserRepository = Mockito.mock(IUserRepository.class);
+        // Mock method getUserByUsername return null
+        when(mockUserRepository.getUserByUsername(username)).thenReturn(null);
+        // Mock factory createRepository return mock repository
+        UserFactory mockUserFactory = Mockito.mock(UserFactory.class);
+        // Mock method createRepository return mock repository
+        when(mockUserFactory.createRepository()).thenReturn(mockUserRepository);
 
-        // Then
-        assertEquals(isSuccess, false );
+        // Mock static method
+        try(MockedStatic<UserFactory> mockUserFactoryStatic = Mockito.mockStatic(UserFactory.class)){
+            mockUserFactoryStatic.when(UserFactory::getInstance).thenReturn(mockUserFactory);
+
+            // When
+            UserService userService = UserService.getInstance();
+            boolean isSuccess = userService.authenticate(username, password);
+
+            // Then
+            assertEquals(isSuccess, false );
+        }
     }
 
     @ParameterizedTest
@@ -69,19 +105,4 @@ public class ExampleTest {
             assertEquals(isSuccess, true );
         }
     }
-
-    @Test
-    public void testSubTwoNumber(){
-        final int expected = 1;
-        final int actual = 2 - 1;
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    public void testAddTwoNumber(){
-        final int expected = 2;
-        final int actual = 1 + 1;
-        assertEquals(expected, actual);
-    }
-
 }

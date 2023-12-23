@@ -1,4 +1,4 @@
-package com.groupsix.pages.importexcel;
+package com.groupsix.importexcel;
 
 public class AttendanceLogImport {
     private int index;
@@ -8,6 +8,7 @@ public class AttendanceLogImport {
     public AttendanceLogImport(int index, String timestamp, String employeeCode) {
         this.timestamp = timestamp;
         this.employeeCode = employeeCode;
+        this.index = index;
     }
 
     public int getIndex() {

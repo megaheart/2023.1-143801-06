@@ -1,6 +1,7 @@
 package com.groupsix.hrsubsystem;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface IEmployeeRepository {
 
@@ -11,5 +12,7 @@ public interface IEmployeeRepository {
 	Employee getEmployeeByCode(String code);
 
 	ArrayList<Employee> filterEmployeeByCode(String code, Department department);
+
+	List<Employee> getEmployeesByListCodes(List<String> codes);
 
 }
