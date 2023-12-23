@@ -1,6 +1,7 @@
 package com.groupsix.pages.importexcel;
 
 import com.groupsix.attendance.OfficerAttendance;
+import com.groupsix.importexcel.AttendanceLogImport;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

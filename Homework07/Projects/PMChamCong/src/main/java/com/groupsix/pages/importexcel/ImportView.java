@@ -1,5 +1,7 @@
 package com.groupsix.pages.importexcel;
 
+import com.groupsix.importexcel.ImportHistory;
+import com.groupsix.importexcel.AttendanceLogImport;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -21,7 +23,7 @@ import java.util.ResourceBundle;
 
 public class ImportView implements Initializable {
     @FXML
-    private TableView<ImportLogHistory> importLogTable;
+    private TableView<ImportHistory> importLogTable;
 
     @FXML
     private Button importButton;
@@ -36,7 +38,7 @@ public class ImportView implements Initializable {
     private void initImportButton()  {
         importButton.setOnAction(event -> {
             // Open import stage
-            FXMLLoader fxmlLoader = new FXMLLoader(AttendanceLogImport.class.getResource("choose-file-import.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(ChooseFileImportView.class.getResource("choose-file-import.fxml"));
             try {
                 Scene importStage = new Scene(fxmlLoader.load(), 500, 300);
                 Stage stage = new Stage();
@@ -53,9 +55,9 @@ public class ImportView implements Initializable {
     // Khởi tạo bảng
     private void initTable(){
         // Lấy dữ liệu từ database
-        ObservableList<ImportLogHistory> importLogHistories = FXCollections.observableArrayList();
+        ObservableList<ImportHistory> importLogHistories = FXCollections.observableArrayList();
         for(int i = 1; i< 100; i++) {
-            importLogHistories.add(new ImportLogHistory("1", "20/10/2020 10:10:10", "admin"));
+            importLogHistories.add(new ImportHistory("1", "20/10/2020 10:10:10", "admin"));
         }
         // Căn giữa các cột
         importLogTable.getColumns().stream().forEach(column -> {
@@ -67,12 +69,12 @@ public class ImportView implements Initializable {
         importLogTable.getColumns().get(1).setCellValueFactory(new PropertyValueFactory("createdBy"));
 
         // Tạo cột, tại mỗi dòng sẽ có 2 button là chi tiết và xóa
-        Callback<TableColumn<ImportLogHistory, String>, TableCell<ImportLogHistory, String>> cellFactory
+        Callback<TableColumn<ImportHistory, String>, TableCell<ImportHistory, String>> cellFactory
                 = //
-                new Callback<TableColumn<ImportLogHistory, String>, TableCell<ImportLogHistory, String>>() {
+                new Callback<TableColumn<ImportHistory, String>, TableCell<ImportHistory, String>>() {
                     @Override
-                    public TableCell call(final TableColumn<ImportLogHistory, String> param) {
-                        final TableCell<ImportLogHistory, String> cell = new TableCell<ImportLogHistory, String>() {
+                    public TableCell call(final TableColumn<ImportHistory, String> param) {
+                        final TableCell<ImportHistory, String> cell = new TableCell<ImportHistory, String>() {
 
                             final Button btn = new Button("Chi tiết");
                             final Button btn2 = new Button("Xóa");
@@ -86,12 +88,12 @@ public class ImportView implements Initializable {
                                 } else {
                                     setText(null);
                                     btn.setOnAction(event -> {
-                                        ImportLogHistory person = getTableView().getItems().get(getIndex());
+                                        ImportHistory person = getTableView().getItems().get(getIndex());
                                         System.out.println(person.getId()
                                                 + "   " + person.getTime());
                                     });
                                     btn2.setOnAction(event -> {
-                                        ImportLogHistory person = getTableView().getItems().get(getIndex());
+                                        ImportHistory person = getTableView().getItems().get(getIndex());
                                         System.out.println(person.getId()
                                                 + "   " + person.getTime());
                                     });
@@ -109,7 +111,7 @@ public class ImportView implements Initializable {
                     }
                 };
         // Tạo cột action, tại mỗi dòng sẽ có 2 button là chi tiết và xóa
-        TableColumn<ImportLogHistory, String> actionCol = new TableColumn<>("Action");
+        TableColumn<ImportHistory, String> actionCol = new TableColumn<>("Action");
         actionCol.setCellFactory(cellFactory);
         actionCol.setStyle( "-fx-alignment: CENTER;");
         importLogTable.getColumns().add(actionCol);

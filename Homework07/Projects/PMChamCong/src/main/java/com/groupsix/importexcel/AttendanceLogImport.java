@@ -1,4 +1,4 @@
-package com.groupsix.pages.importexcel;
+package com.groupsix.importexcel;
 
 public class AttendanceLogImport {
     private int index;

@@ -28,5 +28,7 @@ module com.groupsix.pmchamcong {
 
     exports com.groupsix.pages.importexcel;
     opens com.groupsix.pages.importexcel to javafx.fxml;
+    exports com.groupsix.importexcel;
+    opens com.groupsix.importexcel to javafx.fxml;
 
 }

@@ -6,6 +6,7 @@ import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.table.TableUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class EmployeeAdapter implements IEmployeeRepository {
     private final Dao<Employee, String> employeeDao;
@@ -59,6 +60,19 @@ public class EmployeeAdapter implements IEmployeeRepository {
                     .eq("departmentCode", department.getDepartmentCode())
                     .prepare();
             return (ArrayList<Employee>) employeeDao.query(query);
+        } catch (java.sql.SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<Employee> getEmployeesByListCodes(List<String> codes) {
+        try {
+            QueryBuilder<Employee, String> queryBuilder = employeeDao.queryBuilder();
+            var query = queryBuilder.where()
+                    .in("employeeCode", codes)
+                    .prepare();
+            return employeeDao.query(query);
         } catch (java.sql.SQLException e) {
             throw new RuntimeException(e);
         }
