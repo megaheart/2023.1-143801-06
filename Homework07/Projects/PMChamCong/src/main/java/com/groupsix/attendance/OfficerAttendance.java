@@ -10,6 +10,13 @@ import java.util.Date;
 @DatabaseTable(tableName = "OfficerAttendance")
 public class OfficerAttendance {
 
+	public double getHoursEarlyLeave() {
+		return hoursEarlyLeave;
+	}
+
+	public void setHoursEarlyLeave(double hoursEarlyLeave) {
+		this.hoursEarlyLeave = hoursEarlyLeave;
+	}
 
 	public String getEmployeeCode() {
 		return employeeCode;
@@ -20,43 +27,11 @@ public class OfficerAttendance {
 	}
 
 	public double getHoursLate() {
-		return morningHoursLate + afternoonHoursLate;
-	}
-	public double getHoursEarlyLeave(){
-		return morningHoursLate + afternoonHoursLate;
+		return hoursLate;
 	}
 
-
-	public double getMorningHoursEarlyLeave() {
-		return morningHoursEarlyLeave;
-	}
-
-	public double getMorningHoursLate() {
-		return morningHoursLate;
-	}
-
-	public double getAfternoonHoursEarlyLeave() {
-		return afternoonHoursEarlyLeave;
-	}
-
-	public void setMorningHoursEarlyLeave(double morningHoursEarlyLeave) {
-		this.morningHoursEarlyLeave = morningHoursEarlyLeave;
-	}
-
-	public void setMorningHoursLate(double morningHoursLate) {
-		this.morningHoursLate = morningHoursLate;
-	}
-
-	public void setAfternoonHoursEarlyLeave(double afternoonHoursEarlyLeave) {
-		this.afternoonHoursEarlyLeave = afternoonHoursEarlyLeave;
-	}
-
-	public void setAfternoonHoursLate(double afternoonHoursLate) {
-		this.afternoonHoursLate = afternoonHoursLate;
-	}
-
-	public double getAfternoonHoursLate() {
-		return afternoonHoursLate;
+	public void setHoursLate(double hoursLate) {
+		this.hoursLate = hoursLate;
 	}
 
 	public Date getDate() {
@@ -91,16 +66,7 @@ public class OfficerAttendance {
 	}
 
 	@DatabaseField()
-	private double morningHoursEarlyLeave;
-
-	@DatabaseField()
-	private double morningHoursLate;
-
-	@DatabaseField()
-	private double afternoonHoursEarlyLeave;
-
-	@DatabaseField()
-	private double afternoonHoursLate;
+	private double hoursEarlyLeave;
 
 	@DatabaseField(generatedId = true)
 	private int id;
@@ -108,6 +74,8 @@ public class OfficerAttendance {
 	@DatabaseField(uniqueCombo = true)
 	private String employeeCode;
 
+	@DatabaseField()
+	private double hoursLate;
 
 	@DatabaseField(dataType = DataType.DATE, uniqueCombo = true)
 	private Date date;
