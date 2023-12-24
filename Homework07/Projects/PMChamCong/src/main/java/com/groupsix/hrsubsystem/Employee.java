@@ -30,11 +30,22 @@ public class Employee {
 		this.departmentCode = departmentCode;
 	}
 
+	public String getPositionName() {
+		return positionName;
+	}
+
+	public void setPositionName(String positionName) {
+		this.positionName = positionName;
+	}
+
 	@DatabaseField()
 	private String fullName;
 	@DatabaseField(id = true)
 	private String employeeCode;
 	@DatabaseField()
 	private String departmentCode;
+
+	@DatabaseField()
+	private String positionName;
 
 }

@@ -8,6 +8,6 @@ public interface IImportService {
 
     List<ImportHistory> getAllHistoryImport();
 
-    void deleteHistoryImport(String id);
+    void deleteHistoryImport(int id);
 
 }
