@@ -31,6 +31,7 @@
             <Button mnemonicParsing="false" style="-fx-background-color: #F44336; -fx-text-fill: #fff; -fx-cursor: hand;" text="Clear" />
          </children>
       </HBox>
-      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="258.0" layoutY="360.0" mnemonicParsing="false" style="-fx-background-color: #2196F3; -fx-text-fill: white;" text="Nhập dữ liệu" AnchorPane.bottomAnchor="14.399999999999977" AnchorPane.leftAnchor="258.0" />
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="462.0" layoutY="359.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="118.0" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-cursor: HAND;" text="Nhập dữ liệu" AnchorPane.bottomAnchor="14.600000000000023" AnchorPane.rightAnchor="19.59999999999991" />
+      <Button layoutX="381.0" layoutY="359.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" text="Đóng" AnchorPane.bottomAnchor="14.600000000000001" AnchorPane.rightAnchor="148.6" />
    </children>
 </AnchorPane>
