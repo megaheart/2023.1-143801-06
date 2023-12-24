@@ -50,7 +50,24 @@ public class SqliteOfficerAttendanceRepository implements IOfficerAttendanceRepo
 	@Override
 	public void insertMany(List<OfficerAttendance> attendances) {
 		try {
-			dao.create(attendances);
+			String sql = "INSERT INTO OfficerAttendance (employeeCode, date, hoursEarlyLeave, hoursLate, morningSession, afternoonSession) VALUES ";
+
+			List<String> values = new ArrayList<>();
+			for (OfficerAttendance officerAttendance : attendances) {
+				String s = String.format("('%s', '%s', %f, %f, %d, %d)",
+						officerAttendance.getEmployeeCode(),
+						officerAttendance.getDate(),
+						officerAttendance.getHoursEarlyLeave(),
+						officerAttendance.getHoursLate(),
+						officerAttendance.isMorningSession() ? 1 : 0,
+						officerAttendance.isAfternoonSession() ? 1 : 0);
+				values.add(s);
+			}
+
+			sql += String.join(",", values);
+
+			dao.executeRaw(sql);
+
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
