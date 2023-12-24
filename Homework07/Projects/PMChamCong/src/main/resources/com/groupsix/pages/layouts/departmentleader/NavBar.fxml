@@ -10,21 +10,18 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.groupsix.pages.layouts.departmentleader.NavBar"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupsix.pages.layouts.departmentleader.NavBar">
     <effect>
         <DropShadow color="#1b1eeb" />
     </effect>
-    <VBox alignment="TOP_CENTER" prefHeight="576.0" prefWidth="250.0" style="-fx-background-color: #fff; -fx-border-width: 0 1px 0 0; -fx-border-color: cyan;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <VBox alignment="TOP_CENTER" prefHeight="576.0" prefWidth="250.0" styleClass="nav-panel" stylesheets="@../style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
         <ImageView fitHeight="145.0" fitWidth="127.0" pickOnBounds="true" preserveRatio="true">
             <VBox.margin>
                 <Insets bottom="20.0" top="50.0" />
             </VBox.margin>
             <Image url="@../images/jimmy-fallon.png" />
         </ImageView>
-        <Label alignment="CENTER" prefHeight="25.0" prefWidth="250.0" text="Jimmy Fallon" textFill="#000">
+        <Label fx:id="employeeNameLabel" alignment="CENTER" prefHeight="25.0" prefWidth="250.0" text="Jimmy Fallon" textFill="#000">
             <VBox.margin>
                 <Insets bottom="10.0" />
             </VBox.margin>
@@ -32,20 +29,25 @@
                 <Font size="14.0" />
             </font>
         </Label>
-        <Label alignment="CENTER" layoutX="100.0" layoutY="138.0" prefHeight="27.0" prefWidth="250.0" text="Jimmy Fallon" textFill="#000">
+        <Label fx:id="employeeCodeLabel" alignment="CENTER" layoutX="100.0" layoutY="138.0" prefHeight="27.0" prefWidth="250.0" text="Jimmy Fallon" textFill="#000">
             <VBox.margin>
                 <Insets bottom="10.0" />
             </VBox.margin>
         </Label>
-        <Label alignment="CENTER" layoutX="100.0" layoutY="176.0" prefHeight="18.0" prefWidth="254.0" text="Jimmy Fallon" textFill="#000">
+        <Label fx:id="departmentNameLabel" alignment="CENTER" layoutX="100.0" layoutY="176.0" prefHeight="18.0" prefWidth="254.0" text="Jimmy Fallon" textFill="#000">
             <VBox.margin>
                 <Insets bottom="20.0" />
             </VBox.margin>
         </Label>
-        <Button alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="259.0" stylesheets="@../style.css" text="Trang chủ" textFill="#e7e5e5">
+      <Button mnemonicParsing="false" onAction="#userLogout" text="Đăng xuất">
+         <VBox.margin>
+            <Insets bottom="20.0" />
+         </VBox.margin>
+      </Button>
+        <Button alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#goToHome" prefHeight="42.0" prefWidth="259.0" styleClass="nav-button" stylesheets="@../style.css" text="Trang chủ" textFill="#e7e5e5">
             <graphic>
                 <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
-                    <Image url="@../images/icons8_Home_32px.png" />
+                    <Image url="@../images/Custom-Icon-Design-Mono-General-3-Home.48.png" />
                 </ImageView>
             </graphic>
             <opaqueInsets>
@@ -58,7 +60,7 @@
                 <Insets left="30.0" />
             </padding>
         </Button>
-        <Button alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="259.0" stylesheets="@../style.css" text="Xem báo cáo chấm công">
+        <Button alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#goToOfficerDepartmentAttendanceReportView" prefHeight="42.0" prefWidth="259.0" styleClass="nav-button" stylesheets="@../style.css" text="Xem báo cáo chấm công">
             <graphic>
                 <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                     <Image url="@../images/Aniket-Suvarna-Box-Bxs-report.48.png" />
@@ -69,4 +71,5 @@
             </padding>
         </Button>
     </VBox>
+   <AnchorPane fx:id="subSceneAnchorPane" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
 </AnchorPane>

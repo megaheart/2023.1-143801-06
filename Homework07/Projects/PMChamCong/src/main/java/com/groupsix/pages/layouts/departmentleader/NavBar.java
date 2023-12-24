@@ -1,5 +1,6 @@
 package com.groupsix.pages.layouts.departmentleader;
 
+import com.groupsix.pages.FXRouter;
 import com.groupsix.pages.layouts.INavBar;
 import com.groupsix.pages.layouts.NavBarBase;
 import javafx.fxml.FXML;
@@ -55,6 +56,20 @@ public class NavBar extends NavBarBase implements INavBar {
 
     @Override
     public void navigateToHome() {
+        FXRouter.goTo("departmentleaderhome");
+    }
+
+    @FXML
+    protected void userLogout() {
+        super.logout();
+    }
+
+    @FXML
+    protected void goToHome() {
+        FXRouter.goTo("departmentleaderhome");
+    }
+    @FXML
+    protected void goToOfficerDepartmentAttendanceReportView() throws Exception {
 //        FXRouter.goTo("Hi");
     }
 }

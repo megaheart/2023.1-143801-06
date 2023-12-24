@@ -46,5 +46,9 @@ public abstract class NavBarBase implements INavBar{
         }
     }
 
+    protected void logout() {
+        UserService.getInstance().logout();
+    }
+
 
 }

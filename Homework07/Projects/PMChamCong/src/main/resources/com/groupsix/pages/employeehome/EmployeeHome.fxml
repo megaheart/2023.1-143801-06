@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="538.0" prefWidth="832.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="538.0" prefWidth="832.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupsix.pages.employeehome.EmployeeHome">
    <children>
       <GridPane alignment="CENTER" layoutX="52.0" layoutY="77.0" prefHeight="134.0" prefWidth="758.0" AnchorPane.leftAnchor="52.0" AnchorPane.rightAnchor="21.600000000000023" AnchorPane.topAnchor="77.0">
         <columnConstraints>

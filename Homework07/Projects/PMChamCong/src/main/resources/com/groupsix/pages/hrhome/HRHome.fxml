@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.LineChart?>
-<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -15,12 +12,14 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1259.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1259.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"  fx:controller="com.groupsix.pages.hrhome.HRHome">
    <children>
-      <GridPane alignment="CENTER" hgap="70.0" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="169.0" prefWidth="1232.0" vgap="20.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+      <GridPane alignment="CENTER" hgap="20.0" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="169.0" prefWidth="1232.0" vgap="20.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="300.79998779296875" minWidth="10.0" prefWidth="300.79998779296875" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="300.79998779296875" minWidth="10.0" prefWidth="300.79998779296875" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="299.20001220703125" minWidth="10.0" prefWidth="299.20001220703125" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="299.20001220703125" minWidth="10.0" prefWidth="299.20001220703125" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="299.20001220703125" minWidth="10.0" prefWidth="299.20001220703125" />
          </columnConstraints>
          <rowConstraints>
@@ -30,11 +29,11 @@
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </padding>
          <children>
-            <AnchorPane layoutX="312.0" layoutY="8.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #2196F3;" GridPane.columnIndex="1">
+            <AnchorPane layoutX="312.0" layoutY="8.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #2196F3;">
                <children>
                   <ImageView fitHeight="56.0" fitWidth="55.0" layoutX="40.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../images/Hopstarter-Sleek-Xp-Basic-User-Group.64.png" />
+                        <Image url="@../layouts/images/Hopstarter-Sleek-Xp-Basic-User-Group.64.png" />
                      </image>
                   </ImageView>
                   <Label layoutX="123.0" layoutY="23.0" text="Nhân viên">
@@ -49,11 +48,49 @@
                   </Label>
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="132.0" layoutY="30.0" prefHeight="130.0" prefWidth="368.0" style="-fx-background-color: #fff;" GridPane.columnIndex="2">
+            <AnchorPane layoutX="132.0" layoutY="30.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #81C784;" GridPane.columnIndex="1">
                <children>
                   <ImageView fitHeight="56.0" fitWidth="55.0" layoutX="40.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../images/download.png" />
+                        <Image url="@../layouts/images/Aha-Soft-Free-Large-Boss-Global-Manager.64.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="123.0" layoutY="23.0" text="Trưởng phòng">
+                     <font>
+                        <Font name="System Bold" size="19.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="123.0" layoutY="51.0" prefHeight="55.0" prefWidth="77.0" text="100">
+                     <font>
+                        <Font size="35.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="132.0" layoutY="30.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #FFCDD2;" GridPane.columnIndex="2">
+               <children>
+                  <ImageView fitHeight="56.0" fitWidth="55.0" layoutX="40.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../layouts/images/Microsoft-Fluentui-Emoji-3d-Department-Store-3d.64.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="123.0" layoutY="23.0" text="Phòng ban">
+                     <font>
+                        <Font name="System Bold" size="19.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="123.0" layoutY="51.0" prefHeight="55.0" prefWidth="77.0" text="100">
+                     <font>
+                        <Font size="35.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="132.0" layoutY="30.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #fff;" GridPane.columnIndex="3">
+               <children>
+                  <ImageView fitHeight="56.0" fitWidth="55.0" layoutX="40.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../layouts/images/download.png" />
                      </image>
                   </ImageView>
                   <Label layoutX="123.0" layoutY="23.0" text="Ca làm việc">
@@ -64,15 +101,6 @@
                   <Label layoutX="123.0" layoutY="51.0" prefHeight="55.0" prefWidth="77.0" text="2">
                      <font>
                         <Font size="35.0" />
-                     </font>
-                  </Label>
-               </children>
-            </AnchorPane>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0">
-               <children>
-                  <Label layoutX="35.0" layoutY="44.0" text="Phòng hành chính">
-                     <font>
-                        <Font name="System Bold" size="28.0" />
                      </font>
                   </Label>
                </children>
@@ -98,24 +126,26 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
+            <TableView prefHeight="384.0" prefWidth="503.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+              <columns>
+                <TableColumn prefWidth="75.0" text="Mã nhân viên" />
+                <TableColumn prefWidth="75.0" text="Tên nhân viên" />
+                  <TableColumn prefWidth="75.0" text="Phòng ban" />
+              </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+            </TableView>
             <Label text="Danh sách phòng ban">
                <font>
                   <Font name="System Bold" size="17.0" />
                </font>
             </Label>
-            <Label text="Thống kê ca đi muộn" GridPane.columnIndex="1">
+            <Label text="Danh sách nhân viên" GridPane.columnIndex="1">
                <font>
                   <Font name="System Bold" size="17.0" />
                </font>
             </Label>
-            <LineChart GridPane.columnIndex="1" GridPane.rowIndex="1">
-              <xAxis>
-                <CategoryAxis side="BOTTOM" />
-              </xAxis>
-              <yAxis>
-                <NumberAxis side="LEFT" />
-              </yAxis>
-            </LineChart>
          </children>
       </GridPane>
    </children>

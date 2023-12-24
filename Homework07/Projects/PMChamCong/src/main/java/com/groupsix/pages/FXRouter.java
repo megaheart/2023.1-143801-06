@@ -32,6 +32,7 @@ public class FXRouter {
 	private static HashMap<String, Routerinfo> navRoutes = new HashMap<String, Routerinfo>();
 	private static Routerinfo loginRoute;
 	private static INavBar currentNav;
+	private static String currentRouteLabel = "";
 
 	public static void bind(Application ref, Stage win, String winTitle, double winWidth, double winHeight) {
 		window = win;
@@ -69,6 +70,10 @@ public class FXRouter {
 	}
 
 	public static Object goTo(String routeLabel) {
+		if(currentRouteLabel.equals(routeLabel)) {
+			return null;
+		}
+
 		Routerinfo route = routes.get(routeLabel);
 		if (route == null) {
 			throw new RuntimeException("Route not found");
@@ -76,6 +81,7 @@ public class FXRouter {
 
 		try {
 			var controller = loadNewSubScene(route);
+			currentRouteLabel = routeLabel;
 			return controller;
 		} catch (Exception e) {
 			throw new RuntimeException(e);

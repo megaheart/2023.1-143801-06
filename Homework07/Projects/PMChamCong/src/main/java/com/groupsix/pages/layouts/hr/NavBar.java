@@ -58,12 +58,17 @@ public class NavBar extends NavBarBase implements INavBar {
 
     @Override
     public void navigateToHome() {
-//        FXRouter.goTo("Hi");
+        FXRouter.goTo("hrhome");
+    }
+
+    @FXML
+    protected void userLogout() {
+        super.logout();
     }
 
     @FXML
     protected void goToHome() {
-//        FXRouter.goTo("Hi");
+        FXRouter.goTo("hrhome");
     }
     @FXML
     protected void goToImportAttendancePanel() throws Exception {
