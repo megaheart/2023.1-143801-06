@@ -77,7 +77,7 @@ public class OfficerAttendance {
 	@DatabaseField()
 	private double hoursLate;
 
-	@DatabaseField(dataType = DataType.DATE, uniqueCombo = true)
+	@DatabaseField(dataType = DataType.DATE_STRING, uniqueCombo = true)
 	private Date date;
 
 	@DatabaseField()

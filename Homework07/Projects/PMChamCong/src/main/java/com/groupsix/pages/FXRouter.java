@@ -1,5 +1,6 @@
 package com.groupsix.pages;
 
+import com.groupsix.pages.layouts.INavBar;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,13 +18,17 @@ public class FXRouter {
 	private static Application mainRef;
 
 	private static class Routerinfo {
-		public String routeLabel;
-		public URL scenePath;
-		public Class viewClass;
-		public Class controllerClass;
+		public String _routeLabel;
+		public URL _scenePath;
+		public Class _viewClass;
+		public Class _controllerClass;
+		public String _navName;
 	}
 
 	private static HashMap<String, Routerinfo> routes = new HashMap<String, Routerinfo>();
+
+	private static HashMap<String, Routerinfo> navRoutes = new HashMap<String, Routerinfo>();
+	private static Routerinfo loginRoute;
 
 	public static void bind(Application ref, Stage win, String winTitle, double winWidth, double winHeight) {
 		window = win;
@@ -34,12 +39,29 @@ public class FXRouter {
 		window.resizableProperty().setValue(Boolean.FALSE);
 	}
 
-	public static void when(String routeLabel, URL scenePath,Class viewClass, Class controllerClass) {
+	public static void when(String routeLabel, URL scenePath, Class controllerClass, String navName) {
 		routes.put(routeLabel, new Routerinfo() {{
-			this.routeLabel = routeLabel;
-			this.scenePath = scenePath;
-			this.viewClass = viewClass;
-			this.controllerClass = controllerClass;
+			this._routeLabel = routeLabel;
+			this._scenePath = scenePath;
+//			this._viewClass = viewClass;
+			this._controllerClass = controllerClass;
+			this._navName = navName;
+		}});
+	}
+
+	public static void addLoginPage(URL scenePath, Class controllerClass) {
+		loginRoute = new Routerinfo() {{
+			this._routeLabel = "login";
+			this._scenePath = scenePath;
+//			this._viewClass = viewClass;
+			this._controllerClass = controllerClass;
+		}};
+	}
+
+	public static void addNav(String navName, URL scenePath) {
+		navRoutes.put(navName, new Routerinfo() {{
+			this._routeLabel = navName;
+			this._scenePath = scenePath;
 		}});
 	}
 
@@ -50,7 +72,7 @@ public class FXRouter {
 		}
 
 		try {
-			var controller = loadNewScene(route);
+			var controller = loadNewSubScene(route);
 			return controller;
 		} catch (Exception e) {
 			throw new RuntimeException(e);
@@ -58,8 +80,24 @@ public class FXRouter {
 
 	}
 
-	private static Object loadNewScene(Routerinfo route) throws Exception{
-		var loader = new FXMLLoader(route.scenePath);
+	private static INavBar loadNewScene(Routerinfo route) throws Exception{
+		var loader = new FXMLLoader(route._scenePath);
+
+		Parent resource = loader.load();
+		var view = loader.getController();
+
+		var scene = new Scene(resource);
+		window.setScene(scene);
+		window.show();
+
+		if (view instanceof INavBar) {
+			return (INavBar) view;
+		}
+
+		return null;
+	}
+	private static Object loadNewSubScene(Routerinfo route) throws Exception{
+		var loader = new FXMLLoader(route._scenePath);
 
 //		if(route.viewClass != null) {
 //			loader.setController(route.viewClass.getDeclaredConstructor().newInstance());
@@ -68,7 +106,7 @@ public class FXRouter {
 		Parent resource = loader.load();
 		var view = loader.getController();
 //		var controllerContructors = route.controllerClass.getDeclaredConstructors();
-		var controller = route.controllerClass.getDeclaredConstructor(route.viewClass).newInstance(view);
+		var controller = route._controllerClass.getDeclaredConstructor(view.getClass()).newInstance(view);
 
 		var scene = new Scene(resource);
 		window.setScene(scene);
