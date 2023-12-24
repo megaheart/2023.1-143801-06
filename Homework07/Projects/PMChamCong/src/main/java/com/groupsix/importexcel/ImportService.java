@@ -60,8 +60,8 @@ public class ImportService implements IImportService {
             importHistory.setCreatedBy("ADMIN");
             importHistory.setTime(Calendar.getInstance().getTime().toString());
 
-            officerAttendanceRepository.insertMany(officerAttendances);
             historyImportRepository.save(importHistory);
+            officerAttendanceRepository.insertMany(officerAttendances);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -90,12 +90,15 @@ public class ImportService implements IImportService {
             DataFormatter dataFormatter = new DataFormatter();
             List<AttendanceLogImport> attendanceLogImports = new ArrayList<>();
             // Read each row, skip first row
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
             sheet.forEach(row -> {
                 int index = row.getRowNum();
                 if (index == 0) return;
-                String time = dataFormatter.formatCellValue(row.getCell(0));
                 String code = dataFormatter.formatCellValue(row.getCell(1));
-                attendanceLogImports.add(new AttendanceLogImport(index, time, code));
+                if(code.isEmpty()) return;
+                Date time = row.getCell(0).getDateCellValue();
+                String timestamp = simpleDateFormat.format(time);
+                attendanceLogImports.add(new AttendanceLogImport(index, ExcelHelper.getFormatDate(timestamp), code));
             });
             return attendanceLogImports;
         } catch (Exception e) {
@@ -104,8 +107,7 @@ public class ImportService implements IImportService {
         return null;
     }
 
-    public List<Employee> getListEmployees(List<String> codes){
-        try {
+    public List<Employee> getListEmployees(List<String> codes) throws Exception {
             List<Employee> employees = employeeRepository.getEmployeesByListCodes(codes);
             List<String> codesFound = employees.stream().map(Employee::getEmployeeCode).toList();
             List<String> codesNotFound = new ArrayList<>();
@@ -116,11 +118,7 @@ public class ImportService implements IImportService {
                 throw new Exception("Không tìm thấy nhân viên có mã: " + String.join(", ", codesNotFound));
             }
             return employees;
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-        return null;
-    }
 
     public OfficerAttendance createOfficerAttendance(Employee employee, AttendanceLogImport attendanceLogImport){
         try {
@@ -128,29 +126,27 @@ public class ImportService implements IImportService {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
             Date date = simpleDateFormat.parse(attendanceLogImport.getTimestamp());
 
+            int hour = ExcelHelper.getHour(attendanceLogImport.getTimestamp());
+            int minute = ExcelHelper.getMinute(attendanceLogImport.getTimestamp());
+
             boolean isMorningSession = false;
             boolean isAfternoonSession = false;
-            int hoursLate = 0;
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(date);
-            int hour = calendar.get(Calendar.HOUR_OF_DAY);
+            double hoursLate = 0;
 
             if (hour < 12) {
                 isMorningSession = true;
-                int minute = calendar.get(Calendar.MINUTE);
                 if (hour >= 8){
-                    hoursLate = (hour - 8) + minute/60;
+                    hoursLate = (hour - 8) + (double) minute/60;
                 }
             } else {
                 isAfternoonSession = true;
-                int minute = calendar.get(Calendar.MINUTE);
                 if (hour >= 14){
-                    hoursLate = (hour - 8) + minute/60;
+                    hoursLate = (hour - 8) + (double) minute/60;
                 }
             }
             officerAttendance.setHoursLate(hoursLate);
             officerAttendance.setEmployeeCode(employee.getEmployeeCode());
-            officerAttendance.setDate(date);
+//            officerAttendance.setDate(date);
 
             officerAttendance.setMorningSession(isMorningSession);
             officerAttendance.setAfternoonSession(isAfternoonSession);
