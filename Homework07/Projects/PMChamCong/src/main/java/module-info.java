@@ -21,7 +21,14 @@ module com.groupsix.pmchamcong {
     opens com.groupsix.user to ormlite.jdbc;
 
     opens com.groupsix.pages to javafx.fxml;
-
+    opens com.groupsix.pages.layouts to javafx.fxml;
+    opens com.groupsix.pages.layouts.login to javafx.fxml;
+    opens com.groupsix.pages.layouts.departmentleader to javafx.fxml;
+    opens com.groupsix.pages.layouts.employee to javafx.fxml;
+    opens com.groupsix.pages.layouts.hr to javafx.fxml;
+    opens com.groupsix.pages.employeehome to javafx.fxml;
+    opens com.groupsix.pages.departmentleaderhome to javafx.fxml;
+    opens com.groupsix.pages.hrhome to javafx.fxml;
     opens com.groupsix.pmchamcong to javafx.fxml;
     exports com.groupsix.pmchamcong;
 

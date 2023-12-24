@@ -1,18 +1,25 @@
-.button
-{
--fx-background-color : #fff;
--fx-text-fill : #000;
+.nav-button {
+    -fx-background-color: #fff;
+    -fx-text-fill: #333333;
+    -fx-cursor: hand;
 }
-.button:hover{
--fx-background-color : #10165F;
+
+.nav-button:hover {
+    -fx-background-color: #d1ecff;
 }
-.button:pressed
-{
--fx-background-color : #1620A1;
+
+.nav-button:pressed {
+    -fx-background-color: #9bc5ee;
+}
+
+.nav-panel {
+    -fx-background-color: #fff;
+    -fx-border-color: #9a9a9a;
+    -fx-border-width: 0 1px 0 0;
 }
 
 .background-login {
-   -fx-background-image: url('../layouts/images/desktop-wallpaper-login-background-outlook-login.jpg');
-   -fx-background-repeat: no-repeat;
+    -fx-background-image: url('../layouts/images/desktop-wallpaper-login-background-outlook-login.jpg');
+    -fx-background-repeat: no-repeat;
     -fx-background-size: cover;
 }
