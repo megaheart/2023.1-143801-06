@@ -19,7 +19,8 @@ public class SqliteHistoryImportRepository implements IHistoryImportRepository {
     @Override
     public void save(ImportHistory history) {
         try {
-            dao.createOrUpdate(history);
+            dao.executeRaw("INSERT INTO HistoryImport (time, createdBy) VALUES (?, ?)",
+                    history.getTime(), history.getCreatedBy());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

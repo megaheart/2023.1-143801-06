@@ -1,7 +1,6 @@
 package com.groupsix.pages.importexcel;
 
 import com.groupsix.importexcel.ImportHistory;
-import com.groupsix.importexcel.AttendanceLogImport;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -11,7 +10,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -21,12 +19,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ImportView implements Initializable {
-    @FXML
-    private TableView<ImportHistory> importLogTable;
+public class ImportAttendanceController implements Initializable {
+    public ImportAttendancePanel importAttendancePanel;
 
-    @FXML
-    private Button importButton;
+    public ImportAttendanceController(ImportAttendancePanel importAttendancePanel){
+        this.importAttendancePanel = importAttendancePanel;
+        initialize(null, null);
+    }
 
     @FXML
     public void initialize(URL location, ResourceBundle resources) {
@@ -36,7 +35,7 @@ public class ImportView implements Initializable {
 
     // Khởi tạo nút import
     private void initImportButton()  {
-        importButton.setOnAction(event -> {
+        importAttendancePanel.importButton.setOnAction(event -> {
             // Open import stage
             FXMLLoader fxmlLoader = new FXMLLoader(ChooseFileImportView.class.getResource("choose-file-import.fxml"));
             try {
@@ -54,6 +53,7 @@ public class ImportView implements Initializable {
 
     // Khởi tạo bảng
     private void initTable(){
+        var importLogTable = this.importAttendancePanel.importLogTable;
         // Lấy dữ liệu từ database
         ObservableList<ImportHistory> importLogHistories = FXCollections.observableArrayList();
         for(int i = 1; i< 100; i++) {
@@ -118,4 +118,5 @@ public class ImportView implements Initializable {
         // Đổ dữ liệu vào bảng
         importLogTable.getItems().addAll(importLogHistories);
     }
+
 }
