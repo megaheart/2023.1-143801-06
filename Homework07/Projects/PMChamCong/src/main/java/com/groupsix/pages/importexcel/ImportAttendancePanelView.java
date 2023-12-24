@@ -1,7 +1,6 @@
 package com.groupsix.pages.importexcel;
 
 import com.groupsix.importexcel.ImportHistory;
-import com.groupsix.importexcel.AttendanceLogImport;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -21,7 +20,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ImportView implements Initializable {
+public class ImportAttendancePanelView implements Initializable {
     @FXML
     private TableView<ImportHistory> importLogTable;
 
