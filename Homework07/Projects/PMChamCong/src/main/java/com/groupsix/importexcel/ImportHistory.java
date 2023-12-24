@@ -7,12 +7,12 @@ import com.j256.ormlite.table.DatabaseTable;
 public class ImportHistory {
 
     @DatabaseField(generatedId = true)
-    private int id;
+    private Integer id = -1;
 
-    @DatabaseField()
+    @DatabaseField
     private String time;
 
-    @DatabaseField()
+    @DatabaseField
     private String createdBy;
 
     public ImportHistory() {
@@ -36,7 +36,7 @@ public class ImportHistory {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
