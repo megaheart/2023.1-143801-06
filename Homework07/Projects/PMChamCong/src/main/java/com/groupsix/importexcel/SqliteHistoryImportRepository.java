@@ -9,7 +9,7 @@ import java.util.List;
 
 public class SqliteHistoryImportRepository implements IHistoryImportRepository {
 
-    private final Dao<ImportHistory, String> dao;
+    private final Dao<ImportHistory, Integer> dao;
 
     public SqliteHistoryImportRepository() {
         dao = DatabaseHelper.createDAO(ImportHistory.class);
@@ -26,7 +26,7 @@ public class SqliteHistoryImportRepository implements IHistoryImportRepository {
     }
 
     @Override
-    public ImportHistory getById(String id) {
+    public ImportHistory getById(int id) {
        try {
            return dao.queryForId(id);
        } catch (Exception e) {
@@ -44,7 +44,7 @@ public class SqliteHistoryImportRepository implements IHistoryImportRepository {
     }
 
     @Override
-    public void deleteById(String id) {
+    public void deleteById(int id) {
         try {
             dao.deleteById(id);
         } catch (Exception e) {

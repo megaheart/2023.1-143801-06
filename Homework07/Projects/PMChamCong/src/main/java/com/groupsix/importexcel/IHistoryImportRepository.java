@@ -5,10 +5,10 @@ import java.util.List;
 public interface IHistoryImportRepository {
     void save(ImportHistory history);
 
-    ImportHistory getById(String id);
+    ImportHistory getById(int id);
 
     List<ImportHistory> getAll();
 
-    void deleteById(String id);
+    void deleteById(int id);
 
 }
