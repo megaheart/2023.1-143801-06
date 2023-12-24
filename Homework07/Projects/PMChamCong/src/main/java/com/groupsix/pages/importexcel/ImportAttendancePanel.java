@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ImportAttendancePanelView implements Initializable {
+public class ImportAttendancePanel implements Initializable {
     @FXML
     private TableView<ImportHistory> importLogTable;
 
