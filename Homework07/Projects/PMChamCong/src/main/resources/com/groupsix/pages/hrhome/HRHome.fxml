@@ -37,7 +37,7 @@
                   </ImageView>
                   <Label layoutX="83.0" layoutY="24.0" text="Nhân viên">
                      <font>
-                        <Font name="System Bold" size="19.0" />
+                        <Font name="System Bold" size="17.0" />
                      </font>
                   </Label>
                   <Label layoutX="82.0" layoutY="48.0" prefHeight="55.0" prefWidth="77.0" text="100">
@@ -56,7 +56,7 @@
                   </ImageView>
                   <Label layoutX="76.0" layoutY="24.0" text="Trưởng phòng">
                      <font>
-                        <Font name="System Bold" size="19.0" />
+                        <Font name="System Bold" size="17.0" />
                      </font>
                   </Label>
                   <Label layoutX="78.0" layoutY="46.0" prefHeight="55.0" prefWidth="77.0" text="100">
@@ -75,7 +75,7 @@
                   </ImageView>
                   <Label layoutX="76.0" layoutY="23.0" text="Phòng ban">
                      <font>
-                        <Font name="System Bold" size="19.0" />
+                        <Font name="System Bold" size="17.0" />
                      </font>
                   </Label>
                   <Label layoutX="68.0" layoutY="46.0" prefHeight="55.0" prefWidth="68.0" text="100">
@@ -94,7 +94,7 @@
                   </ImageView>
                   <Label layoutX="78.0" layoutY="23.0" text="Ca làm việc">
                      <font>
-                        <Font name="System Bold" size="19.0" />
+                        <Font name="System Bold" size="17.0" />
                      </font>
                   </Label>
                   <Label layoutX="81.0" layoutY="47.0" prefHeight="55.0" prefWidth="77.0" text="2">
