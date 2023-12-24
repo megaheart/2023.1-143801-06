@@ -276,15 +276,19 @@ public class OfficerHomeController implements Initializable {
 
     private OfficerAttendance getAttendanceDateRow(Date date){
         var repo = AttendanceFactory.getInstance().createRepository();
-        UserService.getInstance().authenticate("officer","1234");
         var user = UserService.getInstance().getCurrentUser();
+        System.out.println(user.getEmployeeCode());
         var employee = HRSubsystemFactory.getInstance().createEmployeeRepository().getEmployeeByCode(user.getEmployeeCode());
 
         int month = date.getMonth();
         int year = date.getYear();
-        var attendances = repo.getAttendancesOfEmployee(user, employee, month, year, 1 );
-
+        System.out.println(month);
+        System.out.println(year);
+        var attendances = repo.getAttendancesOfEmployee(user, employee, 1, 2022, 12);
+        System.out.println("so luong");
+        System.out.println(attendances.size());
         for (OfficerAttendance attendance : attendances) {
+            System.out.println(attendance.getDate());
             if (attendance.getDate().equals(date)) {
                 return attendance;
             }
