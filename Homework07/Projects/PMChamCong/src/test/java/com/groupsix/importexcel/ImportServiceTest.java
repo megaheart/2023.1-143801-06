@@ -14,13 +14,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.doAnswer;
@@ -152,7 +156,6 @@ class ImportServiceTest {
     void getHistoryImport_Success(int id) {
         // Given
         // When
-
         // Then
         assertDoesNotThrow(() -> {
             ImportHistory history = historyImportRepository.getById(id);
@@ -165,7 +168,6 @@ class ImportServiceTest {
     @ValueSource(ints = {11})
     void deleteHistoryImport_Fail(int id) {
         // Given
-
         // When
         // Then
         assertThrows(NullPointerException.class, () -> {
@@ -177,12 +179,51 @@ class ImportServiceTest {
     void getAttendanceLogImportFromFile() {
     }
 
-    @Test
-    void getListEmployees() {
+    static public Stream<Arguments> getListEmployees_Success(){
+        return Stream.of(
+                Arguments.of(Arrays.asList("EMP001", "EMP002", "EMP003")),
+                Arguments.of(Arrays.asList("EMP004", "EMP005")),
+                Arguments.of(Arrays.asList("EMP008", "EMP009"))
+        );
     }
 
-    @Test
-    void checkDuplicateCodes() {
+    @DisplayName("Get list employees - success")
+    @ParameterizedTest
+    @MethodSource
+    void getListEmployees_Success(List<String> codes) throws Exception {
+        // Given
+        List<Employee> actual = employees.stream()
+                .filter(employee -> codes.contains(employee.getEmployeeCode()))
+                .toList();
+        when(employeeRepository.getEmployeesByListCodes(codes)).thenReturn(actual);
+        // When
+        List<Employee> listGet = importService.getListEmployees(codes);
+        // Then
+        assertEquals(listGet, actual);
+    }
+
+    static public Stream<Arguments> getListEmployees_Fail(){
+        return Stream.of(
+                Arguments.of(Arrays.asList("EMP001", "EMP002", "EMP0010")),
+                Arguments.of(Arrays.asList("EMP0011", "EMP005")),
+                Arguments.of(Arrays.asList("EMP0077", "EMP009"))
+        );
+    }
+
+    @DisplayName("Get list employees - fail")
+    @ParameterizedTest
+    @MethodSource
+    void getListEmployees_Fail(List<String> codes) {
+        // Given
+        List<Employee> actual = employees.stream()
+                .filter(employee -> codes.contains(employee.getEmployeeCode()))
+                .toList();
+        when(employeeRepository.getEmployeesByListCodes(codes)).thenReturn(actual);
+        // When
+        // Then
+        assertThrows(Exception.class, () -> {
+            importService.getListEmployees(codes);
+        });
     }
 
     @Test
