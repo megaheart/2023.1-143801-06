@@ -4,9 +4,11 @@ import com.groupsix.base.DatabaseHelper;
 import com.groupsix.user.User;
 import com.groupsix.hrsubsystem.Employee;
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.SelectArg;
 import org.apache.poi.ss.usermodel.DateUtil;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,13 +24,24 @@ public class SqliteOfficerAttendanceRepository implements IOfficerAttendanceRepo
 	public ArrayList<OfficerAttendance> getAttendancesOfEmployee(User user, Employee employee, int month, int year, int monthCount) {
 		LocalDate fromDate = LocalDate.of(year, month, 1);
 		LocalDate toDate = fromDate.plusMonths(monthCount).minusDays(1);
+
+		Date _fromDate = Date.from(fromDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+		Date _toDate = Date.from(toDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
 		var queryBuilder = dao.queryBuilder();
 		try {
+			SelectArg fromDateArg = new SelectArg(_fromDate);
+			SelectArg toDateArg = new SelectArg(_toDate);
 			queryBuilder.where()
 					.eq("employeeCode", employee.getEmployeeCode())
 					.and()
-					.between("date", fromDate, toDate);
-			return (ArrayList<OfficerAttendance>) dao.query(queryBuilder.prepare());
+					.between("date", fromDateArg, toDateArg);
+
+			var statement = queryBuilder.prepare();
+
+			System.out.println(statement.getStatement());
+
+			return (ArrayList<OfficerAttendance>) dao.query(statement);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}

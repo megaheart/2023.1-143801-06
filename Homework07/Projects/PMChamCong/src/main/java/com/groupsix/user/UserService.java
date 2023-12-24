@@ -19,6 +19,7 @@ public class UserService {
 	}
 
 	public boolean authenticate(String username, String password) {
+		username = username.toLowerCase();
 		var user = UserFactory.getInstance().createRepository().getUserByUsername(username);
 		if(user != null && user.getPassword().equals(password)) {
 			currentUser = user;
