@@ -1,6 +1,8 @@
 package com.groupsix.pages;
 
 import com.groupsix.pages.layouts.INavBar;
+import com.groupsix.user.User;
+import com.groupsix.user.UserService;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -29,6 +31,7 @@ public class FXRouter {
 
 	private static HashMap<String, Routerinfo> navRoutes = new HashMap<String, Routerinfo>();
 	private static Routerinfo loginRoute;
+	private static INavBar currentNav;
 
 	public static void bind(Application ref, Stage win, String winTitle, double winWidth, double winHeight) {
 		window = win;
@@ -39,13 +42,13 @@ public class FXRouter {
 		window.resizableProperty().setValue(Boolean.FALSE);
 	}
 
-	public static void when(String routeLabel, URL scenePath, Class controllerClass, String navName) {
+	public static void when(String routeLabel, URL scenePath, Class controllerClass, String role) {
 		routes.put(routeLabel, new Routerinfo() {{
 			this._routeLabel = routeLabel;
 			this._scenePath = scenePath;
 //			this._viewClass = viewClass;
 			this._controllerClass = controllerClass;
-			this._navName = navName;
+			this._navName = role;
 		}});
 	}
 
@@ -58,9 +61,9 @@ public class FXRouter {
 		}};
 	}
 
-	public static void addNav(String navName, URL scenePath) {
-		navRoutes.put(navName, new Routerinfo() {{
-			this._routeLabel = navName;
+	public static void addNav(String role, URL scenePath) {
+		navRoutes.put(role, new Routerinfo() {{
+			this._routeLabel = role;
 			this._scenePath = scenePath;
 		}});
 	}
@@ -80,11 +83,23 @@ public class FXRouter {
 
 	}
 
+	public static void showWindow() {
+		var userServ = UserService.getInstance();
+		var user = userServ.getCurrentUser();
+		onUserChanged(userServ, user);
+		UserService.getInstance().onUserChanged(FXRouter::onUserChanged);
+		window.show();
+	}
+
 	private static INavBar loadNewScene(Routerinfo route) throws Exception{
 		var loader = new FXMLLoader(route._scenePath);
 
 		Parent resource = loader.load();
 		var view = loader.getController();
+
+		if(route._controllerClass != null) {
+			route._controllerClass.getDeclaredConstructor(view.getClass()).newInstance(view);
+		}
 
 		var scene = new Scene(resource);
 		window.setScene(scene);
@@ -96,6 +111,7 @@ public class FXRouter {
 
 		return null;
 	}
+
 	private static Object loadNewSubScene(Routerinfo route) throws Exception{
 		var loader = new FXMLLoader(route._scenePath);
 
@@ -108,11 +124,38 @@ public class FXRouter {
 //		var controllerContructors = route.controllerClass.getDeclaredConstructors();
 		var controller = route._controllerClass.getDeclaredConstructor(view.getClass()).newInstance(view);
 
-		var scene = new Scene(resource);
-		window.setScene(scene);
-		window.show();
+//		var scene = new Scene(resource);
+//		window.setScene(scene);
+//		window.show();
+
+		currentNav.loadPage(route._routeLabel, resource);
 
 		return controller;
+	}
+
+	private static void onUserChanged(UserService service, User user) {
+		if(user == null) {
+			try {
+				loadNewScene(loginRoute);
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+			return;
+		}
+
+		var navRoute = navRoutes.get(user.getRole());
+		if(navRoute != null) {
+			try {
+                currentNav = loadNewScene(navRoute);
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		}
+		else {
+			throw new RuntimeException("Role " + user.getRole() + " not have nav route");
+		}
+
+        currentNav.navigateToHome();
 	}
 
 }
