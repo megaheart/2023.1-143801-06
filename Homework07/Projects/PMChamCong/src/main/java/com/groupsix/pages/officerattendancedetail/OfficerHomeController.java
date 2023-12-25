@@ -18,6 +18,7 @@ import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -32,6 +33,13 @@ public class OfficerHomeController implements Initializable {
 
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle){
+      initThongKeFunction();
+      initButtonThongKe();
+  }
+
+
+
+  private void initThongKeFunction(){
       this.officerHomeView.loaiComboBox.setValue("Tháng");
 
       //Lấy tháng và năm của hệ thống
@@ -58,44 +66,59 @@ public class OfficerHomeController implements Initializable {
       ObservableList<String> yearOptions =
               FXCollections.observableArrayList();
       for(int i=startYear;i<=endYear;i++){
-        yearOptions.add(String.valueOf(i));
+          yearOptions.add(String.valueOf(i));
       }
       this.officerHomeView.yearComboBox.setItems(yearOptions);
 
       this.officerHomeView.loaiComboBox.setOnAction(event -> {
-        String selected = this.officerHomeView.loaiComboBox.getSelectionModel().getSelectedItem();
-        if ("Tháng".equals(selected)) {
-            this.officerHomeView.listComboBox.setItems(FXCollections.observableArrayList(
-                    "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"
-            ));
-            this.officerHomeView.listComboBox.setValue(String.valueOf(month));
-            this.officerHomeView.yearComboBox.setValue(String.valueOf(year));
+          String selected = this.officerHomeView.loaiComboBox.getSelectionModel().getSelectedItem();
+          if ("Tháng".equals(selected)) {
+              this.officerHomeView.listComboBox.setItems(FXCollections.observableArrayList(
+                      "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"
+              ));
+              this.officerHomeView.listComboBox.setValue(String.valueOf(month));
+              this.officerHomeView.yearComboBox.setValue(String.valueOf(year));
 
-        } else if ("Quý".equals(selected)) {
-          this.officerHomeView.listComboBox.setItems(FXCollections.observableArrayList(
-                  "I", "II", "III", "IV"
-          ));
-            int monthCheck = java.time.LocalDate.now().getMonthValue();
-            this.officerHomeView.yearComboBox.setValue(String.valueOf(year));
-            if(monthCheck <=3) {
-                this.officerHomeView.listComboBox.setValue("I");
-            }else if(monthCheck <=6){
-                this.officerHomeView.listComboBox.setValue("II");
-            }else if(monthCheck <=9){
-                this.officerHomeView.listComboBox.setValue("III");
-            }else{
-                this.officerHomeView.listComboBox.setValue(String.valueOf("IV"));
-            }
-        }else {
-            this.officerHomeView.listComboBox.setValue("");
-            this.officerHomeView.yearComboBox.setValue(String.valueOf(year));
-          this.officerHomeView.listComboBox.setItems(FXCollections.observableArrayList());
-        }
+          } else if ("Quý".equals(selected)) {
+              this.officerHomeView.listComboBox.setItems(FXCollections.observableArrayList(
+                      "I", "II", "III", "IV"
+              ));
+              int monthCheck = java.time.LocalDate.now().getMonthValue();
+              this.officerHomeView.yearComboBox.setValue(String.valueOf(year));
+              if(monthCheck <=3) {
+                  this.officerHomeView.listComboBox.setValue("I");
+              }else if(monthCheck <=6){
+                  this.officerHomeView.listComboBox.setValue("II");
+              }else if(monthCheck <=9){
+                  this.officerHomeView.listComboBox.setValue("III");
+              }else{
+                  this.officerHomeView.listComboBox.setValue(String.valueOf("IV"));
+              }
+          }else {
+              this.officerHomeView.listComboBox.setValue("");
+              this.officerHomeView.yearComboBox.setValue(String.valueOf(year));
+              this.officerHomeView.listComboBox.setItems(FXCollections.observableArrayList());
+          }
       });
-      initButtonThongKe();
+      ArrayList<OfficerAttendance> attendances = getAttendanceDateRow(month, year, 1);
+      ArrayList<Double> result = labelThongKet(attendances);
+      double hoursLate = result.get(0);
+      double hoursEarlyLeave = result.get(1);
+      double doubleCountWork = result.get(2);
+      int countWork = (int) doubleCountWork;
+      initLabelThongKe(countWork, hoursLate, hoursEarlyLeave);
+      ArrayList<AttendanceLogRow> rows = new ArrayList<>();
+      for (OfficerAttendance attendance : attendances) {
+          String dateRow = attendance.getDate().getDate() + " - " + (attendance.getDate().getMonth() + 1) + " - " + (attendance.getDate().getYear() + 1900);
+          String morningSession = attendance.isMorningSession() ? "Có" : "Không";
+          String afternoonSession = attendance.isAfternoonSession() ? "Có" : "Không";
+          AttendanceLogRow row = new AttendanceLogRow(dateRow, morningSession, afternoonSession);
+          rows.add(row);
+      }
+      clearTable();
+      addRowTable(rows);
+      this.officerHomeView.datePicker.setValue(null);
   }
-
-
   private void initButtonThongKe() {
     this.officerHomeView.btnThongKe.setOnAction(event -> {
       String selected = this.officerHomeView.loaiComboBox.getSelectionModel().getSelectedItem();
@@ -242,6 +265,7 @@ public class OfficerHomeController implements Initializable {
         }
     });
 
+
   }
 
   //Xử lý label thống kê
@@ -286,6 +310,16 @@ public class OfficerHomeController implements Initializable {
                                         System.out.println(row.getDate());
                                         var ctrl = (OfficerDetailController) FXRouter.goTo("officerdetailview");
                                         ctrl.setDateLabel(row.getDate());
+
+                                        String[] dateInfo = row.getDate().split(" - ");
+                                        int day = Integer.parseInt(dateInfo[0]);
+                                        int month = Integer.parseInt(dateInfo[1]);
+                                        int year = Integer.parseInt(dateInfo[2]);
+                                        Date dateSearch = new Date(year, month - 1, day);
+                                        OfficerAttendance attendance = getAttendanceDateRow(dateSearch);
+                                        ctrl.settup(attendance);
+
+
 
                                     });
                                     detailBtn.setStyle("-fx-background-color: #00ff00; -fx-text-fill: #000;-fx-cursor: hand;");
@@ -360,6 +394,33 @@ public class OfficerHomeController implements Initializable {
         result.add(hoursEarlyLeave);
         result.add(countWork);
         return result;
+    }
+
+    public void handleDetailBack(int day, int month, int year){
+      Date date = new Date(year, month - 1, day);
+        OfficerAttendance attendance = getAttendanceDateRow(date);
+        initThongKeFunction();
+        if(attendance != null){
+            String dateRow = day + " - " + month + " - " + year;
+            String morningSession = attendance.isMorningSession() ? "Có" : "Không";
+            String afternoonSession = attendance.isAfternoonSession() ? "Có" : "Không";
+            AttendanceLogRow row = new AttendanceLogRow(dateRow, morningSession, afternoonSession);
+            clearTable();
+            ArrayList<AttendanceLogRow> rows = new ArrayList<>();
+            rows.add(row);
+            addRowTable(rows);
+        }else{
+            String dateRow = day + " - " + month + " - " + year;
+            AttendanceLogRow row = new AttendanceLogRow(dateRow, "Không", "Không");
+            clearTable();
+            ArrayList<AttendanceLogRow> rows = new ArrayList<>();
+            rows.add(row);
+            addRowTable(rows);
+        }
+        LocalDate datePicker = LocalDate.of(year, month, day);
+        this.officerHomeView.datePicker.setValue(datePicker);
+
+
     }
 
 

@@ -69,22 +69,22 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="morningSession" layoutX="215.0" layoutY="199.0" style="-fx-font-weight: bold;" text="Label">
+      <Label fx:id="morningSession" layoutX="215.0" layoutY="199.0" style="-fx-font-weight: bold;" text="Không">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="affternoonSession" layoutX="215.0" layoutY="231.0" style="-fx-font-weight: bold;" text="Label">
+      <Label fx:id="afternoonSession" layoutX="215.0" layoutY="231.0" style="-fx-font-weight: bold;" text="Không">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="lateView" layoutX="215.0" layoutY="292.0" text="Label">
+      <Label fx:id="lateView" layoutX="215.0" layoutY="292.0" text="0">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="earlyLeaveView" layoutX="215.0" layoutY="325.0" text="Label">
+      <Label fx:id="earlyLeaveView" layoutX="215.0" layoutY="325.0" text="0">
          <font>
             <Font size="14.0" />
          </font>
@@ -100,7 +100,7 @@
          </font>
       </Label>
       <ComboBox fx:id="morningRequest" layoutX="579.0" layoutY="195.0" prefWidth="150.0" />
-      <ComboBox fx:id="affternoonRequest" layoutX="579.0" layoutY="230.0" prefWidth="150.0" />
+      <ComboBox fx:id="afternoonRequest" layoutX="579.0" layoutY="230.0" prefWidth="150.0" />
       <TextField fx:id="reasonRequest" alignment="TOP_LEFT" layoutX="584.0" layoutY="374.0" prefHeight="132.0" prefWidth="275.0" />
       <Button fx:id="closeBtn" layoutX="354.0" layoutY="547.0" mnemonicParsing="false" text="Quay lại">
          <font>
@@ -112,22 +112,22 @@
          </font></Button>
       <TextField fx:id="lateRequest" layoutX="580.0" layoutY="290.0" prefHeight="25.0" prefWidth="86.0" />
       <TextField fx:id="earlyLeaveRequest" layoutX="580.0" layoutY="322.0" prefHeight="25.0" prefWidth="86.0" />
-      <Label layoutX="364.0" layoutY="106.0" text="*" textFill="#e90606">
+      <Label layoutX="549.0" layoutY="194.0" text="*" textFill="#e90606">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label layoutX="344.0" layoutY="331.0" text="*" textFill="#e90606">
+      <Label layoutX="553.0" layoutY="287.0" text="*" textFill="#e90606">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label layoutX="347.0" layoutY="293.0" text="*" textFill="#e90606">
+      <Label layoutX="552.0" layoutY="229.0" text="*" textFill="#e90606">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label layoutX="329.0" layoutY="360.0" text="*" textFill="#e90606">
+      <Label layoutX="548.0" layoutY="322.0" text="*" textFill="#e90606">
          <font>
             <Font size="16.0" />
          </font>
@@ -171,5 +171,10 @@
          </children>
       </AnchorPane>
       <AnchorPane layoutX="5.0" layoutY="178.0" prefHeight="26.0" prefWidth="886.0" />
+      <Label layoutX="538.0" layoutY="368.0" text="*" textFill="#e90606">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
