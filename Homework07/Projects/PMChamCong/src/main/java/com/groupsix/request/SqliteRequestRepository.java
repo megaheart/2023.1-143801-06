@@ -47,6 +47,43 @@ public class SqliteRequestRepository implements IRequestRepository {
         }
     }
 
+    public ArrayList<Request> getRequestOfEmployee(User user, int date, int month, int year, String employee_code){
+        var queryBuilder = dao.queryBuilder();
+        try{
+            if (date == 0){
+                LocalDate start_date = LocalDate.of(year, month, 1);
+                LocalDate end_date = start_date.plusMonths(1).minusDays(1);
+                Date _start_date = Date.from(start_date.atStartOfDay(ZoneId.systemDefault()).toInstant());
+                Date _end_date = Date.from(end_date.atStartOfDay(ZoneId.systemDefault()).toInstant());
+                SelectArg start_dateArg = new SelectArg(_start_date);
+                SelectArg end_dateArg = new SelectArg(_end_date);
+                if ((employee_code == null) || (employee_code.equals(""))){
+                    queryBuilder.where().between("date", start_dateArg, end_dateArg);
+                }
+                else {
+                    queryBuilder.where().eq("employeeCode", employee_code).and().between("date", start_dateArg, end_dateArg);
+                }
+            }
+            else {
+                LocalDate current_date = LocalDate.of(year, month, date);
+                Date _current_date = Date.from(current_date.atStartOfDay(ZoneId.systemDefault()).toInstant());
+                SelectArg current_dateArg = new SelectArg(_current_date);
+                if ((employee_code == null) || (employee_code.equals(""))){
+                    queryBuilder.where().eq("date", current_dateArg);
+                }
+                else {
+                    queryBuilder.where().eq("employeeCode", employee_code).and().eq("date", current_dateArg);
+                }
+            }
+            var statement = queryBuilder.prepare();
+            System.out.println(statement.getStatement());
+            return (ArrayList<Request>) dao.query(statement);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     @Override
     public void insertMany(List<Request> requests) {
