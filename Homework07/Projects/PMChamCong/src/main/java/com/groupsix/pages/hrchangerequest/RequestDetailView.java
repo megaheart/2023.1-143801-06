@@ -11,6 +11,10 @@ public class RequestDetailView {
     @FXML
     public Label employeeCodeLabel = new Label();
     @FXML
+    public Label requestIDLabel = new Label();
+    @FXML
+    public Label logAttendanceLabel = new Label();
+    @FXML
     public Label oldMorningSessionLabel = new Label();
     @FXML
     public Label oldAfternoonSessionLabel = new Label();
