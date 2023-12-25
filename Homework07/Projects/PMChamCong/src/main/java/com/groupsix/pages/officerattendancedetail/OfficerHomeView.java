@@ -34,4 +34,7 @@ public class OfficerHomeView {
     @FXML
     public TableColumn<AttendanceLogRow, String> optionalCol = new TableColumn<>();
 
+    @FXML
+    public Label banGhi = new Label();
+
 }
