@@ -39,7 +39,7 @@ public class SqliteOfficerAttendanceRepository implements IOfficerAttendanceRepo
 
 			var statement = queryBuilder.prepare();
 
-			System.out.println(statement.getStatement());
+//			System.out.println(statement.getStatement());
 
 			return (ArrayList<OfficerAttendance>) dao.query(statement);
 		} catch (Exception e) {

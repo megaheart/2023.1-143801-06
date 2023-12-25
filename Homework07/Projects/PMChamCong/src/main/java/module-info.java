@@ -17,7 +17,7 @@ module com.groupsix.pmchamcong {
     requires org.apache.poi.poi;
 
     opens com.groupsix.hrsubsystem to ormlite.jdbc;
-    opens com.groupsix.attendance to ormlite.jdbc;
+    opens com.groupsix.attendance to ormlite.jdbc, javafx.base;
     opens com.groupsix.user to ormlite.jdbc;
     opens com.groupsix.request to ormlite.jdbc;
 
@@ -30,7 +30,10 @@ module com.groupsix.pmchamcong {
     opens com.groupsix.pages.employeehome to javafx.fxml;
     opens com.groupsix.pages.departmentleaderhome to javafx.fxml;
     opens com.groupsix.pages.hrhome to javafx.fxml;
+    opens com.groupsix.pages.employeeattendance to javafx.fxml, javafx.base;
+    opens com.groupsix.pages.officerdepartmentattendancereport to javafx.fxml, javafx.base;
     opens com.groupsix.pmchamcong to javafx.fxml;
+    opens com.groupsix.report to javafx.fxml;
     exports com.groupsix.pmchamcong;
 
     opens com.groupsix.pages.officerattendancedetail to javafx.fxml;
