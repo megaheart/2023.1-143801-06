@@ -1,5 +1,10 @@
 package com.groupsix.pages.officerattendancedetail;
 
+import com.groupsix.attendance.AttendanceFactory;
+import com.groupsix.attendance.OfficerAttendance;
+import com.groupsix.hrsubsystem.HRSubsystemFactory;
+import com.groupsix.pages.FXRouter;
+import com.groupsix.user.UserService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +18,10 @@ import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class OfficerHomeController implements Initializable {
@@ -24,6 +33,13 @@ public class OfficerHomeController implements Initializable {
 
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle){
+      initThongKeFunction();
+      initButtonThongKe();
+  }
+
+
+
+  private void initThongKeFunction(){
       this.officerHomeView.loaiComboBox.setValue("Tháng");
 
       //Lấy tháng và năm của hệ thống
@@ -50,44 +66,59 @@ public class OfficerHomeController implements Initializable {
       ObservableList<String> yearOptions =
               FXCollections.observableArrayList();
       for(int i=startYear;i<=endYear;i++){
-        yearOptions.add(String.valueOf(i));
+          yearOptions.add(String.valueOf(i));
       }
       this.officerHomeView.yearComboBox.setItems(yearOptions);
 
       this.officerHomeView.loaiComboBox.setOnAction(event -> {
-        String selected = this.officerHomeView.loaiComboBox.getSelectionModel().getSelectedItem();
-        if ("Tháng".equals(selected)) {
-            this.officerHomeView.listComboBox.setItems(FXCollections.observableArrayList(
-                    "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"
-            ));
-            this.officerHomeView.listComboBox.setValue(String.valueOf(month));
-            this.officerHomeView.yearComboBox.setValue(String.valueOf(year));
+          String selected = this.officerHomeView.loaiComboBox.getSelectionModel().getSelectedItem();
+          if ("Tháng".equals(selected)) {
+              this.officerHomeView.listComboBox.setItems(FXCollections.observableArrayList(
+                      "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"
+              ));
+              this.officerHomeView.listComboBox.setValue(String.valueOf(month));
+              this.officerHomeView.yearComboBox.setValue(String.valueOf(year));
 
-        } else if ("Quý".equals(selected)) {
-          this.officerHomeView.listComboBox.setItems(FXCollections.observableArrayList(
-                  "I", "II", "III", "IV"
-          ));
-            int monthCheck = java.time.LocalDate.now().getMonthValue();
-            this.officerHomeView.yearComboBox.setValue(String.valueOf(year));
-            if(monthCheck <=3) {
-                this.officerHomeView.listComboBox.setValue("I");
-            }else if(monthCheck <=6){
-                this.officerHomeView.listComboBox.setValue("II");
-            }else if(monthCheck <=9){
-                this.officerHomeView.listComboBox.setValue("III");
-            }else{
-                this.officerHomeView.listComboBox.setValue(String.valueOf("IV"));
-            }
-        }else {
-            this.officerHomeView.listComboBox.setValue("");
-            this.officerHomeView.yearComboBox.setValue(String.valueOf(year));
-          this.officerHomeView.listComboBox.setItems(FXCollections.observableArrayList());
-        }
+          } else if ("Quý".equals(selected)) {
+              this.officerHomeView.listComboBox.setItems(FXCollections.observableArrayList(
+                      "I", "II", "III", "IV"
+              ));
+              int monthCheck = java.time.LocalDate.now().getMonthValue();
+              this.officerHomeView.yearComboBox.setValue(String.valueOf(year));
+              if(monthCheck <=3) {
+                  this.officerHomeView.listComboBox.setValue("I");
+              }else if(monthCheck <=6){
+                  this.officerHomeView.listComboBox.setValue("II");
+              }else if(monthCheck <=9){
+                  this.officerHomeView.listComboBox.setValue("III");
+              }else{
+                  this.officerHomeView.listComboBox.setValue(String.valueOf("IV"));
+              }
+          }else {
+              this.officerHomeView.listComboBox.setValue("");
+              this.officerHomeView.yearComboBox.setValue(String.valueOf(year));
+              this.officerHomeView.listComboBox.setItems(FXCollections.observableArrayList());
+          }
       });
-      initButtonThongKe();
+      ArrayList<OfficerAttendance> attendances = getAttendanceDateRow(month, year, 1);
+      ArrayList<Double> result = labelThongKet(attendances);
+      double hoursLate = result.get(0);
+      double hoursEarlyLeave = result.get(1);
+      double doubleCountWork = result.get(2);
+      int countWork = (int) doubleCountWork;
+      initLabelThongKe(countWork, hoursLate, hoursEarlyLeave);
+      ArrayList<AttendanceLogRow> rows = new ArrayList<>();
+      for (OfficerAttendance attendance : attendances) {
+          String dateRow = attendance.getDate().getDate() + " - " + (attendance.getDate().getMonth() + 1) + " - " + (attendance.getDate().getYear() + 1900);
+          String morningSession = attendance.isMorningSession() ? "Có" : "Không";
+          String afternoonSession = attendance.isAfternoonSession() ? "Có" : "Không";
+          AttendanceLogRow row = new AttendanceLogRow(dateRow, morningSession, afternoonSession);
+          rows.add(row);
+      }
+      clearTable();
+      addRowTable(rows);
+      this.officerHomeView.datePicker.setValue(null);
   }
-
-
   private void initButtonThongKe() {
     this.officerHomeView.btnThongKe.setOnAction(event -> {
       String selected = this.officerHomeView.loaiComboBox.getSelectionModel().getSelectedItem();
@@ -104,9 +135,26 @@ public class OfficerHomeController implements Initializable {
             alert.setContentText("Thời điểm thống kê chưa xảy ra!");
             alert.showAndWait();
         }else{
-            //Thêm hàm thống kê vào đây
-            initLabelThongKe(2,5,0.5);
-            System.out.println("Tháng");
+
+            ArrayList<OfficerAttendance> attendances = getAttendanceDateRow(month, year, 1);
+            ArrayList<Double> result = labelThongKet(attendances);
+            double hoursLate = result.get(0);
+            double hoursEarlyLeave = result.get(1);
+            double doubleCountWork = result.get(2);
+            int countWork = (int) doubleCountWork;
+            initLabelThongKe(countWork, hoursLate, hoursEarlyLeave);
+            ArrayList<AttendanceLogRow> rows = new ArrayList<>();
+            for (OfficerAttendance attendance : attendances) {
+                String dateRow = attendance.getDate().getDate() + " - " + (attendance.getDate().getMonth() + 1) + " - " + (attendance.getDate().getYear() + 1900);
+                String morningSession = attendance.isMorningSession() ? "Có" : "Không";
+                String afternoonSession = attendance.isAfternoonSession() ? "Có" : "Không";
+                AttendanceLogRow row = new AttendanceLogRow(dateRow, morningSession, afternoonSession);
+                rows.add(row);
+            }
+            clearTable();
+            addRowTable(rows);
+            this.officerHomeView.datePicker.setValue(null);
+
         }
       } else if ("Quý".equals(selected)) {
         String quarter = this.officerHomeView.listComboBox.getSelectionModel().getSelectedItem();
@@ -128,8 +176,24 @@ public class OfficerHomeController implements Initializable {
             alert.setContentText("Thời điểm thống kê chưa xảy ra!");
             alert.showAndWait();
         }else{
-            //Thêm hàm thống kê vào đây
-            System.out.println("Quý");
+            ArrayList<OfficerAttendance> attendances = getAttendanceDateRow(monthCheck, year, 3);
+            ArrayList<Double> result = labelThongKet(attendances);
+            double hoursLate = result.get(0);
+            double hoursEarlyLeave = result.get(1);
+            double doubleCountWork = result.get(2);
+            int countWork = (int) doubleCountWork;
+            initLabelThongKe(countWork, hoursLate, hoursEarlyLeave);
+            ArrayList<AttendanceLogRow> rows = new ArrayList<>();
+            for (OfficerAttendance attendance : attendances) {
+                String dateRow = attendance.getDate().getDate() + " - " + (attendance.getDate().getMonth() + 1) + " - " + (attendance.getDate().getYear() + 1900);
+                String morningSession = attendance.isMorningSession() ? "Có" : "Không";
+                String afternoonSession = attendance.isAfternoonSession() ? "Có" : "Không";
+                AttendanceLogRow row = new AttendanceLogRow(dateRow, morningSession, afternoonSession);
+                rows.add(row);
+            }
+            clearTable();
+            addRowTable(rows);
+            this.officerHomeView.datePicker.setValue(null);
         }
       }else {
         int year = Integer.parseInt(this.officerHomeView.yearComboBox.getSelectionModel().getSelectedItem());
@@ -140,8 +204,24 @@ public class OfficerHomeController implements Initializable {
             alert.setContentText("Thời điểm thống kê chưa xảy ra!");
             alert.showAndWait();
         }else{
-            //Thêm hàm thống kê vào đây
-            System.out.println("Năm");
+            ArrayList<OfficerAttendance> attendances = getAttendanceDateRow(1, year, 12);
+            ArrayList<Double> result = labelThongKet(attendances);
+            double hoursLate = result.get(0);
+            double hoursEarlyLeave = result.get(1);
+            double doubleCountWork = result.get(2);
+            int countWork = (int) doubleCountWork;
+            initLabelThongKe(countWork, hoursLate, hoursEarlyLeave);
+            ArrayList<AttendanceLogRow> rows = new ArrayList<>();
+            for (OfficerAttendance attendance : attendances) {
+                String dateRow = attendance.getDate().getDate() + " - " + (attendance.getDate().getMonth() + 1) + " - " + (attendance.getDate().getYear() + 1900);
+                String morningSession = attendance.isMorningSession() ? "Có" : "Không";
+                String afternoonSession = attendance.isAfternoonSession() ? "Có" : "Không";
+                AttendanceLogRow row = new AttendanceLogRow(dateRow, morningSession, afternoonSession);
+                rows.add(row);
+            }
+            clearTable();
+            addRowTable(rows);
+            this.officerHomeView.datePicker.setValue(null);
         }
       }
     });
@@ -163,11 +243,28 @@ public class OfficerHomeController implements Initializable {
             alert.showAndWait();
         }else{
             //Thêm hàm thống kê vào đây
-            clearTable();
-            addRowTable();
-            System.out.println("Ngày");
+            Date dateSearch = new Date(year, month - 1, day);
+            OfficerAttendance attendance = getAttendanceDateRow(dateSearch);
+            if(attendance != null){
+                String dateRow = day + " - " + month + " - " + year;
+                String morningSession = attendance.isMorningSession() ? "Có" : "Không";
+                String afternoonSession = attendance.isAfternoonSession() ? "Có" : "Không";
+                AttendanceLogRow row = new AttendanceLogRow(dateRow, morningSession, afternoonSession);
+                clearTable();
+                ArrayList<AttendanceLogRow> rows = new ArrayList<>();
+                rows.add(row);
+                addRowTable(rows);
+            }else{
+                String dateRow = day + " - " + month + " - " + year;
+                AttendanceLogRow row = new AttendanceLogRow(dateRow, "Không", "Không");
+                clearTable();
+                ArrayList<AttendanceLogRow> rows = new ArrayList<>();
+                rows.add(row);
+                addRowTable(rows);
+            }
         }
     });
+
 
   }
 
@@ -179,11 +276,9 @@ public class OfficerHomeController implements Initializable {
     }
 
     //Add row to table
-    private void addRowTable() {
+    private void addRowTable(ArrayList<AttendanceLogRow> listAttendanceLog) {
         ObservableList<AttendanceLogRow> attendanceLog = FXCollections.observableArrayList();
-        for(int i = 1; i< 100; i++) {
-            attendanceLog.add(new AttendanceLogRow(String.valueOf(i), "Có", "Có"));
-        }
+        attendanceLog.addAll(listAttendanceLog);
         this.officerHomeView.tableLog.getColumns().stream().forEach(column -> {
             column.setStyle( "-fx-alignment: CENTER;");
         });
@@ -213,20 +308,19 @@ public class OfficerHomeController implements Initializable {
                                         //Open OfficerDetialView
                                         AttendanceLogRow row = getTableView().getItems().get(getIndex());
                                         System.out.println(row.getDate());
-                                        FXMLLoader fxmlLoader = new FXMLLoader(OfficerHomeController.class.getResource("officer-detail-view.fxml"));
-                                        try {
-                                            Scene importStage = new Scene(fxmlLoader.load());
-                                            OfficerDetailView officerDetailView = fxmlLoader.getController();
-                                            OfficerDetailController conDetailView = new OfficerDetailController(officerDetailView);
-                                            conDetailView.setDateLabel(row.getDate());
-                                            Stage stage = new Stage();
-                                            stage.initModality(javafx.stage.Modality.APPLICATION_MODAL);
-                                            stage.setTitle("Xem chi tiết");
-                                            stage.setScene(importStage);
-                                            stage.showAndWait();
-                                        } catch (IOException e) {
-                                            throw new RuntimeException(e);
-                                        }
+                                        var ctrl = (OfficerDetailController) FXRouter.goTo("officerdetailview");
+                                        ctrl.setDateLabel(row.getDate());
+
+                                        String[] dateInfo = row.getDate().split(" - ");
+                                        int day = Integer.parseInt(dateInfo[0]);
+                                        int month = Integer.parseInt(dateInfo[1]);
+                                        int year = Integer.parseInt(dateInfo[2]);
+                                        Date dateSearch = new Date(year, month - 1, day);
+                                        OfficerAttendance attendance = getAttendanceDateRow(dateSearch);
+                                        ctrl.settup(attendance);
+
+
+
                                     });
                                     detailBtn.setStyle("-fx-background-color: #00ff00; -fx-text-fill: #000;-fx-cursor: hand;");
                                     // Add two buttons into a cell
@@ -244,9 +338,90 @@ public class OfficerHomeController implements Initializable {
         this.officerHomeView.optionalCol.setCellFactory(cellFactory);
         this.officerHomeView.optionalCol.setStyle( "-fx-alignment: CENTER;");
         this.officerHomeView.tableLog.getItems().addAll(attendanceLog);
+        this.officerHomeView.banGhi.setText(String.valueOf(attendanceLog.size()));
     }
     private void clearTable(){
         this.officerHomeView.tableLog.getItems().clear();
     }
+
+
+    private OfficerAttendance getAttendanceDateRow(Date date){
+        var repo = AttendanceFactory.getInstance().createRepository();
+        var user = UserService.getInstance().getCurrentUser();
+        System.out.println(user.getEmployeeCode());
+        var employee = HRSubsystemFactory.getInstance().createEmployeeRepository().getEmployeeByCode(user.getEmployeeCode());
+
+        int day = date.getDate();
+        int month = date.getMonth() + 1;
+        int year = date.getYear();
+        var attendances = repo.getAttendancesOfEmployee(user, employee, month, year, 1);
+        for (OfficerAttendance attendance : attendances) {
+            int dayLog = attendance.getDate().getDate();
+            if (dayLog == day) {
+                return attendance;
+            }
+        }
+        return null;
+    }
+
+    private ArrayList<OfficerAttendance> getAttendanceDateRow(int month, int year, int monthCount) {
+        var repo = AttendanceFactory.getInstance().createRepository();
+        var user = UserService.getInstance().getCurrentUser();
+        System.out.println(user.getEmployeeCode());
+        var employee = HRSubsystemFactory.getInstance().createEmployeeRepository().getEmployeeByCode(user.getEmployeeCode());
+
+        var attendances = repo.getAttendancesOfEmployee(user, employee, month, year, monthCount);
+        return attendances;
+    }
+
+    private ArrayList<Double> labelThongKet(ArrayList<OfficerAttendance> attendances){
+        double hoursLate = 0;
+        double hoursEarlyLeave = 0;
+        double countWork = 0;
+        for (OfficerAttendance attendance : attendances) {
+            if(attendance.isMorningSession()){
+                countWork = countWork + 1;
+            }
+            if(attendance.isAfternoonSession()){
+                countWork = countWork + 1;
+            }
+            hoursLate = hoursLate + attendance.getHoursLate();
+            hoursEarlyLeave = hoursEarlyLeave + attendance.getHoursEarlyLeave();
+
+        }
+        ArrayList<Double> result = new ArrayList<>();
+        result.add(hoursLate);
+        result.add(hoursEarlyLeave);
+        result.add(countWork);
+        return result;
+    }
+
+    public void handleDetailBack(int day, int month, int year){
+      Date date = new Date(year, month - 1, day);
+        OfficerAttendance attendance = getAttendanceDateRow(date);
+        initThongKeFunction();
+        if(attendance != null){
+            String dateRow = day + " - " + month + " - " + year;
+            String morningSession = attendance.isMorningSession() ? "Có" : "Không";
+            String afternoonSession = attendance.isAfternoonSession() ? "Có" : "Không";
+            AttendanceLogRow row = new AttendanceLogRow(dateRow, morningSession, afternoonSession);
+            clearTable();
+            ArrayList<AttendanceLogRow> rows = new ArrayList<>();
+            rows.add(row);
+            addRowTable(rows);
+        }else{
+            String dateRow = day + " - " + month + " - " + year;
+            AttendanceLogRow row = new AttendanceLogRow(dateRow, "Không", "Không");
+            clearTable();
+            ArrayList<AttendanceLogRow> rows = new ArrayList<>();
+            rows.add(row);
+            addRowTable(rows);
+        }
+        LocalDate datePicker = LocalDate.of(year, month, day);
+        this.officerHomeView.datePicker.setValue(datePicker);
+
+
+    }
+
 
 }

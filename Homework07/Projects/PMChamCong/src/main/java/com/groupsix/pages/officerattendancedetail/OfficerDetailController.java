@@ -1,5 +1,7 @@
 package com.groupsix.pages.officerattendancedetail;
 
+import com.groupsix.attendance.OfficerAttendance;
+import com.groupsix.pages.FXRouter;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -21,7 +23,15 @@ public class OfficerDetailController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         // Xử lý nút đóng
         this.viewDetail.closeBtn.setOnAction(event -> {
-            this.viewDetail.closeBtn.getScene().getWindow().hide();
+            //this.viewDetail.closeBtn.getScene().getWindow().hide();
+            var ctrl = (OfficerHomeController) FXRouter.goTo("officerattendancedetail");
+            String dateLabel = this.viewDetail.dateView.getText();
+            String[] dateInfo = dateLabel.split(" - ");
+            int day = Integer.parseInt(dateInfo[0]);
+            int month = Integer.parseInt(dateInfo[1]);
+            int year = Integer.parseInt(dateInfo[2]);
+            ctrl.handleDetailBack(day, month, year);
+
         });
 
         // Xử lý nút gửi yêu cầu
@@ -73,7 +83,7 @@ public class OfficerDetailController implements Initializable {
         this.viewDetail.morningRequest.getItems().addAll("Có", "Không");
 
         // Xử lý comboBox affternoonRequest
-        this.viewDetail.affternoonRequest.getItems().addAll("Có", "Không");
+        this.viewDetail.afternoonRequest.getItems().addAll("Có", "Không");
 
         // Xử lý textField lateRequest
 
@@ -93,5 +103,13 @@ public class OfficerDetailController implements Initializable {
         }catch (NumberFormatException e){
             return false;
         }
+    }
+
+    public void settup(OfficerAttendance attendance){
+            this.viewDetail.morningSession.setText(attendance.isMorningSession() ? "Có" : "Không");
+            this.viewDetail.afternoonSession.setText(attendance.isAfternoonSession() ? "Có" : "Không");
+            this.viewDetail.lateView.setText(String.valueOf(attendance.getHoursLate()));
+            this.viewDetail.earlyLeaveView.setText(String.valueOf(attendance.getHoursEarlyLeave()));
+
     }
 }
