@@ -7,6 +7,10 @@ import com.groupsix.report.OfficerAttendanceReport;
 
 public class EmployeeAttendanceController {
 
+	public EmployeeAttendanceController(EmployeeAttendanceView view) {
+
+	}
+
 	private Employee employee;
 
 	private User user;
