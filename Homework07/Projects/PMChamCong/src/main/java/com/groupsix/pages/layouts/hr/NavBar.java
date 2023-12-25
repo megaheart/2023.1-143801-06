@@ -70,12 +70,14 @@ public class NavBar extends NavBarBase implements INavBar {
     protected void goToHome() {
         FXRouter.goTo("hrhome");
     }
+
+
     @FXML
     protected void goToImportAttendancePanel() throws Exception {
-//        FXRouter.goTo("Hi");
+        FXRouter.goTo("importview");
     }
     @FXML
     protected void goToChangeAttendanceRequestListView() throws Exception {
-//        FXRouter.goTo("Hi");
+        FXRouter.goTo("requesthomeview");
     }
 }

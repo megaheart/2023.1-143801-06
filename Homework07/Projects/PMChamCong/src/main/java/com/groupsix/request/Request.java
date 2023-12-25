@@ -1,19 +1,19 @@
-package com.groupsix.importexcel;
+package com.groupsix.request;
 
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import java.util.Date;
+@DatabaseTable(tableName = "Request")
+public class Request {
 
-@DatabaseTable(tableName = "OfficerAttendance")
-public class AttendanceCreateDto {
-    public double getHoursEarlyLeave() {
-        return hoursEarlyLeave;
+    public int getId() {
+        return id;
     }
 
-    public void setHoursEarlyLeave(double hoursEarlyLeave) {
-        this.hoursEarlyLeave = hoursEarlyLeave;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getEmployeeCode() {
@@ -55,16 +55,30 @@ public class AttendanceCreateDto {
     public void setAfternoonSession(boolean afternoonSession) {
         this.afternoonSession = afternoonSession;
     }
-    public int getId() {
-        return id;
+
+    public String getReason() {
+        return reason;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setReason(String reason) {
+        this.reason = reason;
     }
 
-    @DatabaseField()
-    private double hoursEarlyLeave;
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public double getHoursEarlyLeave() {
+        return hoursEarlyLeave;
+    }
+
+    public void setHoursEarlyLeave(double hoursEarlyLeave) {
+        this.hoursEarlyLeave = hoursEarlyLeave;
+    }
 
     @DatabaseField(generatedId = true)
     private int id;
@@ -75,7 +89,10 @@ public class AttendanceCreateDto {
     @DatabaseField()
     private double hoursLate;
 
-    @DatabaseField(dataType = DataType.DATE, uniqueCombo = true)
+    @DatabaseField()
+    private double hoursEarlyLeave;
+
+    @DatabaseField(dataType = DataType.DATE_STRING, uniqueCombo = true)
     private Date date;
 
     @DatabaseField()
@@ -83,4 +100,9 @@ public class AttendanceCreateDto {
 
     @DatabaseField()
     private boolean afternoonSession;
+
+    @DatabaseField()
+    private String reason;
+    @DatabaseField
+    private int status;
 }

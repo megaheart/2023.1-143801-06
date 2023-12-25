@@ -40,4 +40,7 @@ module com.groupsix.pmchamcong {
     exports com.groupsix.importexcel;
     opens com.groupsix.importexcel to javafx.fxml, ormlite.jdbc;
 
+    exports com.groupsix.pages.changerequesthr;
+    opens com.groupsix.pages.changerequesthr to javafx.fxml;
+
 }
