@@ -36,12 +36,12 @@ public class OfficerAttendanceReport {
 		this.attendances = attendances;
 	}
 
-	public double getAverageShifts() {
-		return averageShifts;
+	public double getAverageSessions() {
+		return averageSessions;
 	}
 
-	public void setAverageShifts(double averageShifts) {
-		this.averageShifts = averageShifts;
+	public void setAverageSessions(double averageSessions) {
+		this.averageSessions = averageSessions;
 	}
 
 	public double getTotalHoursNotWork() {
@@ -60,12 +60,12 @@ public class OfficerAttendanceReport {
 		this.month = month;
 	}
 
-	public int getTotalShifts() {
-		return totalShifts;
+	public int getTotalSessions() {
+		return totalSessions;
 	}
 
-	public void setTotalShifts(int totalShifts) {
-		this.totalShifts = totalShifts;
+	public void setTotalSessions(int totalSessions) {
+		this.totalSessions = totalSessions;
 	}
 
 	private double averageHoursNotWork;
@@ -76,12 +76,12 @@ public class OfficerAttendanceReport {
 
     private ArrayList<OfficerAndAttendance> attendances;
 
-    private double averageShifts;
+    private double averageSessions;
 
     private double totalHoursNotWork;
 
     private int month;
 
-    private int totalShifts;
+    private int totalSessions;
 
 }

@@ -10,6 +10,10 @@ import java.util.ArrayList;
 
 public class OfficerDepartmentAttendanceReportController {
 
+	public OfficerDepartmentAttendanceReportController(OfficerDepartmentAttendanceReportView view) {
+
+	}
+
 	private int department;
 
 	private OfficerAttendanceReport report;
@@ -17,6 +21,8 @@ public class OfficerDepartmentAttendanceReportController {
 	private User user;
 
 	private ArrayList<Employee> employees;
+
+	private AttendanceReportExportPanel exportPanel;
 
 	public void exportReportAsFile(OfficerAttendanceReport report, String path, String format) {
 

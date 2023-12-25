@@ -62,7 +62,6 @@ public class HelloApplication extends Application {
         UserFactory.getInstance().registerRepository(SqliteUserRepository.class);
         AttendanceFactory.getInstance().registerRepository(SqliteOfficerAttendanceRepository.class);
 
-        UserService.getInstance().authenticate("hr", "1234567");
 //        UserService.getInstance().authenticate("departmentleader", "1234567");
 //        UserService.getInstance().authenticate("officer", "1234567");
 
