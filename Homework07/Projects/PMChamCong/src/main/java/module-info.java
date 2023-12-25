@@ -17,7 +17,7 @@ module com.groupsix.pmchamcong {
     requires org.apache.poi.poi;
 
     opens com.groupsix.hrsubsystem to ormlite.jdbc;
-    opens com.groupsix.attendance to ormlite.jdbc;
+    opens com.groupsix.attendance to ormlite.jdbc, javafx.base;
     opens com.groupsix.user to ormlite.jdbc;
 
     opens com.groupsix.pages to javafx.fxml;

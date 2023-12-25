@@ -49,31 +49,36 @@ public class ImportService implements IImportService {
 
             List<Employee> employees = getListEmployees(codes);
 
-            List<OfficerAttendance> officerAttendances = new ArrayList<>();
-            attendanceLogImports.forEach(attendanceLogImport -> {
-                Employee employee = employees.stream().filter(e -> e.getEmployeeCode().equals(attendanceLogImport.getEmployeeCode())).findFirst().orElse(null);
-                if (employee != null) {
-                    OfficerAttendance officerAttendance = null;
-                    try {
-                        officerAttendance = createOfficerAttendance(employee, attendanceLogImport);
-                    } catch (ParseException e) {
-                        throw new RuntimeException(e);
-                    }
-                    officerAttendances.add(officerAttendance);
-                }
-            });
-
             ImportHistory importHistory = new ImportHistory();
             importHistory.setCreatedBy("ADMIN");
             importHistory.setTime(Calendar.getInstance().getTime().toString());
 
-            historyImportRepository.save(importHistory);
+            int idReturn = historyImportRepository.save(importHistory);
+            List<OfficerAttendance> officerAttendances = new ArrayList<>();
+            attendanceLogImports.forEach(attendanceLogImport -> {
+                Employee employee = employees.stream().filter(e -> e.getEmployeeCode().equals(attendanceLogImport.getEmployeeCode())).findFirst().orElse(null);
+                if (employee != null) {
+                    OfficerAttendance officerAttendance;
+                    try {
+                        officerAttendance = createOfficerAttendance(employee, attendanceLogImport);
+                        officerAttendance.setHistoryImportId(idReturn);
+                        officerAttendances.add(officerAttendance);
+                     } catch (ParseException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
             officerAttendanceRepository.insertMany(officerAttendances);
     }
 
     @Override
     public List<ImportHistory> getAllHistoryImport() {
         return historyImportRepository.getAll();
+    }
+
+    @Override
+    public ImportHistory getHistoryImport(int id) {
+        return historyImportRepository.getById(id);
     }
 
     @Override
@@ -99,9 +104,9 @@ public class ImportService implements IImportService {
                 if (index == 0) return;
                 String code = dataFormatter.formatCellValue(row.getCell(1));
                 if(code.isEmpty()) return;
-                Date time = row.getCell(0).getDateCellValue();
-                String timestamp = simpleDateFormat.format(time);
-                attendanceLogImports.add(new AttendanceLogImport(index, ExcelHelper.getFormatDate(timestamp), code));
+                String time = dataFormatter.formatCellValue(row.getCell(0));
+//                String timestamp = simpleDateFormat.format(time);
+                attendanceLogImports.add(new AttendanceLogImport(index, ExcelHelper.getFormatDate(time), code));
             });
             return attendanceLogImports;
     }
@@ -143,7 +148,7 @@ public class ImportService implements IImportService {
                     hoursLate = (hour - 8) + (double) minute/60;
                 }
             }
-            officerAttendance.setHoursLate(hoursLate);
+            officerAttendance.setHoursLate(Math.round(hoursLate * 100) / 100);
             officerAttendance.setEmployeeCode(employee.getEmployeeCode());
             officerAttendance.setDate(date);
 
@@ -152,5 +157,10 @@ public class ImportService implements IImportService {
 
 
             return officerAttendance;
+    }
+
+    public List<OfficerAttendance> getOfficerAttendancesByHistoryId(int id) {
+        List<OfficerAttendance> officerAttendances = officerAttendanceRepository.getAttendancesByHistoryId(id);
+        return officerAttendances;
     }
 }

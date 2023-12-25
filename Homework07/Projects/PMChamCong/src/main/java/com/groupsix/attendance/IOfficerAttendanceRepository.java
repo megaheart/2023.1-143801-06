@@ -12,4 +12,6 @@ public interface IOfficerAttendanceRepository {
 
 	void insertMany(List<OfficerAttendance> attendances);
 
+	List<OfficerAttendance> getAttendancesByHistoryId(int historyId);
+
 }

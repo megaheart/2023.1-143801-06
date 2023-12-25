@@ -67,6 +67,9 @@ public class ChooseFileImportController implements Initializable  {
                     table .getColumns().stream().forEach(column -> {
                         column.setStyle("-fx-alignment: CENTER;");
                     });
+                    table.getColumns().stream().forEach(column -> {
+                        column.setStyle("-fx-alignment: CENTER;");
+                    });
                     // Khởi tạo trường id và time cho bảng
                     table.getColumns().get(0).setCellValueFactory(new PropertyValueFactory("index"));
                     table.getColumns().get(1).setCellValueFactory(new PropertyValueFactory("timestamp"));
@@ -152,6 +155,7 @@ public class ChooseFileImportController implements Initializable  {
                         goToImportView();
                     } catch (Exception e) {
                         System.out.println("ERROR: " + e.getMessage());
+                        throw new RuntimeException(e);
                     }
                 } else {
                     System.out.println("INFO: Người dùng đã hủy nhập dữ liệu");

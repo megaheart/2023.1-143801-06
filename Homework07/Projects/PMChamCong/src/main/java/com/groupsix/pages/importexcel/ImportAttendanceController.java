@@ -10,9 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -20,12 +18,17 @@ import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ImportAttendanceController implements Initializable {
     public ImportAttendancePanel importAttendancePanel;
 
     private IImportService importService;
+
+    public static Integer historyId;
+
+    ObservableList<ImportHistory> importLogHistories;
 
     public ImportAttendanceController(ImportAttendancePanel importAttendancePanel){
         this.importAttendancePanel = importAttendancePanel;
@@ -44,7 +47,7 @@ public class ImportAttendanceController implements Initializable {
     }
 
     private void goToViewHistoryImport() {
-        FXRouter.goTo("history-view");
+        FXRouter.goTo("view-history");
     }
 
     // Khởi tạo nút import
@@ -60,13 +63,13 @@ public class ImportAttendanceController implements Initializable {
             var importLogTable = this.importAttendancePanel.importLogTable;
             var listHistory = importService.getAllHistoryImport();
             // Lấy dữ liệu từ database
-            ObservableList<ImportHistory> importLogHistories = FXCollections.observableArrayList();
+            importLogHistories = FXCollections.observableArrayList();
             if(listHistory == null || listHistory.size() == 0) {
                 return;
             }
             for (int i = 0; i < listHistory.size(); i++) {
                 importLogHistories.add(
-                        new ImportHistory(i+1, listHistory.get(i).getTime(), listHistory.get(i).getCreatedBy()
+                        new ImportHistory(listHistory.get(i).getId(), listHistory.get(i).getTime(), listHistory.get(i).getCreatedBy()
                         ));
             }
             // Căn giữa các cột
@@ -98,14 +101,12 @@ public class ImportAttendanceController implements Initializable {
                                     } else {
                                         setText(null);
                                         btn.setOnAction(event -> {
-                                            ImportHistory person = getTableView().getItems().get(getIndex());
-                                            System.out.println(person.getId()
-                                                    + "   " + person.getTime());
+                                            historyId = getTableView().getItems().get(getIndex()).getId();
+                                            goToViewHistoryImport();
                                         });
                                         btn2.setOnAction(event -> {
-                                            ImportHistory person = getTableView().getItems().get(getIndex());
-                                            System.out.println(person.getId()
-                                                    + "   " + person.getTime());
+                                            int id = getTableView().getItems().get(getIndex()).getId();
+                                            onDeleteHistory(id);
                                         });
                                         btn.setStyle("-fx-background-color: #00ff00; -fx-text-fill: #000;-fx-cursor: hand;");
                                         btn2.setStyle("-fx-background-color: #ff0000; -fx-text-fill: #ffffff;-fx-cursor: hand;");
@@ -131,5 +132,30 @@ public class ImportAttendanceController implements Initializable {
             System.out.println("Error: " + e.getMessage());
         }
     }
+    public void onDeleteHistory (int id) {
+        Alert confirmationDialog = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmationDialog.setTitle("Xóa dữ liệu");
+        confirmationDialog.setHeaderText("Xác nhận xóa lịch sử import?");
 
+        // Tạo các nút xác nhận và hủy
+        ButtonType confirmButton = new ButtonType("Xác nhận");
+        ButtonType cancelButton = new ButtonType("Hủy");
+
+        confirmationDialog.getButtonTypes().setAll(cancelButton,confirmButton);
+
+        // Hiển thị dialog và chờ người dùng phản hồi
+        Optional<ButtonType> result = confirmationDialog.showAndWait();
+
+        // Xử lý phản hồi từ người dùng
+        if (result.isPresent() && result.get() == confirmButton) {
+            System.out.println("INFO: Người dùng đã xác nhận xóa lich sử import có id: " + id);
+            // Thực hiện hành động khi người dùng xác nhận
+            importService.deleteHistoryImport(id);
+            importLogHistories.removeIf(importHistory -> importHistory.getId() == id);
+            importAttendancePanel.importLogTable.getItems().clear();
+            importAttendancePanel.importLogTable.getItems().addAll(importLogHistories);
+        } else {
+            System.out.println("INFO: Người dùng đã hủy xóa dữ liệu");
+        }
+    }
 }
