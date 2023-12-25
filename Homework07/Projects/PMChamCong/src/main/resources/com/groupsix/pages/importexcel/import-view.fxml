@@ -7,18 +7,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="509.0" prefWidth="739.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupsix.pages.importexcel.ImportAttendancePanel">
+<AnchorPane prefHeight="721.0" prefWidth="936.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupsix.pages.importexcel.ImportAttendancePanel">
    <children>
-      <Label alignment="CENTER" layoutY="15.2" prefHeight="35.0" prefWidth="739.0" text="Nhập thông tin chấm công" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="15.0">
+      <Label alignment="CENTER" layoutY="15.2" prefHeight="35.0" prefWidth="739.0" text="Nhập dữ liệu chấm công" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="15.0">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Button fx:id="importButton" layoutX="22.0" layoutY="85.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="185.0" style="-fx-cursor: hand;" text="Nhập dữ liệu chấm công" AnchorPane.leftAnchor="22.0" AnchorPane.topAnchor="85.0">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Button>
       <TableView fx:id="importLogTable" layoutX="22.0" layoutY="135.0" prefHeight="358.0" prefWidth="700.0" AnchorPane.bottomAnchor="22.0" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="128.20000000000005">
         <columns>
           <TableColumn prefWidth="75.0" text="ID" />
@@ -29,5 +24,15 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
+      <Button fx:id="importButton" layoutX="728.0" layoutY="78.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="185.0" style="-fx-cursor: hand;" text="Nhập dữ liệu chấm công" AnchorPane.rightAnchor="22.400000000000006" AnchorPane.topAnchor="78.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Label layoutX="22.0" layoutY="82.0" text="Lịch sử nhập dữ liệu">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

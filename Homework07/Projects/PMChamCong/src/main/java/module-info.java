@@ -36,12 +36,12 @@ module com.groupsix.pmchamcong {
     opens com.groupsix.pages.officerattendancedetail to javafx.fxml;
     exports com.groupsix.pages.officerattendancedetail;
 
+    opens com.groupsix.pages.hrchangerequest to javafx.fxml;
+    exports com.groupsix.pages.hrchangerequest;
+
     exports com.groupsix.pages.importexcel;
     opens com.groupsix.pages.importexcel to javafx.fxml;
     exports com.groupsix.importexcel;
     opens com.groupsix.importexcel to javafx.fxml, ormlite.jdbc;
-
-    exports com.groupsix.pages.changerequesthr;
-    opens com.groupsix.pages.changerequesthr to javafx.fxml;
 
 }
