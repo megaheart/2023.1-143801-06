@@ -7,155 +7,169 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupsix.pages.officerattendancedetail.OfficerDetailView">
+<AnchorPane prefHeight="722.4" prefWidth="885.6" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupsix.pages.officerattendancedetail.OfficerDetailView">
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutY="23.0" prefHeight="25.0" prefWidth="600.0" style="-fx-font-weight: bold;" text="Xem thông tin chấm công chi tiết" textAlignment="CENTER">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutY="23.0" prefHeight="25.0" prefWidth="885.0" style="-fx-font-weight: bold;" text="Xem thông tin chấm công chi tiết" textAlignment="CENTER">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label layoutX="171.0" layoutY="48.0" text="Ngày:">
+      <Label layoutX="348.0" layoutY="54.0" text="Ngày:">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="dateView" alignment="CENTER" contentDisplay="CENTER" layoutX="238.0" layoutY="48.0" prefHeight="20.0" prefWidth="123.0" text="Label">
+      <Label fx:id="dateView" alignment="CENTER" contentDisplay="CENTER" layoutX="415.0" layoutY="54.0" prefHeight="20.0" prefWidth="144.0" text="Label">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="26.0" layoutY="79.0" style="-fx-font-weight: bold;" text="Thông tin chi tiết:" underline="true">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label layoutX="268.0" layoutY="81.0" prefHeight="20.0" prefWidth="151.0" style="-fx-font-weight: bold;" text="Yêu cầu chỉnh sửa:" underline="true">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label layoutX="41.0" layoutY="109.0" text="Ca làm việc:">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label layoutX="59.0" layoutY="131.0" text="Sáng:">
+      <Label layoutX="145.0" layoutY="197.0" text="Sáng:">
          <font>
             <Font size="13.0" />
          </font>
       </Label>
-      <Label layoutX="58.0" layoutY="165.0" text="Chiều:">
+      <Label layoutX="144.0" layoutY="231.0" text="Chiều:">
          <font>
             <Font size="13.0" />
          </font>
       </Label>
-      <Label layoutX="39.0" layoutY="198.0" text="Đi muộn:">
+      <Label layoutX="125.0" layoutY="290.0" text="Đi muộn:">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="41.0" layoutY="233.0" text="Về sớm:">
+      <Label layoutX="127.0" layoutY="325.0" text="Về sớm:">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="293.0" layoutY="265.0" text="Lý do:">
+      <Label layoutX="500.0" layoutY="373.0" text="Lý do:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="516.0" layoutY="198.0" text="Sáng:">
          <font>
             <Font size="13.0" />
          </font>
       </Label>
-      <Label layoutX="288.0" layoutY="109.0" text="Ca làm việc:">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label layoutX="310.0" layoutY="132.0" text="Sáng:">
+      <Label layoutX="516.0" layoutY="231.0" text="Chiều:">
          <font>
             <Font size="13.0" />
          </font>
       </Label>
-      <Label layoutX="310.0" layoutY="165.0" text="Chiều:">
+      <Label layoutX="496.0" layoutY="290.0" text="Đi muộn:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="498.0" layoutY="327.0" text="Về sớm:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="morningSession" layoutX="215.0" layoutY="199.0" style="-fx-font-weight: bold;" text="Label">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="affternoonSession" layoutX="215.0" layoutY="231.0" style="-fx-font-weight: bold;" text="Label">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lateView" layoutX="215.0" layoutY="292.0" text="Label">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="earlyLeaveView" layoutX="215.0" layoutY="325.0" text="Label">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="259.0" layoutY="292.0" text="giờ">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="259.0" layoutY="325.0" text="giờ">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="morningRequest" layoutX="579.0" layoutY="195.0" prefWidth="150.0" />
+      <ComboBox fx:id="affternoonRequest" layoutX="579.0" layoutY="230.0" prefWidth="150.0" />
+      <TextField fx:id="reasonRequest" alignment="TOP_LEFT" layoutX="584.0" layoutY="374.0" prefHeight="132.0" prefWidth="275.0" />
+      <Button fx:id="closeBtn" layoutX="354.0" layoutY="547.0" mnemonicParsing="false" text="Quay lại">
          <font>
             <Font size="13.0" />
-         </font>
-      </Label>
-      <Label layoutX="290.0" layoutY="198.0" text="Đi muộn:">
+         </font></Button>
+      <Button fx:id="requestBtn" layoutX="437.0" layoutY="548.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="140.0" text="Yêu cầu chỉnh sửa">
          <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label layoutX="292.0" layoutY="235.0" text="Về sớm:">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label fx:id="morningSession" layoutX="129.0" layoutY="133.0" style="-fx-font-weight: bold;" text="Label">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label fx:id="affternoonSession" layoutX="129.0" layoutY="165.0" style="-fx-font-weight: bold;" text="Label">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label fx:id="lateView" layoutX="129.0" layoutY="200.0" text="Label">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label fx:id="earlyLeaveView" layoutX="129.0" layoutY="233.0" text="Label">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label layoutX="173.0" layoutY="200.0" text="giờ">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label layoutX="173.0" layoutY="233.0" text="giờ">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <ComboBox fx:id="morningRequest" layoutX="374.0" layoutY="129.0" prefWidth="150.0" />
-      <ComboBox fx:id="affternoonRequest" layoutX="374.0" layoutY="164.0" prefWidth="150.0" />
-      <TextField fx:id="reasonRequest" alignment="TOP_LEFT" layoutX="342.0" layoutY="262.0" prefHeight="77.0" prefWidth="239.0" />
-      <Button fx:id="closeBtn" layoutX="207.0" layoutY="352.0" mnemonicParsing="false" text="Đóng" />
-      <Button fx:id="requestBtn" layoutX="274.0" layoutY="352.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="140.0" text="Yêu cầu chỉnh sửa" />
-      <TextField fx:id="lateRequest" layoutX="374.0" layoutY="198.0" prefHeight="25.0" prefWidth="86.0" />
-      <TextField fx:id="earlyLeaveRequest" layoutX="374.0" layoutY="230.0" prefHeight="25.0" prefWidth="86.0" />
+            <Font size="13.0" />
+         </font></Button>
+      <TextField fx:id="lateRequest" layoutX="580.0" layoutY="290.0" prefHeight="25.0" prefWidth="86.0" />
+      <TextField fx:id="earlyLeaveRequest" layoutX="580.0" layoutY="322.0" prefHeight="25.0" prefWidth="86.0" />
       <Label layoutX="364.0" layoutY="106.0" text="*" textFill="#e90606">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label layoutX="344.0" layoutY="231.0" text="*" textFill="#e90606">
+      <Label layoutX="344.0" layoutY="331.0" text="*" textFill="#e90606">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label layoutX="347.0" layoutY="193.0" text="*" textFill="#e90606">
+      <Label layoutX="347.0" layoutY="293.0" text="*" textFill="#e90606">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label layoutX="329.0" layoutY="260.0" text="*" textFill="#e90606">
+      <Label layoutX="329.0" layoutY="360.0" text="*" textFill="#e90606">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label layoutX="472.0" layoutY="201.0" text="giờ">
+      <Label layoutX="678.0" layoutY="293.0" text="giờ">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="473.0" layoutY="232.0" text="giờ">
+      <Label layoutX="679.0" layoutY="324.0" text="giờ">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
+      <AnchorPane layoutX="6.0" layoutY="124.0" prefHeight="15.0" prefWidth="885.0">
+         <children>
+            <Label layoutX="87.0" layoutY="12.0" style="-fx-font-weight: bold;" text="Thông tin chi tiết:" underline="true">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="460.0" layoutY="12.0" prefHeight="20.0" prefWidth="151.0" style="-fx-font-weight: bold;" text="Yêu cầu chỉnh sửa:" underline="true">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="4.0" layoutY="156.0" prefHeight="26.0" prefWidth="886.0">
+         <children>
+            <Label layoutX="118.0" layoutY="12.0" text="Ca làm việc:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="490.0" layoutY="11.0" text="Ca làm việc:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="5.0" layoutY="178.0" prefHeight="26.0" prefWidth="886.0" />
    </children>
 </AnchorPane>

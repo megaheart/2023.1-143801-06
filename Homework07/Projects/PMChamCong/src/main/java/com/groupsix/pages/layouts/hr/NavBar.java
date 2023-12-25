@@ -78,6 +78,6 @@ public class NavBar extends NavBarBase implements INavBar {
     }
     @FXML
     protected void goToChangeAttendanceRequestListView() throws Exception {
-//        FXRouter.goTo("Hi");
+        FXRouter.goTo("requesthomeview");
     }
 }
