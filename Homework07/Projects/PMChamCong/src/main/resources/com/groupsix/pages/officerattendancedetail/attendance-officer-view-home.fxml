@@ -10,14 +10,14 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="722.4" prefWidth="885.6" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupsix.pages.officerattendancedetail.OfficerHomeView">
+<AnchorPane prefHeight="722.4" prefWidth="936.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupsix.pages.officerattendancedetail.OfficerHomeView">
    <children>
-      <Label layoutX="382.0" layoutY="90.0" style="-fx-font-weight: bold;" text="Thông tin tổng hợp">
+      <Label layoutX="396.0" layoutY="90.0" style="-fx-font-weight: bold;" text="Thông tin tổng hợp">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="390.0" layoutY="229.0" style="-fx-font-weight: bold;" text="Chi tiết theo ngày">
+      <Label layoutX="404.0" layoutY="229.0" style="-fx-font-weight: bold;" text="Chi tiết theo ngày">
          <font>
             <Font size="14.0" />
          </font>
@@ -33,7 +33,7 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <HBox alignment="CENTER" layoutX="10.0" layoutY="127.0" prefHeight="79.0" prefWidth="882.0" spacing="35.0">
+      <HBox alignment="CENTER" layoutY="127.0" prefHeight="79.0" prefWidth="934.0" spacing="35.0">
          <children>
             <AnchorPane prefHeight="70.0" prefWidth="158.0" style="-fx-border-color: black; -fx-border-radius: 10;">
                <children>
@@ -85,16 +85,16 @@
             </AnchorPane>
          </children>
       </HBox>
-      <DatePicker fx:id="datePicker" layoutX="674.0" layoutY="226.0" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="296.0" layoutY="16.0" style="-fx-font-weight: bold;" text="Xem thông tin chấm công nhân viên văn phòng">
+      <DatePicker fx:id="datePicker" layoutX="721.0" layoutY="226.0" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="310.0" layoutY="16.0" style="-fx-font-weight: bold;" text="Xem thông tin chấm công nhân viên văn phòng">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <ComboBox fx:id="listComboBox" layoutX="605.0" layoutY="50.0" prefHeight="25.0" prefWidth="57.0" />
-      <ComboBox fx:id="loaiComboBox" layoutX="510.0" layoutY="50.0" prefHeight="25.0" prefWidth="82.0" promptText="Loại" />
-      <ComboBox fx:id="yearComboBox" layoutX="675.0" layoutY="50.0" prefHeight="25.0" prefWidth="82.0" promptText="Năm" />
-      <Button fx:id="btnThongKe" layoutX="769.0" layoutY="50.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" text="Thống kê" />
+      <ComboBox fx:id="listComboBox" layoutX="550.0" layoutY="50.0" prefHeight="25.0" prefWidth="57.0" />
+      <ComboBox fx:id="loaiComboBox" layoutX="455.0" layoutY="50.0" prefHeight="25.0" prefWidth="82.0" promptText="Loại" />
+      <ComboBox fx:id="yearComboBox" layoutX="620.0" layoutY="50.0" prefHeight="25.0" prefWidth="82.0" promptText="Năm" />
+      <Button fx:id="btnThongKe" layoutX="714.0" layoutY="50.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" text="Thống kê" />
       <Label layoutX="147.0" layoutY="679.0" prefHeight="20.0" prefWidth="55.0" text="bản ghi">
          <font>
             <Font size="14.0" />
@@ -105,5 +105,6 @@
             <Font size="14.0" />
          </font>
       </Label>
+      <Button fx:id="notificationBtn" layoutX="809.0" layoutY="50.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="89.0" text="Thông báo" />
    </children>
 </AnchorPane>

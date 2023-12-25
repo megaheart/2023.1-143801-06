@@ -85,7 +85,9 @@ public class SqliteRequestRepository implements IRequestRepository {
     }
 
 
-    @Override
+
+
+/*    @Override
     public void insertMany(List<Request> requests) {
         try {
             String sql = "INSERT INTO Request (employeeCode, date, hoursEarlyLeave, hoursLate, morningSession, afternoonSession, reason, status) VALUES ";
@@ -111,6 +113,90 @@ public class SqliteRequestRepository implements IRequestRepository {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }*/
+
+    @Override
+    public void insertRequest(Request req) {
+        try {
+            var _date = req.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            String sql = "INSERT INTO Request (employeeCode, date, hoursEarlyLeave, hoursLate, morningSession, afternoonSession, reason, status, logAttendanceId, response) VALUES " +
+                    String.format("('%s', '%s', %f, %f, %d, %d, '%s', %d, %d, '%s')",
+                            req.getEmployeeCode(),
+                            _date,
+                            req.getHoursEarlyLeave(),
+                            req.getHoursLate(),
+                            req.isMorningSession() ? 1 : 0,
+                            req.isAfternoonSession() ? 1 : 0,
+                            req.getReason(),
+                            req.getStatus(),
+                            req.getLogAttendanceId(),
+                            req.getResponse());
+            System.out.println(sql);
+            var r = dao.executeRaw(sql);
+            var x = r;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
+    /*public void insertRequest(Request req) {
+        try {
+            String sql = "INSERT INTO Request (employeeCode, date, hoursEarlyLeave, hoursLate, morningSession, afternoonSession, reason, status) VALUES ";
+
+
+            String s = String.format("('%s', '%s', %f, %f, %d, %d, '%s', %d)",
+                    req.getEmployeeCode(),
+                    req.getDate(),
+                    req.getHoursEarlyLeave(),
+                    req.getHoursLate(),
+                    req.isMorningSession() ? 1 : 0,
+                    req.isAfternoonSession() ? 1 : 0,
+                    req.getReason(),
+                    req.getStatus());
+
+            sql += String.join(",", s);
+
+            dao.executeRaw(sql);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }*/
+
+    public ArrayList<Request> getRequestNotification(User user, Employee employee) {
+
+        var queryBuilder = dao.queryBuilder();
+        try {
+            queryBuilder.where()
+                    .eq("employeeCode", employee.getEmployeeCode())
+                    .and(2);
+            queryBuilder.where().eq("status", 0)
+                    .or()
+                    .eq("status", 2);
+
+            queryBuilder.orderBy("date", false);
+
+
+            var statement = queryBuilder.prepare();
+
+            System.out.println(statement.getStatement());
+
+            return (ArrayList<Request>) dao.query(statement);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void updateRequest(User user, int id, int status, String respond){
+
+        try {
+            String sql = "UPDATE Request SET status = " + status + ", respond = '" + respond + "' WHERE id = " + id;
+            System.out.println(sql);
+            var r = dao.executeRaw(sql);
+            var x = r;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 }

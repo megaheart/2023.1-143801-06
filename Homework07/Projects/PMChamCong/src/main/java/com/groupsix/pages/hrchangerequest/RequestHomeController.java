@@ -72,7 +72,7 @@ public class RequestHomeController implements Initializable {
         }
 
         clearTable();
-        addRowTable(requestRows);
+        //addRowTable(requestRows);
 
         this.requestHomeView.dateTextField.setText("");
         this.requestHomeView.employeeCodeTextField.setText("");
@@ -89,7 +89,7 @@ public class RequestHomeController implements Initializable {
         return requests;
     }
 
-    private void addRowTable(ArrayList<RequestRow> listRequestRow){
+/*    private void addRowTable(ArrayList<RequestRow> listRequestRow){
         ObservableList<RequestRow> requestRow = FXCollections.observableArrayList();
         requestRow.addAll(listRequestRow);
         this.requestHomeView.dateCol.setCellValueFactory(new PropertyValueFactory("date"));
@@ -125,8 +125,8 @@ public class RequestHomeController implements Initializable {
                         };
                         return cell;
                     }
-                };
-
-    }
+                };*/
+/*
+    }*/
 
 }

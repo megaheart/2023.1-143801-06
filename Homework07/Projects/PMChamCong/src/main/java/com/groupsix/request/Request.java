@@ -8,6 +8,7 @@ import java.util.Date;
 @DatabaseTable(tableName = "Request")
 public class Request {
 
+
     public int getId() {
         return id;
     }
@@ -122,6 +123,7 @@ public class Request {
 
     @DatabaseField()
     private int logAttendanceId;
+
 
     @DatabaseField()
     private String response;
