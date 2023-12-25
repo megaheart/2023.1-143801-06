@@ -42,20 +42,20 @@ public class OfficerAndAttendance {
 		this.year = year;
 	}
 
-	public int getSessionCount() {
-		return sessionCount;
-	}
-
-	public void setSessionCount(int sessionCount) {
-		this.sessionCount = sessionCount;
-	}
-
 	public double getHoursNotWork() {
 		return hoursNotWork;
 	}
 
 	public void setHoursNotWork(double hoursNotWork) {
 		this.hoursNotWork = hoursNotWork;
+	}
+
+	public int getTotalSession() {
+		return totalSession;
+	}
+
+	public void setTotalSession(int totalSession) {
+		this.totalSession = totalSession;
 	}
 
 	private String fullName;
@@ -68,7 +68,7 @@ public class OfficerAndAttendance {
 
     private int year;
 
-    private int sessionCount;
+    private int totalSession;
 
     private double hoursNotWork;
 

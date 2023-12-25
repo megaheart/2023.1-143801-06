@@ -42,33 +42,36 @@ public class OfficerDepartmentAttendanceReportView {
 	private Label averageSessionsLabel = new Label();
 
 	@FXML
+	private Label totalRecordCountLabel = new Label();
+
+	@FXML
 	private Label currentPageLabel = new Label();
 
 	@FXML
 	private TextField pageWantToGoTxtBox = new TextField();
 
 	@FXML
-	private TableView<OfficerAttendanceDTO> attendanceLogTable = new TableView<OfficerAttendanceDTO>();
+	private TableView<OfficerAndAttendanceDTO> attendanceLogTable = new TableView<OfficerAndAttendanceDTO>();
 
 	@FXML
-	public TableColumn<OfficerAttendanceDTO, String> dateCol = new TableColumn<>();
+	public TableColumn<OfficerAndAttendanceDTO, String> dateCol = new TableColumn<>();
 	@FXML
-	public TableColumn<OfficerAttendanceDTO, String> morningSessionCol = new TableColumn<>();
+	public TableColumn<OfficerAndAttendanceDTO, String> morningSessionCol = new TableColumn<>();
 	@FXML
-	public TableColumn<OfficerAttendanceDTO, String> afternoonSessionCol = new TableColumn<>();
+	public TableColumn<OfficerAndAttendanceDTO, String> afternoonSessionCol = new TableColumn<>();
 	@FXML
-	public TableColumn<OfficerAttendanceDTO, String> hoursLateCol = new TableColumn<>();
+	public TableColumn<OfficerAndAttendanceDTO, String> hoursLateCol = new TableColumn<>();
 	@FXML
-	public TableColumn<OfficerAttendanceDTO, String> hoursEarlyLeaveCol = new TableColumn<>();
-
-	@FXML
-	private Label employeeInfoLabel = new Label();
+	public TableColumn<OfficerAndAttendanceDTO, String> hoursEarlyLeaveCol = new TableColumn<>();
 
 	@FXML
 	private Button nextPageBtn = new Button();
 
 	@FXML
 	private Button previousPageBtn = new Button();
+
+	@FXML
+	private TextField employeeCodeSearchTxtBox = new TextField();
 
 	private TimeRange timeRange = new TimeRange(1, 1 , 1);
 
@@ -147,10 +150,23 @@ public class OfficerDepartmentAttendanceReportView {
 	}
 
 	@FXML
-	private void refreshTable(ActionEvent event) {
-		if(refreshTableHandler != null) {
-			refreshTableHandler.handle(event);
+	private void clickExportExcel(ActionEvent event) {
+		openExportPanel();
+	}
+
+	@FXML
+	private void searchEmployeeByCode(ActionEvent event) {
+		var employeeCode = employeeCodeSearchTxtBox.getText();
+		if(employeeCode.isEmpty()) {
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Lỗi nhập liệu");
+			alert.setContentText("Vui lòng nhập mã nhân viên.");
+			alert.showAndWait();
+			employeeCodeSearchTxtBox.requestFocus();
+			return;
 		}
+
 	}
 
 	@FXML
@@ -161,18 +177,12 @@ public class OfficerDepartmentAttendanceReportView {
 		currentPage++;
 		currentPageLabel.setText(currentPage + "/" + pageCount);
 
-		var fromDate = LocalDate.of(report.getYear(), report.getMonth(), 1);
-		fromDate = fromDate.plusDays(7 * (currentPage - 1));
-		var toDate = fromDate.plusDays(7);
-		var _fromDate = Date.from(fromDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-		var _toDate = Date.from(toDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-
-		var attendances = report.getAttendances().stream()
-				.filter(attendance -> attendance.getDate().compareTo(_fromDate) >= 0 && attendance.getDate().compareTo(_toDate) < 0)
-				.map(attendance -> new OfficerAttendanceDTO(attendance)).toArray(OfficerAttendanceDTO[]::new);
-
-		this.attendanceLogTable.getItems().clear();
-		this.attendanceLogTable.getItems().addAll(attendances);
+//		var attendances = report.getAttendances().stream()
+//				.filter(attendance -> attendance.getDate().compareTo(_fromDate) >= 0 && attendance.getDate().compareTo(_toDate) < 0)
+//				.map(attendance -> new OfficerAttendanceDTO(attendance)).toArray(OfficerAttendanceDTO[]::new);
+//
+//		this.attendanceLogTable.getItems().clear();
+//		this.attendanceLogTable.getItems().addAll(attendances);
 
 		if(currentPage == pageCount) {
 			nextPageBtn.setDisable(true);
@@ -196,18 +206,12 @@ public class OfficerDepartmentAttendanceReportView {
 		currentPage--;
 		currentPageLabel.setText(currentPage + "/" + pageCount);
 
-		var fromDate = LocalDate.of(report.getYear(), report.getMonth(), 1);
-		fromDate = fromDate.plusDays(7 * (currentPage - 1));
-		var toDate = fromDate.plusDays(7);
-		var _fromDate = Date.from(fromDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-		var _toDate = Date.from(toDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-
-		var attendances = report.getAttendances().stream()
-				.filter(attendance -> attendance.getDate().compareTo(_fromDate) >= 0 && attendance.getDate().compareTo(_toDate) < 0)
-				.map(attendance -> new OfficerAttendanceDTO(attendance)).toArray(OfficerAttendanceDTO[]::new);
-
-		this.attendanceLogTable.getItems().clear();
-		this.attendanceLogTable.getItems().addAll(attendances);
+//		var attendances = report.getAttendances().stream()
+//				.filter(attendance -> attendance.getDate().compareTo(_fromDate) >= 0 && attendance.getDate().compareTo(_toDate) < 0)
+//				.map(attendance -> new OfficerAttendanceDTO(attendance)).toArray(OfficerAttendanceDTO[]::new);
+//
+//		this.attendanceLogTable.getItems().clear();
+//		this.attendanceLogTable.getItems().addAll(attendances);
 
 		if(currentPage == pageCount) {
 			nextPageBtn.setDisable(true);
@@ -232,7 +236,7 @@ public class OfficerDepartmentAttendanceReportView {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle("Lỗi");
 			alert.setHeaderText("Lỗi nhập liệu");
-			alert.setContentText("Vui lòng nhập số tuần hợp lệ, không được bỏ trống.");
+			alert.setContentText("Vui lòng nhập số trang hợp lệ, không được bỏ trống.");
 			alert.showAndWait();
 			pageWantToGoTxtBox.requestFocus();
 			return;
@@ -242,7 +246,7 @@ public class OfficerDepartmentAttendanceReportView {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle("Lỗi");
 			alert.setHeaderText("Lỗi nhập liệu");
-			alert.setContentText("Vui lòng nhập số tuần trong khoảng từ 1 đến " + pageCount);
+			alert.setContentText("Vui lòng nhập số trang trong khoảng từ 1 đến " + pageCount);
 			alert.showAndWait();
 			pageWantToGoTxtBox.requestFocus();
 			return;
@@ -250,18 +254,12 @@ public class OfficerDepartmentAttendanceReportView {
 
 		currentPageLabel.setText(page + "/" + pageCount);
 
-		var fromDate = LocalDate.of(report.getYear(), report.getMonth(), 1);
-		fromDate = fromDate.plusDays(7 * (page - 1));
-		var toDate = fromDate.plusDays(7);
-		var _fromDate = Date.from(fromDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-		var _toDate = Date.from(toDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-
-		var attendances = report.getAttendances().stream()
-				.filter(attendance -> attendance.getDate().compareTo(_fromDate) >= 0 && attendance.getDate().compareTo(_toDate) < 0)
-				.map(attendance -> new OfficerAttendanceDTO(attendance)).toArray(OfficerAttendanceDTO[]::new);
-
-		this.attendanceLogTable.getItems().clear();
-		this.attendanceLogTable.getItems().addAll(attendances);
+//		var attendances = report.getAttendances().stream()
+//				.filter(attendance -> attendance.getDate().compareTo(_fromDate) >= 0 && attendance.getDate().compareTo(_toDate) < 0)
+//				.map(attendance -> new OfficerAttendanceDTO(attendance)).toArray(OfficerAttendanceDTO[]::new);
+//
+//		this.attendanceLogTable.getItems().clear();
+//		this.attendanceLogTable.getItems().addAll(attendances);
 
 		if(page == pageCount) {
 			nextPageBtn.setDisable(true);
@@ -278,18 +276,18 @@ public class OfficerDepartmentAttendanceReportView {
 	}
 
 	private EventHandler<ActionEvent> onTimeRangeChangedHandler;
-	private EventHandler<ActionEvent> refreshTableHandler;
-	private EventHandler<ActionEvent> nextPageHandler;
-	private EventHandler<ActionEvent> previousPageHandler;
-	private IEventHandler<ActionEvent, Integer> goToPageHandler;
+//	private EventHandler<ActionEvent> refreshTableHandler;
+//	private EventHandler<ActionEvent> nextPageHandler;
+//	private EventHandler<ActionEvent> previousPageHandler;
+//	private IEventHandler<ActionEvent, Integer> goToPageHandler;
 
 	public void setOnTimeRangeChangedHandler(EventHandler<ActionEvent> onTimeRangeChangedHandler) {
 		this.onTimeRangeChangedHandler = onTimeRangeChangedHandler;
 	}
 
-	public void setRefreshTableHandler(EventHandler<ActionEvent> refreshTableHandler) {
-		this.refreshTableHandler = refreshTableHandler;
-	}
+//	public void setRefreshTableHandler(EventHandler<ActionEvent> refreshTableHandler) {
+//		this.refreshTableHandler = refreshTableHandler;
+//	}
 
 //	public void setNextPageHandler(EventHandler<ActionEvent> nextPageHandler) {
 //		this.nextPageHandler = nextPageHandler;
@@ -361,25 +359,19 @@ public class OfficerDepartmentAttendanceReportView {
 
 		this.totalSessionsLabel.setText(String.valueOf(report.getTotalSessions()));
 		this.totalHoursLateAndLeaveEarlyLabel.setText(decimalFormat.format(report.getTotalHoursNotWork()));
+		this.averageHoursLateAndLeaveEarlyLabel.setText(decimalFormat.format(report.getAverageHoursNotWork()));
+		this.averageSessionsLabel.setText(decimalFormat.format(report.getAverageSessions()));
+
+		this.totalRecordCountLabel.setText(String.valueOf(report.getAttendances().size()));
+		pageCount = (int) Math.ceil(report.getAttendances().size() / 10.0);
+		this.currentPageLabel.setText("1/" + pageCount);
 
 		setTimeRange(new TimeRange(report.getMonth(), report.getYear(), report.getMonthCount()));
 
-		this.employeeInfoLabel.setText(report.getEmployee().getFullName() + " [" + report.getEmployee().getEmployeeCode() + "]");
-
-		var fromDate = LocalDate.of(report.getYear(), report.getMonth(), 1);
-		var toDate = fromDate.plusMonths(report.getMonthCount()).minusDays(1);
-		var fromToRange = Duration.between(fromDate.atStartOfDay(), toDate.atStartOfDay()).toDays();
-
-		var pageCount = (int) Math.ceil(fromToRange / 7.0);
-		this.pageCount = pageCount;
-		this.currentPageLabel.setText("1/" + pageCount);
-
-		var _fromDate = Date.from(fromDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-		var _toDate = Date.from(fromDate.plusDays(7).atStartOfDay(ZoneId.systemDefault()).toInstant());
-
 		var attendances = report.getAttendances().stream()
-				.filter(attendance -> attendance.getDate().compareTo(_fromDate) >= 0 && attendance.getDate().compareTo(_toDate) < 0)
-				.map(attendance -> new OfficerAttendanceDTO(attendance)).toArray(OfficerAttendanceDTO[]::new);
+				.map(attendance -> new OfficerAndAttendanceDTO(attendance)).toArray(OfficerAndAttendanceDTO[]::new);
+//				.filter(attendance -> attendance.getDate().compareTo(_fromDate) >= 0 && attendance.getDate().compareTo(_toDate) < 0)
+//				.map(attendance -> new OfficerAttendanceDTO(attendance)).toArray(OfficerAttendanceDTO[]::new);
 
 		var observableAttendances = FXCollections.observableArrayList(attendances);
 
