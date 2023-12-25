@@ -48,7 +48,7 @@ public class SqliteRequestRepository implements IRequestRepository {
     }
 
 
-    @Override
+/*    @Override
     public void insertMany(List<Request> requests) {
         try {
             String sql = "INSERT INTO Request (employeeCode, date, hoursEarlyLeave, hoursLate, morningSession, afternoonSession, reason, status) VALUES ";
@@ -74,6 +74,51 @@ public class SqliteRequestRepository implements IRequestRepository {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }*/
+
+    @Override
+    public void insertRequest(Request req) {
+        try {
+            var _date = req.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            String sql = "INSERT INTO Request (employeeCode, date, hoursEarlyLeave, hoursLate, morningSession, afternoonSession, reason, status) VALUES " +
+                    String.format("('%s', '%s', %f, %f, %d, %d, '%s', %d)",
+                            req.getEmployeeCode(),
+                            _date,
+                            req.getHoursEarlyLeave(),
+                            req.getHoursLate(),
+                            req.isMorningSession() ? 1 : 0,
+                            req.isAfternoonSession() ? 1 : 0,
+                            req.getReason(),
+                            req.getStatus());
+            System.out.println(sql);
+            var r = dao.executeRaw(sql);
+            var x = r;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
+    /*public void insertRequest(Request req) {
+        try {
+            String sql = "INSERT INTO Request (employeeCode, date, hoursEarlyLeave, hoursLate, morningSession, afternoonSession, reason, status) VALUES ";
+
+
+            String s = String.format("('%s', '%s', %f, %f, %d, %d, '%s', %d)",
+                    req.getEmployeeCode(),
+                    req.getDate(),
+                    req.getHoursEarlyLeave(),
+                    req.getHoursLate(),
+                    req.isMorningSession() ? 1 : 0,
+                    req.isAfternoonSession() ? 1 : 0,
+                    req.getReason(),
+                    req.getStatus());
+
+            sql += String.join(",", s);
+
+            dao.executeRaw(sql);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }*/
 }

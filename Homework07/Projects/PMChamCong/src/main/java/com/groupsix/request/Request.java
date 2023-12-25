@@ -8,6 +8,7 @@ import java.util.Date;
 @DatabaseTable(tableName = "Request")
 public class Request {
 
+
     public int getId() {
         return id;
     }
@@ -105,4 +106,6 @@ public class Request {
     private String reason;
     @DatabaseField
     private int status;
+
+    
 }

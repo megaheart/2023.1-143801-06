@@ -11,9 +11,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="722.4" prefWidth="885.6" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupsix.pages.changerequesthr.RequestHomeView">
+<AnchorPane prefHeight="722.4" prefWidth="936.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupsix.pages.changerequesthr.RequestHomeView">
     <children>
-        <Label layoutX="382.0" layoutY="90.0" style="-fx-font-weight: bold;" text="Thông tin tổng hợp">
+        <Label layoutX="405.0" layoutY="90.0" style="-fx-font-weight: bold;" text="Thông tin tổng hợp">
             <font>
                 <Font size="14.0" />
             </font>
@@ -29,7 +29,7 @@
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
             </columnResizePolicy>
         </TableView>
-        <HBox alignment="CENTER" layoutX="10.0" layoutY="127.0" prefHeight="79.0" prefWidth="882.0" spacing="35.0">
+        <HBox alignment="CENTER" layoutX="-2.0" layoutY="127.0" prefHeight="79.0" prefWidth="945.0" spacing="35.0">
             <children>
                 <AnchorPane prefHeight="70.0" prefWidth="158.0" style="-fx-border-color: black; -fx-border-radius: 10;">
                     <children>
@@ -81,15 +81,15 @@
                 </AnchorPane>
             </children>
         </HBox>
-        <DatePicker fx:id="datePicker" layoutX="492.0" layoutY="224.0" prefHeight="25.0" prefWidth="140.0" />
-        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="296.0" layoutY="16.0" style="-fx-font-weight: bold;" text="Quản lý yêu cầu chỉnh sửa của nhân viên">
+        <DatePicker fx:id="datePicker" layoutX="515.0" layoutY="226.0" prefHeight="25.0" prefWidth="140.0" />
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="319.0" layoutY="16.0" style="-fx-font-weight: bold;" text="Quản lý yêu cầu chỉnh sửa của nhân viên">
             <font>
                 <Font size="16.0" />
             </font>
         </Label>
-        <ComboBox fx:id="thangComboBox" layoutX="577.0" layoutY="50.0" prefHeight="25.0" prefWidth="85.0" promptText="Tháng" />
-        <ComboBox fx:id="namComboBox" layoutX="675.0" layoutY="50.0" prefHeight="25.0" prefWidth="82.0" promptText="Năm" />
-        <Button fx:id="btnThongKe" layoutX="769.0" layoutY="50.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" text="Thống kê" />
+        <ComboBox fx:id="thangComboBox" layoutX="600.0" layoutY="50.0" prefHeight="25.0" prefWidth="85.0" promptText="Tháng" />
+        <ComboBox fx:id="namComboBox" layoutX="698.0" layoutY="50.0" prefHeight="25.0" prefWidth="82.0" promptText="Năm" />
+        <Button fx:id="btnThongKe" layoutX="792.0" layoutY="50.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" text="Thống kê" />
         <Label layoutX="147.0" layoutY="679.0" prefHeight="20.0" prefWidth="55.0" text="bản ghi">
             <font>
                 <Font size="14.0" />
@@ -100,10 +100,10 @@
                 <Font size="14.0" />
             </font>
         </Label>
-      <TextField fx:id="employeeCodeTextField" layoutX="314.0" layoutY="227.0" prefHeight="25.0" prefWidth="111.0" />
-      <Button fx:id="btnSearch" layoutX="771.0" layoutY="222.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" text="Tìm kiếm" />
-      <ComboBox fx:id="loaiComboBox" layoutX="659.0" layoutY="222.0" prefHeight="25.0" prefWidth="82.0" promptText="Loại" />
-      <Label layoutX="232.0" layoutY="233.0" text="Mã nhân viên:" />
-      <Label layoutX="446.0" layoutY="230.0" text="Ngày" />
+      <TextField fx:id="employeeCodeTextField" layoutX="337.0" layoutY="227.0" prefHeight="25.0" prefWidth="111.0" />
+      <Button fx:id="btnSearch" layoutX="794.0" layoutY="223.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" text="Tìm kiếm" />
+      <ComboBox fx:id="loaiComboBox" layoutX="682.0" layoutY="223.0" prefHeight="25.0" prefWidth="82.0" promptText="Loại" />
+      <Label layoutX="255.0" layoutY="233.0" text="Mã nhân viên:" />
+      <Label layoutX="469.0" layoutY="230.0" text="Ngày" />
     </children>
 </AnchorPane>

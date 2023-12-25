@@ -397,11 +397,12 @@ public class OfficerHomeController implements Initializable {
     }
 
     public void handleDetailBack(int day, int month, int year){
+      var dateFormat = new java.text.SimpleDateFormat("dd/MM/yyyy");
       Date date = new Date(year, month - 1, day);
         OfficerAttendance attendance = getAttendanceDateRow(date);
         initThongKeFunction();
         if(attendance != null){
-            String dateRow = day + " - " + month + " - " + year;
+            String dateRow = dateFormat.format(date);
             String morningSession = attendance.isMorningSession() ? "Có" : "Không";
             String afternoonSession = attendance.isAfternoonSession() ? "Có" : "Không";
             AttendanceLogRow row = new AttendanceLogRow(dateRow, morningSession, afternoonSession);
@@ -410,7 +411,7 @@ public class OfficerHomeController implements Initializable {
             rows.add(row);
             addRowTable(rows);
         }else{
-            String dateRow = day + " - " + month + " - " + year;
+            String dateRow = dateFormat.format(date);
             AttendanceLogRow row = new AttendanceLogRow(dateRow, "Không", "Không");
             clearTable();
             ArrayList<AttendanceLogRow> rows = new ArrayList<>();

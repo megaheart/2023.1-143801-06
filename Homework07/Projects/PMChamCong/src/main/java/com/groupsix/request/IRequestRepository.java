@@ -9,6 +9,5 @@ import java.util.List;
 
 public interface IRequestRepository {
     ArrayList<Request> getRequestOfEmployee(User user, int month, int year, int monthCount);
-    void insertMany(List<Request> requests);
-
+    void insertRequest(Request req);
 }
