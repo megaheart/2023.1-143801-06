@@ -86,6 +86,14 @@ public class Request {
         this.logAttendanceId = logAttendanceId;
     }
 
+    public String getResponse() {
+        return response;
+    }
+
+    public void setResponse(String response) {
+        this.response = response;
+    }
+
     @DatabaseField(generatedId = true)
     private int id;
 
@@ -114,4 +122,7 @@ public class Request {
 
     @DatabaseField()
     private int logAttendanceId;
+
+    @DatabaseField()
+    private String response;
 }
