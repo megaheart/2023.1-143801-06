@@ -32,4 +32,12 @@ public class ChooseFileImportView {
     @FXML
     public FileChooser fileChooser = new FileChooser();
 
+    @FXML
+    public Button importButton;
+
+    @FXML
+    public Button closeButton;
+
+    @FXML
+    public Button clearButton;
 }

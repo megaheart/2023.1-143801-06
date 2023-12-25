@@ -92,7 +92,7 @@ class ImportServiceTest {
         employeeRepository = Mockito.mock(IEmployeeRepository.class);
         when(employeeRepository.getEmployees()).thenReturn(employees);
 
-        importService = new ImportService(historyImportRepository, officerAttendanceRepository, employeeRepository);
+        importService = new ImportService();
     }
 
     @Test

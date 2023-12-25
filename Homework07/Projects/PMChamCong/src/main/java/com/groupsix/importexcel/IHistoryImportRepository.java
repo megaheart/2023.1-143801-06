@@ -3,7 +3,7 @@ package com.groupsix.importexcel;
 import java.util.List;
 
 public interface IHistoryImportRepository {
-    void save(ImportHistory history);
+    int save(ImportHistory history);
 
     ImportHistory getById(int id);
 

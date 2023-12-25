@@ -6,7 +6,7 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "HistoryImport")
 public class ImportHistory {
 
-    @DatabaseField(generatedId = true)
+    @DatabaseField(id = true)
     private Integer id = -1;
 
     @DatabaseField

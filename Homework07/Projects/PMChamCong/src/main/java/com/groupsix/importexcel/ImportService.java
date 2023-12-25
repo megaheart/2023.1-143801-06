@@ -1,8 +1,10 @@
 package com.groupsix.importexcel;
 
+import com.groupsix.attendance.AttendanceFactory;
 import com.groupsix.attendance.IOfficerAttendanceRepository;
 import com.groupsix.attendance.OfficerAttendance;
 import com.groupsix.hrsubsystem.Employee;
+import com.groupsix.hrsubsystem.HRSubsystemFactory;
 import com.groupsix.hrsubsystem.IEmployeeRepository;
 import com.groupsix.user.User;
 import com.groupsix.user.UserService;
@@ -13,6 +15,9 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -21,12 +26,10 @@ public class ImportService implements IImportService {
     private final IOfficerAttendanceRepository officerAttendanceRepository;
     private final IEmployeeRepository employeeRepository;
 
-//    private
-
-    public ImportService(IHistoryImportRepository historyImportRepository, IOfficerAttendanceRepository officerAttendanceRepository, IEmployeeRepository employeeRepository) {
-        this.historyImportRepository = historyImportRepository;
-        this.officerAttendanceRepository = officerAttendanceRepository;
-        this.employeeRepository = employeeRepository;
+    public ImportService() {
+        this.historyImportRepository = ImportHistoryFactory.getInstance().createRepository();
+        this.officerAttendanceRepository = AttendanceFactory.getInstance().createRepository();
+        this.employeeRepository = HRSubsystemFactory.getInstance().createEmployeeRepository();
     }
 
     public boolean checkFileValid(File file){
@@ -34,8 +37,7 @@ public class ImportService implements IImportService {
         return true;
     }
 
-    public void startImport(File file)  {
-        try {
+    public void startImport(File file) throws Exception {
             List<AttendanceLogImport> attendanceLogImports = GetAttendanceLogImportFromFile(file);
             if (attendanceLogImports.size() == 0) {
                 throw new Exception("File không có dữ liệu");
@@ -51,7 +53,12 @@ public class ImportService implements IImportService {
             attendanceLogImports.forEach(attendanceLogImport -> {
                 Employee employee = employees.stream().filter(e -> e.getEmployeeCode().equals(attendanceLogImport.getEmployeeCode())).findFirst().orElse(null);
                 if (employee != null) {
-                    OfficerAttendance officerAttendance = createOfficerAttendance(employee, attendanceLogImport);
+                    OfficerAttendance officerAttendance = null;
+                    try {
+                        officerAttendance = createOfficerAttendance(employee, attendanceLogImport);
+                    } catch (ParseException e) {
+                        throw new RuntimeException(e);
+                    }
                     officerAttendances.add(officerAttendance);
                 }
             });
@@ -62,9 +69,6 @@ public class ImportService implements IImportService {
 
             historyImportRepository.save(importHistory);
             officerAttendanceRepository.insertMany(officerAttendances);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
@@ -81,8 +85,7 @@ public class ImportService implements IImportService {
         historyImportRepository.deleteById(id);
     }
 
-    public List<AttendanceLogImport> GetAttendanceLogImportFromFile(File file){
-        try {
+    public List<AttendanceLogImport> GetAttendanceLogImportFromFile(File file) throws IOException {
             if (!checkFileValid(file)) return null;
             FileInputStream fileInputStream = new FileInputStream(file);
             Workbook workbook = WorkbookFactory.create(fileInputStream);
@@ -101,10 +104,6 @@ public class ImportService implements IImportService {
                 attendanceLogImports.add(new AttendanceLogImport(index, ExcelHelper.getFormatDate(timestamp), code));
             });
             return attendanceLogImports;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     public List<Employee> getListEmployees(List<String> codes) throws Exception {
@@ -120,8 +119,8 @@ public class ImportService implements IImportService {
             return employees;
         }
 
-    public OfficerAttendance createOfficerAttendance(Employee employee, AttendanceLogImport attendanceLogImport){
-        try {
+    public OfficerAttendance createOfficerAttendance(Employee employee, AttendanceLogImport attendanceLogImport)
+            throws ParseException {
             OfficerAttendance officerAttendance = new OfficerAttendance();
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
             Date date = simpleDateFormat.parse(attendanceLogImport.getTimestamp());
@@ -146,16 +145,12 @@ public class ImportService implements IImportService {
             }
             officerAttendance.setHoursLate(hoursLate);
             officerAttendance.setEmployeeCode(employee.getEmployeeCode());
-//            officerAttendance.setDate(date);
+            officerAttendance.setDate(date);
 
             officerAttendance.setMorningSession(isMorningSession);
             officerAttendance.setAfternoonSession(isAfternoonSession);
 
 
             return officerAttendance;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 }
