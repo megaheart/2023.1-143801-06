@@ -55,7 +55,7 @@ public class ReportHelper {
 		}
 
 		var totalSessions = 0;
-		var totalHoursNotWork = 0;
+		var totalHoursNotWork = 0.0;
 
 		for(var attendance : attendances){
 			if(attendance.isMorningSession()) {
@@ -79,9 +79,27 @@ public class ReportHelper {
 		return report;
 	}
 
-	public static OfficerAttendanceDetailReport summarizeReport(Department department, ArrayList<OfficerAndAttendance> mergedOfficerAttendances) {
+	public static OfficerAttendanceReport summarizeReport(Department department, ArrayList<OfficerAndAttendance> mergedOfficerAttendances) {
+		OfficerAttendanceReport report = new OfficerAttendanceReport();
 
-		return null;
+		var attendances = new ArrayList<OfficerAndAttendance>(mergedOfficerAttendances);
+
+		attendances.sort((a, b) -> a.getFullName().compareTo(b.getFullName()));
+
+		report.setAttendances(attendances);
+
+		var totalSessions = 0;
+		var totalHoursNotWork = 0.0;
+
+		for(var attendance : attendances){
+			totalSessions += attendance.getTotalSession();
+			totalHoursNotWork += attendance.getHoursNotWork();
+		}
+
+		report.setAverageSessions(totalSessions * 1.0 / attendances.size());
+		report.setAverageHoursNotWork(totalHoursNotWork / attendances.size());
+
+		return report;
 	}
 
 }

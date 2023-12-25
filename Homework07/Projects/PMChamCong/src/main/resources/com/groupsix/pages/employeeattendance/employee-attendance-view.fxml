@@ -70,7 +70,7 @@
                <children>
                   <AnchorPane prefHeight="70.0" prefWidth="158.0" style="-fx-border-color: black; -fx-border-radius: 10;">
                      <children>
-                        <Label layoutX="25.0" layoutY="54.0" text="Tổng số ca làm việc">
+                        <Label layoutX="22.0" layoutY="52.0" text="Tổng số buổi đi làm">
                            <font>
                               <Font size="13.0" />
                            </font>

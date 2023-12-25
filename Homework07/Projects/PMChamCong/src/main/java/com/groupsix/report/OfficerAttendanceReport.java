@@ -68,6 +68,14 @@ public class OfficerAttendanceReport {
 		this.totalSessions = totalSessions;
 	}
 
+	public int getMonthCount() {
+		return monthCount;
+	}
+
+	public void setMonthCount(int monthCount) {
+		this.monthCount = monthCount;
+	}
+
 	private double averageHoursNotWork;
 
     private int department;
@@ -83,5 +91,7 @@ public class OfficerAttendanceReport {
     private int month;
 
     private int totalSessions;
+
+	private int monthCount;
 
 }
