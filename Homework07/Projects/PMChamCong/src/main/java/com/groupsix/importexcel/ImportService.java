@@ -130,8 +130,8 @@ public class ImportService implements IImportService {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
             Date date = simpleDateFormat.parse(attendanceLogImport.getTimestamp());
 
-            int hour = ExcelHelper.getHour(attendanceLogImport.getTimestamp());
-            int minute = ExcelHelper.getMinute(attendanceLogImport.getTimestamp());
+            int hour = date.getHours();
+            int minute = date.getMinutes();
 
             boolean isMorningSession = false;
             boolean isAfternoonSession = false;

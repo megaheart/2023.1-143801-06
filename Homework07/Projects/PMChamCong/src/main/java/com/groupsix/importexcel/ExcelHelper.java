@@ -11,16 +11,4 @@ public class ExcelHelper {
         String second = time.length == 3 ? time[2] : "00";
         return date[2] + "/" + date[1] + "/" + date[0] + " " + hour + ":" + minute + ":" + second;
     }
-
-    public static int getHour(String timestamp) {
-        String[] arr = timestamp.split(" ");
-        String[] time = arr[1].split(":");
-        return Integer.parseInt(time[0]);
-    }
-
-    public static int getMinute(String timestamp) {
-        String[] arr = timestamp.split(" ");
-        String[] time = arr[1].split(":");
-        return Integer.parseInt(time[1]);
-    }
 }
