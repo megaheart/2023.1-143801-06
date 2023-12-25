@@ -2,8 +2,11 @@ package com.groupsix.pages.officerattendancedetail;
 
 import com.groupsix.attendance.AttendanceFactory;
 import com.groupsix.attendance.OfficerAttendance;
+import com.groupsix.hrsubsystem.Employee;
 import com.groupsix.hrsubsystem.HRSubsystemFactory;
 import com.groupsix.pages.FXRouter;
+import com.groupsix.request.Request;
+import com.groupsix.request.RequestFactory;
 import com.groupsix.user.UserService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,6 +21,7 @@ import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
@@ -35,6 +39,7 @@ public class OfficerHomeController implements Initializable {
   public void initialize(URL url, ResourceBundle resourceBundle){
       initThongKeFunction();
       initButtonThongKe();
+     notificationBtn();
   }
 
 
@@ -317,7 +322,9 @@ public class OfficerHomeController implements Initializable {
                                         int year = Integer.parseInt(dateInfo[2]);
                                         Date dateSearch = new Date(year, month - 1, day);
                                         OfficerAttendance attendance = getAttendanceDateRow(dateSearch);
-                                        ctrl.settup(attendance);
+                                        if(attendance != null) {
+                                            ctrl.settup(attendance);
+                                        }
 
 
 
@@ -348,7 +355,6 @@ public class OfficerHomeController implements Initializable {
     private OfficerAttendance getAttendanceDateRow(Date date){
         var repo = AttendanceFactory.getInstance().createRepository();
         var user = UserService.getInstance().getCurrentUser();
-        System.out.println(user.getEmployeeCode());
         var employee = HRSubsystemFactory.getInstance().createEmployeeRepository().getEmployeeByCode(user.getEmployeeCode());
 
         int day = date.getDate();
@@ -426,12 +432,101 @@ public class OfficerHomeController implements Initializable {
 
     public void notificationBtn(){
       //Xử lý hàm notificationBtn
-        /*this.officerHomeView.notificationBtn.setOnAction(event -> {
-            var ctrl = (OfficerNotificationController) FXRouter.goTo("officernotificationview");
-            ctrl.initialize(null, null);
-        });*/
+        var repo = RequestFactory.getInstance().createRepository();
+        var user = UserService.getInstance().getCurrentUser();
+        var employee = HRSubsystemFactory.getInstance().createEmployeeRepository().getEmployeeByCode(user.getEmployeeCode());
+
+        var requests = repo.getRequestNotification(employee);
+
+
+        this.officerHomeView.notificationBtn.setOnMouseClicked(event -> {
+
+            ContextMenu notificationMenu = new ContextMenu();
+            for (var request : requests) {
+                String content = "";
+                if (request.getLogAttendanceId() == -1){
+                    if(request.getStatus() == 0){
+                        content = "Yêu cầu ngày 28/12/2023 bị từ chối";
+                    }else{
+                        content = "Yêu cầu ngày 28/12/2023 được chấp nhận";
+                    }
+                }else{
+                    Date date = request.getDate();
+                    //Định dạng ngày theo kiểu dd/MM/yyyy
+                    var dateformat = new SimpleDateFormat("dd/MM/yyyy");
+                    String dateRow = dateformat.format(date);
+                    if(request.getStatus() == 0){
+                        content = "Yêu cầu ngày " + dateRow + " bị từ chối";
+                    }else{
+                        content = "Yêu cầu ngày " + dateRow + " được chấp nhận";
+                    }
+                }
+                MenuItem notification = new MenuItem(content);
+                notification.setOnAction(e -> {
+                    showNotificationDetail(request);
+                });
+                notificationMenu.getItems().add(notification);
+            }
+
+
+            notificationMenu.show(this.officerHomeView.notificationBtn, event.getScreenX(), event.getScreenY());
+        });
     }
 
+    private void showNotificationDetail(Request request) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Chi tiết thông báo");
+        alert.setHeaderText(null);
+        String content = "";
+        if (request.getLogAttendanceId() == -1){
+            if(request.getStatus() == 0){
+                content = "Yêu cầu thêm bản ghi chấm công bị từ chối \n" + "Lý do: " + request.getResponse();
+                alert.setContentText(content);
+                alert.showAndWait();
+            }else{
+                var dateformat = new SimpleDateFormat("dd/MM/yyyy");
+                String dateRow = dateformat.format(request.getDate());
+                content = "Yêu cầu thêm bản ghi chấm công được chấp nhận \n" +
+                        "Chi tiết chấm công ngày " + dateRow + ": \n" ;
+                String morningSession = request.isMorningSession() ? "Có" : "Không";
+                String afternoonSession = request.isAfternoonSession() ? "Có" : "Không";
+                content = content + "Ca sáng: " + morningSession + "     " + "Ca chiều: " + afternoonSession;
+                double hoursLate = request.getHoursLate();
+                double hoursEarlyLeave = request.getHoursEarlyLeave();
+                content = content + "\n" + "Số giờ đi muộn: " + hoursLate +" giờ" + "     " + "Số giờ về sớm: " + hoursEarlyLeave +" giờ";
+                content = content + "\n" + "Lý do: " + request.getReason();
+                alert.setContentText(content);
+                alert.showAndWait();
+
+            }
+
+        }else{
+            if (request.getStatus() == 0){
+
+                content = "Yêu cầu chỉnh sửa bản ghi chấm công bị từ chối \n" + "Lý do: " + request.getResponse();
+                alert.setContentText(content);
+                alert.showAndWait();
+            }else{
+                var repo = AttendanceFactory.getInstance().createRepository();
+                var user = UserService.getInstance().getCurrentUser();
+                var employee = HRSubsystemFactory.getInstance().createEmployeeRepository().getEmployeeByCode(user.getEmployeeCode());
+                var attendanceLog = repo.getChangeLog(employee, request.getLogAttendanceId());
+                var dateformat = new SimpleDateFormat("dd/MM/yyyy");
+                String dateRow = dateformat.format(attendanceLog.getDate());
+                content = "Yêu cầu chỉnh sửa bản ghi chấm công được chấp nhận \n" +
+                        "Chi tiết chấm công ngày " + dateRow + ": \n" ;
+                String morningSession = request.isMorningSession() ? "Có" : "Không";
+                String afternoonSession = request.isAfternoonSession() ? "Có" : "Không";
+                content = content + "Ca sáng: " + morningSession + "     " + "Ca chiều: " + afternoonSession;
+                double hoursLate = request.getHoursLate();
+                double hoursEarlyLeave = request.getHoursEarlyLeave();
+                content = content + "\n" + "Số giờ đi muộn: " + hoursLate + " giờ" + "     " + "Số giờ về sớm: " + hoursEarlyLeave +" giờ";
+                content = content + "\n" + "Lý do: " + request.getReason();
+                alert.setContentText(content);
+                alert.showAndWait();
+            }
+        }
+    }
 
 
 }

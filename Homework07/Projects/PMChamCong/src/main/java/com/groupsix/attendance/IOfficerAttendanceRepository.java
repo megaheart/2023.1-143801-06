@@ -11,5 +11,6 @@ public interface IOfficerAttendanceRepository {
 	ArrayList<OfficerAttendance> getAttendancesOfEmployee(User user, Employee employee, int month, int year, int monthCount);
 
 	void insertMany(List<OfficerAttendance> attendances);
+	OfficerAttendance getChangeLog(Employee e, int id);
 
 }

@@ -14,4 +14,6 @@ public interface IRequestRepository {
 
 
     ArrayList<Request> getRequestOfEmployee(User user, int date, int month, int year, String employee_code);
+
+    ArrayList<Request> getRequestNotification(Employee employee);
 }

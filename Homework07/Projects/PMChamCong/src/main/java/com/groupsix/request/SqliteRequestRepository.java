@@ -9,6 +9,7 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.SelectArg;
 import org.apache.poi.ss.usermodel.DateUtil;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -118,11 +119,12 @@ public class SqliteRequestRepository implements IRequestRepository {
     @Override
     public void insertRequest(Request req) {
         try {
-            var _date = req.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            //var _date = req.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSSSS");
             String sql = "INSERT INTO Request (employeeCode, date, hoursEarlyLeave, hoursLate, morningSession, afternoonSession, reason, status, logAttendanceId, response) VALUES " +
                     String.format("('%s', '%s', %f, %f, %d, %d, '%s', %d, %d, '%s')",
                             req.getEmployeeCode(),
-                            _date,
+                            formatter.format(req.getDate()),
                             req.getHoursEarlyLeave(),
                             req.getHoursLate(),
                             req.isMorningSession() ? 1 : 0,
@@ -162,17 +164,16 @@ public class SqliteRequestRepository implements IRequestRepository {
             throw new RuntimeException(e);
         }
     }*/
-
-    public ArrayList<Request> getRequestNotification(User user, Employee employee) {
+    @Override
+    public ArrayList<Request> getRequestNotification(Employee employee) {
 
         var queryBuilder = dao.queryBuilder();
         try {
             queryBuilder.where()
-                    .eq("employeeCode", employee.getEmployeeCode())
-                    .and(2);
-            queryBuilder.where().eq("status", 0)
+                    .eq("employeeCode", employee.getEmployeeCode());
+            /*queryBuilder.where().eq("status", 0)
                     .or()
-                    .eq("status", 2);
+                    .eq("status", 2);*/
 
             queryBuilder.orderBy("date", false);
 

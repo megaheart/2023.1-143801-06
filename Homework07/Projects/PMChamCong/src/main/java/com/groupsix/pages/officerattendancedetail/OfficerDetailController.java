@@ -19,6 +19,7 @@ import java.util.ResourceBundle;
 public class OfficerDetailController implements Initializable {
 
     private OfficerDetailView viewDetail;
+    public int attendanceLog;
 
     public OfficerDetailController(OfficerDetailView viewDetail) {
         this.viewDetail = viewDetail;
@@ -76,6 +77,15 @@ public class OfficerDetailController implements Initializable {
 
                 // Xử lý phản hồi từ người dùng
                 if (result.isPresent() && result.get() == confirmButton) {
+                    // Truy vấn logID
+                    /*String[] dateString = this.viewDetail.dateView.getText().split(" - ");
+                    int day = Integer.parseInt(dateString[0]);
+                    int month = Integer.parseInt(dateString[1]);
+                    int year = Integer.parseInt(dateString[2]);
+                    var repo = RequestFactory.getInstance().createRepository();
+                    var user = UserService.getInstance().getCurrentUser();
+                    OfficerAttendance attendance = repo.getAttendance(user, day, month, year);*/
+
 
                     boolean morningSession = this.viewDetail.morningRequest.getValue().equals("Có");
                     boolean afternoonSession = this.viewDetail.afternoonRequest.getValue().equals("Có");
@@ -84,16 +94,32 @@ public class OfficerDetailController implements Initializable {
                     String reason = this.viewDetail.reasonRequest.getText();
                     //Lấy thời gian của hệ thống
                     //Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-                    Date now = new Date();
                     Request request = new Request();
                     request.setEmployeeCode(UserService.getInstance().getCurrentUser().getEmployeeCode());
-                    request.setDate(now);
                     request.setHoursLate(hoursLate);
                     request.setHoursEarlyLeave(hoursEarlyLeave);
                     request.setMorningSession(morningSession);
                     request.setAfternoonSession(afternoonSession);
                     request.setReason(reason);
+                    if(attendanceLog != 0){
+                        Date now = new Date();
+                        request.setDate(now);
+                        request.setLogAttendanceId(attendanceLog);
+                    }else{
+                        String dateLabel = this.viewDetail.dateView.getText();
+                        String[] dateInfo = dateLabel.split(" - ");
+                        int day = Integer.parseInt(dateInfo[0]);
+                        int month = Integer.parseInt(dateInfo[1]);
+                        int year = Integer.parseInt(dateInfo[2]);
+                        //Date dateLog = new Date(year - 1900, month - 1, day);
+                        LocalDate dateLog = LocalDate.of(year, month, day);
+                        Date _dateLog = Date.from(dateLog.atStartOfDay().toInstant(java.time.ZoneOffset.UTC));
+                        System.out.println(_dateLog);
+                        request.setDate(_dateLog);
+                        request.setLogAttendanceId(-1);
+                    }
                     insertRequest(request);
+
                     System.out.println("Người dùng đã xác nhận");
                     // Thực hiện hành động khi người dùng xác nhận
                 } else {
@@ -134,6 +160,7 @@ public class OfficerDetailController implements Initializable {
             this.viewDetail.afternoonSession.setText(attendance.isAfternoonSession() ? "Có" : "Không");
             this.viewDetail.lateView.setText(String.valueOf(attendance.getHoursLate()));
             this.viewDetail.earlyLeaveView.setText(String.valueOf(attendance.getHoursEarlyLeave()));
+            this.attendanceLog = attendance.getId();
 
     }
 
