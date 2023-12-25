@@ -91,10 +91,10 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <ComboBox fx:id="listComboBox" layoutX="653.0" layoutY="50.0" prefHeight="25.0" prefWidth="57.0" />
-      <ComboBox fx:id="loaiComboBox" layoutX="558.0" layoutY="50.0" prefHeight="25.0" prefWidth="82.0" promptText="Loại" />
-      <ComboBox fx:id="yearComboBox" layoutX="723.0" layoutY="50.0" prefHeight="25.0" prefWidth="82.0" promptText="Năm" />
-      <Button fx:id="btnThongKe" layoutX="817.0" layoutY="50.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" text="Thống kê" />
+      <ComboBox fx:id="listComboBox" layoutX="550.0" layoutY="50.0" prefHeight="25.0" prefWidth="57.0" />
+      <ComboBox fx:id="loaiComboBox" layoutX="455.0" layoutY="50.0" prefHeight="25.0" prefWidth="82.0" promptText="Loại" />
+      <ComboBox fx:id="yearComboBox" layoutX="620.0" layoutY="50.0" prefHeight="25.0" prefWidth="82.0" promptText="Năm" />
+      <Button fx:id="btnThongKe" layoutX="714.0" layoutY="50.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" text="Thống kê" />
       <Label layoutX="147.0" layoutY="679.0" prefHeight="20.0" prefWidth="55.0" text="bản ghi">
          <font>
             <Font size="14.0" />
@@ -105,5 +105,6 @@
             <Font size="14.0" />
          </font>
       </Label>
+      <Button fx:id="notificationBtn" layoutX="809.0" layoutY="50.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="89.0" text="Thông báo" />
    </children>
 </AnchorPane>

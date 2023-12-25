@@ -424,5 +424,14 @@ public class OfficerHomeController implements Initializable {
 
     }
 
+    public void notificationBtn(){
+      //Xử lý hàm notificationBtn
+        /*this.officerHomeView.notificationBtn.setOnAction(event -> {
+            var ctrl = (OfficerNotificationController) FXRouter.goTo("officernotificationview");
+            ctrl.initialize(null, null);
+        });*/
+    }
+
+
 
 }

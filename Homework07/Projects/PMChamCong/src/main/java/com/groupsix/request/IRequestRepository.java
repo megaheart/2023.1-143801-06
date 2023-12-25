@@ -12,7 +12,6 @@ public interface IRequestRepository {
 
     void insertRequest(Request req);
 
-    void insertMany(List<Request> requests);
 
     ArrayList<Request> getRequestOfEmployee(User user, int date, int month, int year, String employee_code);
 }

@@ -113,7 +113,6 @@ public class Request {
     @DatabaseField()
     private int status;
 
-
     @DatabaseField()
     private int logAttendanceId;
 

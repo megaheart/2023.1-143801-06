@@ -85,6 +85,8 @@ public class SqliteRequestRepository implements IRequestRepository {
     }
 
 
+
+
 /*    @Override
     public void insertMany(List<Request> requests) {
         try {
@@ -158,4 +160,41 @@ public class SqliteRequestRepository implements IRequestRepository {
             throw new RuntimeException(e);
         }
     }*/
+
+    public ArrayList<Request> getRequestNotification(User user, Employee employee) {
+
+        var queryBuilder = dao.queryBuilder();
+        try {
+            queryBuilder.where()
+                    .eq("employeeCode", employee.getEmployeeCode())
+                    .and(2);
+            queryBuilder.where().eq("status", 0)
+                    .or()
+                    .eq("status", 2);
+
+            queryBuilder.orderBy("date", false);
+
+
+            var statement = queryBuilder.prepare();
+
+            System.out.println(statement.getStatement());
+
+            return (ArrayList<Request>) dao.query(statement);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void updateRequest(User user, int id, int status, String respond){
+
+        try {
+            String sql = "UPDATE Request SET status = " + status + ", respond = '" + respond + "' WHERE id = " + id;
+            System.out.println(sql);
+            var r = dao.executeRaw(sql);
+            var x = r;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 }
