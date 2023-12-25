@@ -1,29 +1,21 @@
 package com.groupsix.pages.importexcel;
 
-import com.groupsix.attendance.OfficerAttendance;
 import com.groupsix.importexcel.AttendanceLogImport;
 import com.groupsix.importexcel.IImportService;
 import com.groupsix.importexcel.ImportServiceFactory;
 import com.groupsix.pages.FXRouter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.net.URL;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
-import org.apache.poi.ss.usermodel.DataFormatter;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 public class ChooseFileImportController implements Initializable  {
     public ChooseFileImportView chooseFileImportView;
@@ -151,7 +143,7 @@ public class ChooseFileImportController implements Initializable  {
                     System.out.println("INFO: Người dùng đã xác nhận nhập dữ liệu");
                     // Thực hiện hành động khi người dùng xác nhận
                     try {
-                        importService.startImport(file);
+                        importService.importOfficerAttendance(file);
                         goToImportView();
                     } catch (Exception e) {
                         System.out.println("ERROR: " + e.getMessage());

@@ -37,7 +37,7 @@ public class ImportService implements IImportService {
         return true;
     }
 
-    public void startImport(File file) throws Exception {
+    public void importOfficerAttendance(File file) throws Exception {
             List<AttendanceLogImport> attendanceLogImports = GetAttendanceLogImportFromFile(file);
             if (attendanceLogImports.size() == 0) {
                 throw new Exception("File không có dữ liệu");
@@ -56,7 +56,9 @@ public class ImportService implements IImportService {
             int idReturn = historyImportRepository.save(importHistory);
             List<OfficerAttendance> officerAttendances = new ArrayList<>();
             attendanceLogImports.forEach(attendanceLogImport -> {
-                Employee employee = employees.stream().filter(e -> e.getEmployeeCode().equals(attendanceLogImport.getEmployeeCode())).findFirst().orElse(null);
+                Employee employee = employees.stream()
+                        .filter(e -> e.getEmployeeCode().equals(attendanceLogImport.getEmployeeCode()))
+                        .findFirst().orElse(null);
                 if (employee != null) {
                     OfficerAttendance officerAttendance;
                     try {
@@ -69,6 +71,10 @@ public class ImportService implements IImportService {
                 }
             });
             officerAttendanceRepository.insertMany(officerAttendances);
+    }
+
+    public void importOfficerAttendance(List<OfficerAttendance> officerAttendances) {
+        officerAttendanceRepository.insertMany(officerAttendances);
     }
 
     @Override
@@ -154,7 +160,6 @@ public class ImportService implements IImportService {
 
             officerAttendance.setMorningSession(isMorningSession);
             officerAttendance.setAfternoonSession(isAfternoonSession);
-
 
             return officerAttendance;
     }

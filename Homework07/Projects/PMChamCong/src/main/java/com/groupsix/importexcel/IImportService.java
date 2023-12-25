@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.List;
 
 public interface IImportService {
-    void startImport(File file) throws Exception;
+    void importOfficerAttendance(File file) throws Exception;
 
     List<ImportHistory> getAllHistoryImport();
     ImportHistory getHistoryImport(int id);

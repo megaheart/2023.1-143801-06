@@ -23,12 +23,11 @@ public class DepartmentLeaderHomeController implements Initializable {
     private DepartmentLeaderHome view;
     private IOfficerAttendanceRepository officerAttendanceRepository;
     private IEmployeeRepository employeeRepository;
-    private ReportHelper reportHelper;
     public DepartmentLeaderHomeController(DepartmentLeaderHome view){
         this.view = view;
         officerAttendanceRepository = AttendanceFactory.getInstance().createRepository();
         employeeRepository = HRSubsystemFactory.getInstance().createEmployeeRepository();
-        reportHelper = new ReportHelper();
+        initialize(null, null);
     }
 
 
