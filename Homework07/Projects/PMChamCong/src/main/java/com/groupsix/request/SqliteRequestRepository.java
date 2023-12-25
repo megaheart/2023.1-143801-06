@@ -119,8 +119,8 @@ public class SqliteRequestRepository implements IRequestRepository {
     public void insertRequest(Request req) {
         try {
             var _date = req.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            String sql = "INSERT INTO Request (employeeCode, date, hoursEarlyLeave, hoursLate, morningSession, afternoonSession, reason, status) VALUES " +
-                    String.format("('%s', '%s', %f, %f, %d, %d, '%s', %d)",
+            String sql = "INSERT INTO Request (employeeCode, date, hoursEarlyLeave, hoursLate, morningSession, afternoonSession, reason, status, logAttendanceId, response) VALUES " +
+                    String.format("('%s', '%s', %f, %f, %d, %d, '%s', %d, %d, '%s')",
                             req.getEmployeeCode(),
                             _date,
                             req.getHoursEarlyLeave(),
@@ -128,7 +128,9 @@ public class SqliteRequestRepository implements IRequestRepository {
                             req.isMorningSession() ? 1 : 0,
                             req.isAfternoonSession() ? 1 : 0,
                             req.getReason(),
-                            req.getStatus());
+                            req.getStatus(),
+                            req.getLogAttendanceId(),
+                            req.getResponse());
             System.out.println(sql);
             var r = dao.executeRaw(sql);
             var x = r;
