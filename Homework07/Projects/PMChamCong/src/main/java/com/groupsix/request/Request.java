@@ -79,6 +79,12 @@ public class Request {
     public void setHoursEarlyLeave(double hoursEarlyLeave) {
         this.hoursEarlyLeave = hoursEarlyLeave;
     }
+    public int getLogAttendanceId() {
+        return logAttendanceId;
+    }
+    public void setLogAttendanceId(int logAttendanceId) {
+        this.logAttendanceId = logAttendanceId;
+    }
 
     @DatabaseField(generatedId = true)
     private int id;
@@ -103,6 +109,9 @@ public class Request {
 
     @DatabaseField()
     private String reason;
-    @DatabaseField
+    @DatabaseField()
     private int status;
+
+    @DatabaseField()
+    private int logAttendanceId;
 }
