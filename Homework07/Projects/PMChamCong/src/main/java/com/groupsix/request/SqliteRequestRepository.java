@@ -25,7 +25,7 @@ public class SqliteRequestRepository implements IRequestRepository {
     }
 
     @Override
-    public ArrayList<Request> getRequestOfEmployee(User user, int month, int year, int monthCount) {
+    /*public ArrayList<Request> getRequestOfEmployee(User user, int month, int year, int monthCount) {
         LocalDate fromDate = LocalDate.of(year, month, 1);
         LocalDate toDate = fromDate.plusMonths(monthCount).minusDays(1);
 
@@ -46,7 +46,7 @@ public class SqliteRequestRepository implements IRequestRepository {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
+    }*/
 
     public ArrayList<Request> getRequestOfEmployee(User user, int date, int month, int year, String employee_code, int status){
         var queryBuilder = dao.queryBuilder();
@@ -208,11 +208,27 @@ public class SqliteRequestRepository implements IRequestRepository {
     }
 
 
+
     public Request getRequest(int id){
         var queryBuilder = dao.queryBuilder();
         try {
             queryBuilder.where()
                     .eq("id", id);
+
+            var statement = queryBuilder.prepare();
+
+            return dao.queryForFirst(statement);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public Request getOfficerRequest(int logID){
+        var queryBuilder = dao.queryBuilder();
+        try {
+            queryBuilder.where()
+                    .eq("logAttendanceId", logID);
 
             var statement = queryBuilder.prepare();
 

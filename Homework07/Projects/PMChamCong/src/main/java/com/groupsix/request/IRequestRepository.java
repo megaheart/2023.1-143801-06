@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface IRequestRepository {
-    ArrayList<Request> getRequestOfEmployee(User user, int month, int year, int monthCount);
+    //ArrayList<Request> getRequestOfEmployee(User user, int month, int year, int monthCount);
 
     void insertRequest(Request req);
 
 
-    ArrayList<Request> getRequestOfEmployee(User user, int date, int month, int year, String employee_code);
+    //ArrayList<Request> getRequestOfEmployee(User user, int date, int month, int year, String employee_code);
 
     ArrayList<Request> getRequestNotification(Employee employee);
     ArrayList<Request> getRequestOfEmployee(User user, int date, int month, int year, String employee_code, int status);
@@ -21,5 +21,7 @@ public interface IRequestRepository {
     void updateRequest(User user, int requestId, int status, String response);
 
     Request getRequest(int id);
+
+    Request getOfficerRequest(int logID);
 
 }

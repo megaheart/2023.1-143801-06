@@ -514,7 +514,7 @@ public class OfficerHomeController implements Initializable {
                 double hoursLate = request.getHoursLate();
                 double hoursEarlyLeave = request.getHoursEarlyLeave();
                 content = content + "\n" + "Số giờ đi muộn: " + hoursLate +" giờ" + "     " + "Số giờ về sớm: " + hoursEarlyLeave +" giờ";
-                content = content + "\n" + "Lý do: " + request.getReason();
+                content = content + "\n" + "Lý do: " + request.getResponse();
                 alert.setContentText(content);
                 alert.showAndWait();
 
@@ -535,13 +535,13 @@ public class OfficerHomeController implements Initializable {
                 String dateRow = dateformat.format(attendanceLog.getDate());
                 content = "Yêu cầu chỉnh sửa bản ghi chấm công được chấp nhận \n" +
                         "Chi tiết chấm công ngày " + dateRow + ": \n" ;
-                String morningSession = request.isMorningSession() ? "Có" : "Không";
-                String afternoonSession = request.isAfternoonSession() ? "Có" : "Không";
+                String morningSession = attendanceLog.isMorningSession() ? "Có" : "Không";
+                String afternoonSession = attendanceLog.isAfternoonSession() ? "Có" : "Không";
                 content = content + "Ca sáng: " + morningSession + "     " + "Ca chiều: " + afternoonSession;
-                double hoursLate = request.getHoursLate();
-                double hoursEarlyLeave = request.getHoursEarlyLeave();
+                double hoursLate = attendanceLog.getHoursLate();
+                double hoursEarlyLeave = attendanceLog.getHoursEarlyLeave();
                 content = content + "\n" + "Số giờ đi muộn: " + hoursLate + " giờ" + "     " + "Số giờ về sớm: " + hoursEarlyLeave +" giờ";
-                content = content + "\n" + "Lý do: " + request.getReason();
+                content = content + "\n" + "Lý do: " + request.getResponse();
                 alert.setContentText(content);
                 alert.showAndWait();
             }
