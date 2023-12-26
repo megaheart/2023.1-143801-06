@@ -1,7 +1,5 @@
 package com.groupsix.report;
 
-import com.groupsix.importexcel.ImportHistory;
-
 import java.io.*;
 import java.lang.reflect.Field;
 import java.util.*;
@@ -12,12 +10,12 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ExportHelper<T> {
-    public void exportExcel(List<T> list, String nameSheet, String fileName) throws IllegalAccessException, IOException {
+    public void exportExcel(List<T> list, String nameSheet, String fileName, Class<T> modelClass) throws IllegalAccessException, IOException {
         // Blank workbook
         XSSFWorkbook workbook = new XSSFWorkbook();
         // Creating a blank Excel sheet
         XSSFSheet sheet = workbook.createSheet(nameSheet);
-        Field[] fields = ImportHistory.class.getDeclaredFields();
+        Field[] fields = modelClass.getDeclaredFields();
         Map<String, Object[]> data = new TreeMap<String, Object[]>();
         String[] fieldNames = new String[fields.length];
         for(int i = 0; i < fields.length; i++){
@@ -54,10 +52,10 @@ public class ExportHelper<T> {
         out.close();
     }
 
-    public void exportCsv(List<T> list, String nameSheet, String fileName) throws IOException, IllegalAccessException {
+    public void exportCsv(List<T> list, String nameSheet, String fileName, Class<T> modelClass) throws IOException, IllegalAccessException {
         File fileCsv = new File(fileName + ".csv");
         PrintWriter csvWriter = new PrintWriter(new FileWriter(fileCsv));
-        Field[] fields = ImportHistory.class.getDeclaredFields();
+        Field[] fields = modelClass.getDeclaredFields();
         String[] fieldNames = new String[fields.length];
         for(int i = 0; i < fields.length; i++){
             fieldNames[i] = fields[i].getName();
