@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="722.4" prefWidth="936.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupsix.pages.officerattendancedetail.OfficerHomeView">
+<AnchorPane prefHeight="722.4" prefWidth="936.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupsix.pages.officerattendancedetail.OfficerHomeView">
    <children>
       <Label layoutX="396.0" layoutY="90.0" style="-fx-font-weight: bold;" text="Thông tin tổng hợp">
          <font>
