@@ -3,6 +3,8 @@ package com.groupsix.pages.officerdepartmentattendancereport;
 import com.groupsix.attendance.AttendanceFactory;
 import com.groupsix.hrsubsystem.Department;
 import com.groupsix.hrsubsystem.HRSubsystemFactory;
+import com.groupsix.pages.FXRouter;
+import com.groupsix.pages.employeeattendance.EmployeeAttendanceController;
 import com.groupsix.report.OfficerAndAttendance;
 import com.groupsix.report.OfficerAttendanceReport;
 import com.groupsix.report.ReportHelper;
@@ -34,6 +36,10 @@ public class OfficerDepartmentAttendanceReportController {
 		view.setOnEmployeeChooseHandler((sender, e) -> {
 			var timeRange = view.getTimeRange();
 			openEmployeeView(e, timeRange.getMonth(), timeRange.getYear(), timeRange.getMonthCount());
+		});
+		view.setOnSearchEmployeeByCodeHandler((sender, employeeCode) -> {
+			var timeRange = view.getTimeRange();
+			filterAttendancesBy(this.department, employeeCode, timeRange.getMonth(), timeRange.getYear(), timeRange.getMonthCount());
 		});
 		init();
 	}
@@ -119,6 +125,40 @@ public class OfficerDepartmentAttendanceReportController {
 		return f.exists() && !f.isDirectory();
 	}
 
+	public void filterAttendancesBy(Department department, String employeeCode, int month, int year, int monthCount) {
+		var employeeRepo = HRSubsystemFactory.getInstance().createEmployeeRepository();
+		var attendanceRepo = AttendanceFactory.getInstance().createRepository();
+
+		var officers = employeeRepo.filterEmployeeByCode(employeeCode, department);
+		var mergedOfficerAttendances = new ArrayList<OfficerAndAttendance>();
+
+		for(var officer : officers) {
+			var officerAttendances = attendanceRepo.getAttendancesOfEmployee(user, officer, month, year, monthCount);
+			var mergedOfficerAttendance = mergeOfficerAndAttendance(officer, officerAttendances);
+			mergedOfficerAttendances.add(mergedOfficerAttendance);
+		}
+
+		updateAttendanceList(officers, mergedOfficerAttendances);
+
+		view.show(report);
+	}
+
+	public void updateAttendanceList(ArrayList<Employee> officers, ArrayList<OfficerAndAttendance> mergedOfficerAttendance) {
+		var report = new OfficerAttendanceReport();
+		report.setAttendances(mergedOfficerAttendance);
+		report.setDepartment(this.department);
+		report.setMonth(this.report.getMonth());
+		report.setYear(this.report.getYear());
+		report.setMonthCount(this.report.getMonthCount());
+		report.setTotalSessions(this.report.getTotalSessions());
+		report.setTotalHoursNotWork(this.report.getTotalHoursNotWork());
+		report.setAverageSessions(this.report.getAverageSessions());
+		report.setAverageHoursNotWork(this.report.getAverageHoursNotWork());
+
+		this.report = report;
+		this.view.show(report);
+	}
+
 	public void showExportPanel() {
 
 	}
@@ -128,11 +168,19 @@ public class OfficerDepartmentAttendanceReportController {
 	}
 
 	public void openEmployeeView(Employee employee, int month, int year, int monthCount) {
-
+		var employeeAttendanceCrtl = (EmployeeAttendanceController) FXRouter.goTo("employeeattendance");
+		employeeAttendanceCrtl.openView(employee, month, year, monthCount);
 	}
 
-	public void updateAttendanceList(ArrayList<Employee> officers, OfficerAttendance officerAttendances) {
+	public void open(int month, int year, int monthCount){
+		var user = UserService.getInstance().getCurrentUser();
+		var employeeRepo = HRSubsystemFactory.getInstance().createEmployeeRepository();
+		var employeeOfUser = employeeRepo.getEmployeeByCode(user.getEmployeeCode());
+		var _department = HRSubsystemFactory.getInstance().createDepartmentRepository()
+				.getDepartmentByCode(employeeOfUser.getDepartmentCode());
+		this.department = _department;
 
+		getReport(_department, month, year, monthCount);
 	}
 
 }

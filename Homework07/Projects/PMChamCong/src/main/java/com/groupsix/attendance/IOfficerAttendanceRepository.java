@@ -14,6 +14,8 @@ public interface IOfficerAttendanceRepository {
 	void insertMany(List<OfficerAttendance> attendances);
 	OfficerAttendance getChangeLog(Employee e, int id);
 
+	List<OfficerAttendance> getAttendancesByHistoryId(int historyId);
+
 	void updateAttendance(boolean morningSession, boolean afternoonSession, double hoursLate, double hoursEarlyLeave, int id);
 	OfficerAttendance getChangeLog(Employee e, Date date);
 	OfficerAttendance getAttendance(int id);

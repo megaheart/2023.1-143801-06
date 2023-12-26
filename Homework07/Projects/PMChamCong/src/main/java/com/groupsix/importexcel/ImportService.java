@@ -6,8 +6,6 @@ import com.groupsix.attendance.OfficerAttendance;
 import com.groupsix.hrsubsystem.Employee;
 import com.groupsix.hrsubsystem.HRSubsystemFactory;
 import com.groupsix.hrsubsystem.IEmployeeRepository;
-import com.groupsix.user.User;
-import com.groupsix.user.UserService;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -15,7 +13,6 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -37,7 +34,7 @@ public class ImportService implements IImportService {
         return true;
     }
 
-    public void startImport(File file) throws Exception {
+    public void importOfficerAttendance(File file) throws Exception {
             List<AttendanceLogImport> attendanceLogImports = GetAttendanceLogImportFromFile(file);
             if (attendanceLogImports.size() == 0) {
                 throw new Exception("File không có dữ liệu");
@@ -49,31 +46,42 @@ public class ImportService implements IImportService {
 
             List<Employee> employees = getListEmployees(codes);
 
-            List<OfficerAttendance> officerAttendances = new ArrayList<>();
-            attendanceLogImports.forEach(attendanceLogImport -> {
-                Employee employee = employees.stream().filter(e -> e.getEmployeeCode().equals(attendanceLogImport.getEmployeeCode())).findFirst().orElse(null);
-                if (employee != null) {
-                    OfficerAttendance officerAttendance = null;
-                    try {
-                        officerAttendance = createOfficerAttendance(employee, attendanceLogImport);
-                    } catch (ParseException e) {
-                        throw new RuntimeException(e);
-                    }
-                    officerAttendances.add(officerAttendance);
-                }
-            });
-
             ImportHistory importHistory = new ImportHistory();
             importHistory.setCreatedBy("ADMIN");
             importHistory.setTime(Calendar.getInstance().getTime().toString());
 
-            historyImportRepository.save(importHistory);
+            int idReturn = historyImportRepository.save(importHistory);
+            List<OfficerAttendance> officerAttendances = new ArrayList<>();
+            attendanceLogImports.forEach(attendanceLogImport -> {
+                Employee employee = employees.stream()
+                        .filter(e -> e.getEmployeeCode().equals(attendanceLogImport.getEmployeeCode()))
+                        .findFirst().orElse(null);
+                if (employee != null) {
+                    OfficerAttendance officerAttendance;
+                    try {
+                        officerAttendance = createOfficerAttendance(employee, attendanceLogImport);
+                        officerAttendance.setHistoryImportId(idReturn);
+                        officerAttendances.add(officerAttendance);
+                     } catch (ParseException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
             officerAttendanceRepository.insertMany(officerAttendances);
+    }
+
+    public void importOfficerAttendance(List<OfficerAttendance> officerAttendances) {
+        officerAttendanceRepository.insertMany(officerAttendances);
     }
 
     @Override
     public List<ImportHistory> getAllHistoryImport() {
         return historyImportRepository.getAll();
+    }
+
+    @Override
+    public ImportHistory getHistoryImport(int id) {
+        return historyImportRepository.getById(id);
     }
 
     @Override
@@ -99,9 +107,9 @@ public class ImportService implements IImportService {
                 if (index == 0) return;
                 String code = dataFormatter.formatCellValue(row.getCell(1));
                 if(code.isEmpty()) return;
-                Date time = row.getCell(0).getDateCellValue();
-                String timestamp = simpleDateFormat.format(time);
-                attendanceLogImports.add(new AttendanceLogImport(index, ExcelHelper.getFormatDate(timestamp), code));
+                String time = dataFormatter.formatCellValue(row.getCell(0));
+//                String timestamp = simpleDateFormat.format(time);
+                attendanceLogImports.add(new AttendanceLogImport(index, ExcelHelper.getFormatDate(time), code));
             });
             return attendanceLogImports;
     }
@@ -125,8 +133,8 @@ public class ImportService implements IImportService {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
             Date date = simpleDateFormat.parse(attendanceLogImport.getTimestamp());
 
-            int hour = ExcelHelper.getHour(attendanceLogImport.getTimestamp());
-            int minute = ExcelHelper.getMinute(attendanceLogImport.getTimestamp());
+            int hour = date.getHours();
+            int minute = date.getMinutes();
 
             boolean isMorningSession = false;
             boolean isAfternoonSession = false;
@@ -150,7 +158,11 @@ public class ImportService implements IImportService {
             officerAttendance.setMorningSession(isMorningSession);
             officerAttendance.setAfternoonSession(isAfternoonSession);
 
-
             return officerAttendance;
+    }
+
+    public List<OfficerAttendance> getOfficerAttendancesByHistoryId(int id) {
+        List<OfficerAttendance> officerAttendances = officerAttendanceRepository.getAttendancesByHistoryId(id);
+        return officerAttendances;
     }
 }
