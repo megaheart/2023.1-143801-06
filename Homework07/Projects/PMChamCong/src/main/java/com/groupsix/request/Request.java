@@ -8,6 +8,7 @@ import java.util.Date;
 @DatabaseTable(tableName = "Request")
 public class Request {
 
+
     public int getId() {
         return id;
     }
@@ -79,6 +80,20 @@ public class Request {
     public void setHoursEarlyLeave(double hoursEarlyLeave) {
         this.hoursEarlyLeave = hoursEarlyLeave;
     }
+    public int getLogAttendanceId() {
+        return logAttendanceId;
+    }
+    public void setLogAttendanceId(int logAttendanceId) {
+        this.logAttendanceId = logAttendanceId;
+    }
+
+    public String getResponse() {
+        return response;
+    }
+
+    public void setResponse(String response) {
+        this.response = response;
+    }
 
     @DatabaseField(generatedId = true)
     private int id;
@@ -103,6 +118,13 @@ public class Request {
 
     @DatabaseField()
     private String reason;
-    @DatabaseField
+    @DatabaseField()
     private int status;
+
+    @DatabaseField()
+    private int logAttendanceId;
+
+
+    @DatabaseField()
+    private String response;
 }

@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="722.4" prefWidth="936.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupsix.pages.hrchangerequest.RequestDetailView">
+   <children>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="3.0" layoutY="14.0" prefHeight="41.0" prefWidth="942.0" style="-fx-font-weight: bold;" text="Xem thông tin yêu cầu chỉnh sửa" textAlignment="CENTER">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="557.0" layoutY="82.0" text="Ngày:">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="dateLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="606.0" layoutY="82.0" prefHeight="26.0" prefWidth="110.0">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="107.0" layoutY="198.0" text="Sáng:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="106.0" layoutY="232.0" text="Chiều:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="87.0" layoutY="291.0" text="Đi muộn:">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="89.0" layoutY="326.0" text="Về sớm:">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="88.0" layoutY="364.0" text="Lý do:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="537.0" layoutY="198.0" text="Sáng:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="537.0" layoutY="231.0" text="Chiều:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="511.0" layoutY="290.0" text="Đi muộn:">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="513.0" layoutY="327.0" text="Về sớm:">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="oldMorningSessionLabel" layoutX="177.0" layoutY="200.0" style="-fx-font-weight: bold;" text="Không">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="oldAfternoonSessionLabel" layoutX="177.0" layoutY="232.0" style="-fx-font-weight: bold;" text="Không">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="oldHoursLateLabel" layoutX="177.0" layoutY="293.0" prefHeight="20.0" prefWidth="20.0" text="0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="oldHoursEarlyLeaveLabel" layoutX="177.0" layoutY="326.0" prefHeight="20.0" prefWidth="20.0" text="0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="221.0" layoutY="293.0" text="giờ">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="221.0" layoutY="326.0" text="giờ">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="morningSessionComboBox" layoutX="600.0" layoutY="195.0" prefHeight="26.0" prefWidth="130.0" />
+      <ComboBox fx:id="afternoonSessionComboBox" layoutX="600.0" layoutY="230.0" prefHeight="26.0" prefWidth="130.0" />
+      <Button fx:id="closeBtn" layoutX="273.0" layoutY="590.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="110.0" text="Quay lại">
+         <font>
+            <Font size="13.0" />
+         </font></Button>
+      <Button fx:id="acceptBtn" layoutX="423.0" layoutY="590.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="110.0" text="Chấp nhận">
+         <font>
+            <Font size="13.0" />
+         </font></Button>
+      <TextField fx:id="hoursEarlyLeaveTextField" layoutX="601.0" layoutY="290.0" prefHeight="25.0" prefWidth="86.0" />
+      <TextField fx:id="hoursLateTextField" layoutX="602.0" layoutY="322.0" prefHeight="25.0" prefWidth="86.0" />
+      <Label layoutX="693.0" layoutY="293.0" text="giờ">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="694.0" layoutY="324.0" text="giờ">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <AnchorPane layoutX="4.0" layoutY="156.0" prefHeight="26.0" prefWidth="886.0">
+         <children>
+            <Label layoutX="78.0" layoutY="8.0" text="Ca làm việc:">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="507.0" layoutY="8.0" text="Ca làm việc:">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <Label layoutX="78.0" layoutY="110.0" prefHeight="50.0" prefWidth="305.0" style="-fx-font-weight: BOLD;" text="Thông tin chấm công hiện tại" underline="true">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="507.0" layoutY="110.0" prefHeight="50.0" prefWidth="305.0" style="-fx-font-weight: BOLD;" text="Thông tin chỉnh sửa" underline="true">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="512.0" layoutY="371.0" prefHeight="20.0" prefWidth="65.0" text="Phản hồi:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Button fx:id="rejectBtn" layoutX="568.0" layoutY="590.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="110.0" text="Từ chối">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Button>
+      <TextArea fx:id="reasonTextArea" layoutX="177.0" layoutY="371.0" prefHeight="151.0" prefWidth="275.0" />
+      <TextArea fx:id="responseTextArea" layoutX="604.0" layoutY="371.0" prefHeight="151.0" prefWidth="275.0" />
+      <Label layoutX="753.0" layoutY="81.0" prefHeight="26.0" prefWidth="84.0" text="Trạng thái:">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="statusLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="829.0" layoutY="81.0" prefHeight="26.0" prefWidth="100.0">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="297.0" layoutY="83.0" prefHeight="26.0" prefWidth="100.0" text="Mã nhân viên:">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="employeeCodeLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="401.0" layoutY="82.0" prefHeight="26.0" prefWidth="130.0">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="6.0" layoutY="83.0" prefHeight="26.0" prefWidth="100.0" text="Request ID:">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="requestIDLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="87.0" layoutY="83.0" prefHeight="26.0" prefWidth="65.0">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="166.0" layoutY="83.0" prefHeight="26.0" prefWidth="65.0" text="Log ID:">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="logAttendanceLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="221.0" layoutY="82.0" prefHeight="26.0" prefWidth="65.0">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

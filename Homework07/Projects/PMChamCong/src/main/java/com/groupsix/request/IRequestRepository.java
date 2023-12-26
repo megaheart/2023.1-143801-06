@@ -9,6 +9,14 @@ import java.util.List;
 
 public interface IRequestRepository {
     ArrayList<Request> getRequestOfEmployee(User user, int month, int year, int monthCount);
-    void insertMany(List<Request> requests);
+
+    void insertRequest(Request req);
+
+
+    ArrayList<Request> getRequestOfEmployee(User user, int date, int month, int year, String employee_code, int status);
+
+    void updateRequest(User user, int requestId, int status, String response);
+
+    Request getRequest(int id);
 
 }

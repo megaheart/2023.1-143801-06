@@ -20,11 +20,8 @@ public class SqliteHistoryImportRepository implements IHistoryImportRepository {
     @Override
     public int save(ImportHistory history) {
         try {
-//            String sql = String.format("INSERT INTO HistoryImport (time, createdBy) VALUES ('%s', '%s')",
-//                    history.getTime(), history.getCreatedBy());
-//            dao.executeRaw(sql);
-            var resulta = dao.queryRaw("SELECT MAX(id) FROM HistoryImport");
-            String s = resulta.getFirstResult()[0];
+            var results = dao.queryRaw("SELECT MAX(id) FROM HistoryImport");
+            String s = results.getFirstResult()[0];
             int newId = Integer.parseInt(s) + 1;
 
             history.setId(newId);

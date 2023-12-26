@@ -14,7 +14,7 @@ public class OfficerDetailView {
     @FXML
     public Label morningSession = new Label();
     @FXML
-    public Label affternoonSession = new Label();
+    public Label afternoonSession = new Label();
     @FXML
     public Label lateView = new Label();
     @FXML
@@ -22,7 +22,7 @@ public class OfficerDetailView {
     @FXML
     public ComboBox<String> morningRequest = new ComboBox<>();
     @FXML
-    public ComboBox<String> affternoonRequest = new ComboBox<>();
+    public ComboBox<String> afternoonRequest = new ComboBox<>();
 
     @FXML
     public TextField lateRequest = new TextField();
