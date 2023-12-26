@@ -87,7 +87,8 @@ public class SqliteRequestRepository implements IRequestRepository {
             return (ArrayList<Request>) dao.query(statement);
         }
         catch (Exception e) {
-            throw new RuntimeException(e);
+            ArrayList<Request> requests = new ArrayList<>();
+            return requests;
         }
     }
 
