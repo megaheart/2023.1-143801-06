@@ -15,6 +15,7 @@ module com.groupsix.pmchamcong {
     requires org.xerial.sqlitejdbc;
 
     requires org.apache.poi.poi;
+    requires org.apache.poi.ooxml;
 
     opens com.groupsix.hrsubsystem to ormlite.jdbc;
     opens com.groupsix.attendance to ormlite.jdbc, javafx.base;
