@@ -86,4 +86,15 @@ public class OfficerAttendance {
 	@DatabaseField()
 	private boolean afternoonSession;
 
+	@DatabaseField
+	private Integer historyImportId;
+
+	public Integer getHistoryImportId() {
+		return historyImportId;
+	}
+
+	public void setHistoryImportId(Integer historyImportId) {
+		this.historyImportId = historyImportId;
+	}
+
 }

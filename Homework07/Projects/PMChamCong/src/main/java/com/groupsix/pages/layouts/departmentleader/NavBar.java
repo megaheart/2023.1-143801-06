@@ -4,7 +4,6 @@ import com.groupsix.pages.FXRouter;
 import com.groupsix.pages.layouts.INavBar;
 import com.groupsix.pages.layouts.NavBarBase;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
