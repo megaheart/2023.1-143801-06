@@ -79,7 +79,7 @@ public class ReportHelper {
 		return report;
 	}
 
-	public static OfficerAttendanceReport summarizeReport(Department department, ArrayList<OfficerAndAttendance> mergedOfficerAttendances) {
+	public static OfficerAttendanceReport summarizeReport(Department department, ArrayList<OfficerAndAttendance> mergedOfficerAttendances, int month, int year, int monthCount) {
 		OfficerAttendanceReport report = new OfficerAttendanceReport();
 
 		var attendances = new ArrayList<OfficerAndAttendance>(mergedOfficerAttendances);
@@ -98,6 +98,14 @@ public class ReportHelper {
 
 		report.setAverageSessions(totalSessions * 1.0 / attendances.size());
 		report.setAverageHoursNotWork(totalHoursNotWork / attendances.size());
+
+		report.setTotalSessions(totalSessions);
+		report.setTotalHoursNotWork(totalHoursNotWork);
+
+		report.setDepartment(department);
+		report.setMonth(month);
+		report.setYear(year);
+		report.setMonthCount(monthCount);
 
 		return report;
 	}

@@ -1,5 +1,7 @@
 package com.groupsix.report;
 
+import com.groupsix.hrsubsystem.Department;
+
 import java.util.ArrayList;
 
 public class OfficerAttendanceReport {
@@ -12,11 +14,11 @@ public class OfficerAttendanceReport {
 		this.averageHoursNotWork = averageHoursNotWork;
 	}
 
-	public int getDepartment() {
+	public Department getDepartment() {
 		return department;
 	}
 
-	public void setDepartment(int department) {
+	public void setDepartment(Department department) {
 		this.department = department;
 	}
 
@@ -78,7 +80,7 @@ public class OfficerAttendanceReport {
 
 	private double averageHoursNotWork;
 
-    private int department;
+    private Department department;
 
     private int year;
 
