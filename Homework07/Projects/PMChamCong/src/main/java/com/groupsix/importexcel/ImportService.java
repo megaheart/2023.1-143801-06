@@ -6,6 +6,7 @@ import com.groupsix.attendance.OfficerAttendance;
 import com.groupsix.hrsubsystem.Employee;
 import com.groupsix.hrsubsystem.HRSubsystemFactory;
 import com.groupsix.hrsubsystem.IEmployeeRepository;
+import com.groupsix.user.UserService;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -47,7 +48,7 @@ public class ImportService implements IImportService {
             List<Employee> employees = getListEmployees(codes);
 
             ImportHistory importHistory = new ImportHistory();
-            importHistory.setCreatedBy("ADMIN");
+            importHistory.setCreatedBy(UserService.getInstance().getCurrentUser().getEmployeeCode());
             importHistory.setTime(Calendar.getInstance().getTime().toString());
 
             int idReturn = historyImportRepository.save(importHistory);
