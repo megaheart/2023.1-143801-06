@@ -3,6 +3,8 @@ package com.groupsix.pages.employeeattendance;
 import com.groupsix.attendance.AttendanceFactory;
 import com.groupsix.base.TimeRange;
 import com.groupsix.hrsubsystem.Employee;
+import com.groupsix.pages.FXRouter;
+import com.groupsix.pages.officerdepartmentattendancereport.OfficerDepartmentAttendanceReportController;
 import com.groupsix.report.ReportHelper;
 import com.groupsix.user.User;
 import com.groupsix.report.OfficerAttendanceDetailReport;
@@ -21,6 +23,12 @@ public class EmployeeAttendanceController {
 		view.setOnTimeRangeChangedHandler((e) -> {
 			timeRange = view.getTimeRange();
 			getEmployeeReport(employee, timeRange.getMonth(), timeRange.getYear(), timeRange.getMonthCount());
+		});
+
+		view.setReturnReportViewHandler((e) -> {
+			var ctrl = (OfficerDepartmentAttendanceReportController) FXRouter.goTo("officerdepartmentattendancereport");
+			var timeRange = preRouteTimeRange;
+			ctrl.open(timeRange.getMonth(), timeRange.getYear(), timeRange.getMonthCount());
 		});
 	}
 
@@ -49,6 +57,8 @@ public class EmployeeAttendanceController {
 		return null;
 	}
 
+	private TimeRange preRouteTimeRange;
+
 	public void openView(Employee employee, int month, int year, int monthCount) {
 		this.employee = employee;
 		this.user = UserService.getInstance().getCurrentUser();
@@ -60,6 +70,8 @@ public class EmployeeAttendanceController {
 		this.report = report;
 
 		view.show(report);
+
+		preRouteTimeRange = new TimeRange(month, year, monthCount);
 	}
 
 }
