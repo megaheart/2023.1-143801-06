@@ -10,17 +10,17 @@
 
 <AnchorPane prefHeight="722.4" prefWidth="936.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupsix.pages.hrchangerequest.RequestDetailView">
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="4.0" layoutY="29.0" prefHeight="30.0" prefWidth="942.0" style="-fx-font-weight: bold;" text="Xem thông tin yêu cầu chỉnh sửa" textAlignment="CENTER">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="3.0" layoutY="14.0" prefHeight="41.0" prefWidth="942.0" style="-fx-font-weight: bold;" text="Xem thông tin yêu cầu chỉnh sửa" textAlignment="CENTER">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label layoutX="422.0" layoutY="82.0" text="Ngày:">
+      <Label layoutX="557.0" layoutY="82.0" text="Ngày:">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label fx:id="dateLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="471.0" layoutY="82.0" prefHeight="26.0" prefWidth="130.0">
+      <Label fx:id="dateLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="606.0" layoutY="82.0" prefHeight="26.0" prefWidth="110.0">
          <font>
             <Font size="16.0" />
          </font>
@@ -158,22 +158,42 @@
       </Button>
       <TextArea fx:id="reasonTextArea" layoutX="177.0" layoutY="371.0" prefHeight="151.0" prefWidth="275.0" />
       <TextArea fx:id="responseTextArea" layoutX="604.0" layoutY="371.0" prefHeight="151.0" prefWidth="275.0" />
-      <Label layoutX="644.0" layoutY="81.0" prefHeight="26.0" prefWidth="84.0" text="Trạng thái:">
+      <Label layoutX="753.0" layoutY="81.0" prefHeight="26.0" prefWidth="84.0" text="Trạng thái:">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label fx:id="statusLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="729.0" layoutY="81.0" prefHeight="20.0" prefWidth="121.0">
+      <Label fx:id="statusLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="829.0" layoutY="81.0" prefHeight="26.0" prefWidth="100.0">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label layoutX="103.0" layoutY="83.0" prefHeight="26.0" prefWidth="100.0" text="Mã nhân viên:">
+      <Label layoutX="297.0" layoutY="83.0" prefHeight="26.0" prefWidth="100.0" text="Mã nhân viên:">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label fx:id="employeeCodeLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="204.0" layoutY="82.0" prefHeight="26.0" prefWidth="172.0">
+      <Label fx:id="employeeCodeLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="401.0" layoutY="82.0" prefHeight="26.0" prefWidth="130.0">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="6.0" layoutY="83.0" prefHeight="26.0" prefWidth="100.0" text="Request ID:">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="requestIDLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="87.0" layoutY="83.0" prefHeight="26.0" prefWidth="65.0">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="166.0" layoutY="83.0" prefHeight="26.0" prefWidth="65.0" text="Log ID:">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="logAttendanceLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="221.0" layoutY="82.0" prefHeight="26.0" prefWidth="65.0">
          <font>
             <Font size="16.0" />
          </font>
