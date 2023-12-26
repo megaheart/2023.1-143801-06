@@ -146,7 +146,7 @@ public class ImportService implements IImportService {
     }
 
     public Session createSession(String timestamp) throws ParseException {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = simpleDateFormat.parse(timestamp);
         int hour = date.getHours();
         int minute = date.getMinutes();
