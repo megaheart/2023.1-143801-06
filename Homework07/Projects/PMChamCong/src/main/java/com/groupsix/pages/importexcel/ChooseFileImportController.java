@@ -144,6 +144,7 @@ public class ChooseFileImportController implements Initializable  {
                     // Thực hiện hành động khi người dùng xác nhận
                     try {
                         importService.importOfficerAttendance(file);
+                        showAlert("Nhập dữ liệu thành công");
                         goToImportView();
                     } catch (Exception e) {
                         System.out.println("ERROR: " + e.getMessage());
@@ -154,6 +155,14 @@ public class ChooseFileImportController implements Initializable  {
                 }
             }
         });
+    }
+
+    public void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Thông báo");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     private void initClearButton(){

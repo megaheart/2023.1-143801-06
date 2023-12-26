@@ -42,6 +42,7 @@ public class AttendanceImportController implements Initializable {
             view.codeColumn.setCellValueFactory(new PropertyValueFactory<>("employeeCode"));
             view.timeColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
             view.hourLate.setCellValueFactory(new PropertyValueFactory<>("hoursLate"));
+
             // Căn giữa các cột
             view.attendanceLogImportTable.getColumns().stream().forEach(column -> {
                 column.setStyle("-fx-alignment: CENTER;");

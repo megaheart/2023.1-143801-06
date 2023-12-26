@@ -154,8 +154,16 @@ public class ImportAttendanceController implements Initializable {
             importLogHistories.removeIf(importHistory -> importHistory.getId() == id);
             importAttendancePanel.importLogTable.getItems().clear();
             importAttendancePanel.importLogTable.getItems().addAll(importLogHistories);
+            showAlert("Xóa thành công");
         } else {
             System.out.println("INFO: Người dùng đã hủy xóa dữ liệu");
         }
+    }
+    public void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Thông báo");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

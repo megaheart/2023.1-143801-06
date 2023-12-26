@@ -151,7 +151,7 @@ public class ImportService implements IImportService {
                     hoursLate = (hour - 8) + (double) minute/60;
                 }
             }
-            officerAttendance.setHoursLate(Math.round(hoursLate * 100) / 100);
+            officerAttendance.setHoursLate(hoursLate);
             officerAttendance.setEmployeeCode(employee.getEmployeeCode());
             officerAttendance.setDate(date);
 

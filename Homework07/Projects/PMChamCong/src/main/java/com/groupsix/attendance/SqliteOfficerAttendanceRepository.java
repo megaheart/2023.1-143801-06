@@ -59,7 +59,7 @@ public class SqliteOfficerAttendanceRepository implements IOfficerAttendanceRepo
 			for (OfficerAttendance officerAttendance : attendances) {
 				String date = formatter.format(officerAttendance.getDate());
 
-				String s = String.format("('%s', '%s', %f, %f, %d, %d, %d )",
+				String s = String.format("('%s', '%s', %f, %f, %d, %d, %d)",
 						officerAttendance.getEmployeeCode(),
 						date,
 						officerAttendance.getHoursEarlyLeave(),
@@ -71,7 +71,6 @@ public class SqliteOfficerAttendanceRepository implements IOfficerAttendanceRepo
 			}
 
 			sql += String.join(", ", values);
-			sql += String.join(",", values);
 			System.out.println(sql);
 			dao.executeRaw(sql);
 		} catch (Exception e) {
@@ -89,7 +88,10 @@ public class SqliteOfficerAttendanceRepository implements IOfficerAttendanceRepo
 			var statement = queryBuilder.prepare();
 			return dao.query(statement);
 		} catch (Exception e) {
-			System.out.println("ERROR:"+ e.getMessage());
+			System.out.println("ERROR:" + e.getMessage());
+			throw new RuntimeException(e);
+		}
+	}
 	public void updateAttendance(boolean morningSession, boolean afternoonSession, double hoursLate, double hoursEarlyLeave, int id) {
 		try{
 			String sql = "UPDATE OfficerAttendance SET morningSession = " + morningSession + ", afternoonSession = "+ afternoonSession +", hoursLate = "+ hoursLate +", hoursEarlyLeave = "+ hoursEarlyLeave +  " WHERE id = " + id;
