@@ -5,12 +5,10 @@ import com.groupsix.hrsubsystem.Employee;
 public class OfficerAndAttendance {
 
 	public String getFullName() {
-		return fullName;
+		return employee.getFullName();
 	}
 
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
-	}
+	public void setFullName(String fullName) {}
 
 	public Employee getEmployee() {
 		return employee;
@@ -59,8 +57,6 @@ public class OfficerAndAttendance {
 	public void setTotalSession(int totalSession) {
 		this.totalSession = totalSession;
 	}
-
-	private String fullName;
 
     private Employee employee;
 

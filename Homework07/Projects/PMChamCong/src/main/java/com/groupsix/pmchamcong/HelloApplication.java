@@ -110,6 +110,5 @@ public class HelloApplication extends Application {
 
         launch();
 
-        System.exit(0);
     }
 }

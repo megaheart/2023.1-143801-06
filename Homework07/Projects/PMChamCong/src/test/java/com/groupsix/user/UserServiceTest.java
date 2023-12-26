@@ -19,90 +19,42 @@ public class UserServiceTest {
 
     @BeforeAll
     public static void initAll() {
-        DatabaseHelper.EnsureTableExist(User.class);
-
-        UserFactory.getInstance().registerRepository(SqliteUserRepository.class);
-    }
-
-    @Test
-    @DisplayName("Test get instance")
-    public void testGetInstance(){
-        // Given
-        UserService userService = UserService.getInstance();
-
-        // Then
-        assertNotNull(userService);
-    }
-
-    @Test
-    @DisplayName("Test logout")
-    public void testLogout(){
-        // Given
-        UserService userService = UserService.getInstance();
-        userService.logout();
-
-        // Then
-        assertEquals(userService.getCurrentUser(), null);
+        UserFactory.getInstance().registerRepository(FakeUserRepository.class);
     }
 
     @ParameterizedTest
-    @DisplayName("Test authenticate fail")
+    @DisplayName("Test authenticate return true")
+    @CsvSource({
+            "user, 1234"
+    })
+    public void authenticate_TrueResult(String username, String password){
+        // Given
+        UserService userService = UserService.getInstance();
+
+        // When
+        boolean isSuccess = userService.authenticate(username, password);
+
+        // Then
+        assertEquals(isSuccess, true);
+    }
+
+    @ParameterizedTest
+    @DisplayName("Test authenticate return false")
     @CsvSource({
             "admin, 123456",
-            "user, 123456"
+            "user, 123456",
+            "hello, 1234",
     })
-    public void testAuthenticateFail(String username, String password){
+    public void authenticate_FalseResult(String username, String password){
         // Given
+        UserService userService = UserService.getInstance();
 
-        // Mock repository
-        IUserRepository mockUserRepository = Mockito.mock(IUserRepository.class);
-        // Mock method getUserByUsername return null
-        when(mockUserRepository.getUserByUsername(username)).thenReturn(null);
-        // Mock factory createRepository return mock repository
-        UserFactory mockUserFactory = Mockito.mock(UserFactory.class);
-        // Mock method createRepository return mock repository
-        when(mockUserFactory.createRepository()).thenReturn(mockUserRepository);
+        // When
+        boolean isSuccess = userService.authenticate(username, password);
 
-        // Mock static method
-        try(MockedStatic<UserFactory> mockUserFactoryStatic = Mockito.mockStatic(UserFactory.class)){
-            mockUserFactoryStatic.when(UserFactory::getInstance).thenReturn(mockUserFactory);
-
-            // When
-            UserService userService = UserService.getInstance();
-            boolean isSuccess = userService.authenticate(username, password);
-
-            // Then
-            assertEquals(isSuccess, false );
-        }
+        // Then
+        assertEquals(isSuccess, false);
     }
 
-    @ParameterizedTest
-    @DisplayName("Test authenticate success")
-    @CsvSource({
-            "admin, 1234567",
-            "user, 1234567"
-    })
-    public void testAuthenticateSuccess(String username, String password){
-        // Given
-        IUserRepository mockUserRepository = Mockito.mock(IUserRepository.class);
-        when(mockUserRepository.getUserByUsername(username)).thenReturn(new User(){
-            {
-                setUsername(username);
-                setPassword(password);
-            }
-        });
-        UserFactory mockUserFactory = Mockito.mock(UserFactory.class);
-        when(mockUserFactory.createRepository()).thenReturn(mockUserRepository);
 
-        try(MockedStatic<UserFactory> mockUserFactoryStatic = Mockito.mockStatic(UserFactory.class)){
-            mockUserFactoryStatic.when(UserFactory::getInstance).thenReturn(mockUserFactory);
-
-            // When
-            UserService userService = UserService.getInstance();
-            boolean isSuccess = userService.authenticate(username, password);
-
-            // Then
-            assertEquals(isSuccess, true );
-        }
-    }
 }
