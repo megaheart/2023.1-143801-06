@@ -4,14 +4,12 @@ import com.groupsix.base.IEventHandler;
 import com.groupsix.base.TimeRange;
 import com.groupsix.hrsubsystem.Employee;
 import com.groupsix.report.OfficerAttendanceReport;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.Callback;
 
 public class OfficerDepartmentAttendanceReportView {
     @FXML
@@ -68,6 +66,9 @@ public class OfficerDepartmentAttendanceReportView {
 
     @FXML
     private Button previousPageBtn = new Button();
+
+    @FXML
+    private Button clearSearchResultBtn = new Button();
 
     @FXML
     private TextField employeeCodeSearchTxtBox = new TextField();
@@ -177,15 +178,30 @@ public class OfficerDepartmentAttendanceReportView {
     private void searchEmployeeByCode(ActionEvent event) {
         var employeeCode = employeeCodeSearchTxtBox.getText();
         if (employeeCode.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Lỗi");
-            alert.setHeaderText("Lỗi nhập liệu");
-            alert.setContentText("Vui lòng nhập mã nhân viên.");
-            alert.showAndWait();
+//            Alert alert = new Alert(Alert.AlertType.ERROR);
+//            alert.setTitle("Lỗi");
+//            alert.setHeaderText("Lỗi nhập liệu");
+//            alert.setContentText("Vui lòng nhập mã nhân viên.");
+//            alert.showAndWait();
+//            employeeCodeSearchTxtBox.requestFocus();
+            clearSearchResultBtn.setVisible(false);
             employeeCodeSearchTxtBox.requestFocus();
-            return;
         }
 
+        if (onSearchEmployeeByCodeHandler != null) {
+            onSearchEmployeeByCodeHandler.handle(event, employeeCode);
+            clearSearchResultBtn.setVisible(true);
+        }
+    }
+    @FXML
+    private void clearSearchResult(ActionEvent event) {
+        employeeCodeSearchTxtBox.setText("");
+
+        if (onSearchEmployeeByCodeHandler != null) {
+            onSearchEmployeeByCodeHandler.handle(event, "");
+        }
+
+        clearSearchResultBtn.setVisible(false);
     }
 
     @FXML
@@ -299,7 +315,7 @@ public class OfficerDepartmentAttendanceReportView {
     private EventHandler<ActionEvent> onTimeRangeChangedHandler;
     private EventHandler<ActionEvent> openExportPanelHandler;
     private IEventHandler<Object, Employee> onEmployeeChooseHandler;
-//	private EventHandler<ActionEvent> previousPageHandler;
+	private IEventHandler<ActionEvent, String> onSearchEmployeeByCodeHandler;
 //	private IEventHandler<ActionEvent, Integer> goToPageHandler;
 
     public void setOnTimeRangeChangedHandler(EventHandler<ActionEvent> onTimeRangeChangedHandler) {
@@ -313,10 +329,10 @@ public class OfficerDepartmentAttendanceReportView {
     public void setOnEmployeeChooseHandler(IEventHandler<Object, Employee> onEmployeeChooseHandler) {
         this.onEmployeeChooseHandler = onEmployeeChooseHandler;
     }
-//
-//	public void setPreviousPageHandler(EventHandler<ActionEvent> previousPageHandler) {
-//		this.previousPageHandler = previousPageHandler;
-//	}
+
+    public void setOnSearchEmployeeByCodeHandler(IEventHandler<ActionEvent, String> onSearchEmployeeByCodeHandler) {
+        this.onSearchEmployeeByCodeHandler = onSearchEmployeeByCodeHandler;
+    }
 //
 //	public void setGoToPageHandler(IEventHandler<ActionEvent, Integer> goToPageHandler) {
 //		this.goToPageHandler = goToPageHandler;

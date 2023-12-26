@@ -154,8 +154,13 @@
                       </Label>
                </left>
                <right>
-                  <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="300.0" BorderPane.alignment="CENTER">
+                  <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="400.0" BorderPane.alignment="CENTER">
                      <children>
+                        <Button fx:id="clearSearchResultBtn" mnemonicParsing="false" onAction="#clearSearchResult" text="Hủy tìm kiếm" visible="false">
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </Button>
                         <TextField fx:id="employeeCodeSearchTxtBox" prefHeight="26.0" prefWidth="178.0" promptText="Mã nhân viên">
                            <HBox.margin>
                               <Insets right="6.0" />

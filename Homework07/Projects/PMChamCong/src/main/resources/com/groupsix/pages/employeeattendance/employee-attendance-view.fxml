@@ -192,5 +192,6 @@
             </Label>
          </children>
       </GridPane>
+      <Button mnemonicParsing="false" onAction="#returnReportView" text="Quay lại" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="15.0" />
     </children>
 </AnchorPane>

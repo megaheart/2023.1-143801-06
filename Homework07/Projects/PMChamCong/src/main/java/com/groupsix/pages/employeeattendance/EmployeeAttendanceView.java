@@ -1,10 +1,7 @@
 package com.groupsix.pages.employeeattendance;
 
-import com.almasb.fxgl.ui.DialogBox;
-import com.groupsix.attendance.OfficerAttendance;
 import com.groupsix.base.IEventHandler;
 import com.groupsix.base.TimeRange;
-import com.groupsix.pages.officerattendancedetail.AttendanceLogRow;
 import com.groupsix.report.OfficerAttendanceDetailReport;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -273,9 +270,16 @@ public class EmployeeAttendanceView {
 
 	}
 
+	@FXML
+	private void returnReportView(ActionEvent event) {
+		if(returnReportViewHandler != null) {
+			returnReportViewHandler.handle(event);
+		}
+	}
+
 	private EventHandler<ActionEvent> onTimeRangeChangedHandler;
 	private EventHandler<ActionEvent> refreshTableHandler;
-	private EventHandler<ActionEvent> nextWeekHandler;
+	private EventHandler<ActionEvent> returnReportViewHandler;
 	private EventHandler<ActionEvent> previousWeekHandler;
 	private IEventHandler<ActionEvent, Integer> goToWeekHandler;
 
@@ -287,9 +291,9 @@ public class EmployeeAttendanceView {
 		this.refreshTableHandler = refreshTableHandler;
 	}
 
-//	public void setNextWeekHandler(EventHandler<ActionEvent> nextWeekHandler) {
-//		this.nextWeekHandler = nextWeekHandler;
-//	}
+	public void setReturnReportViewHandler(EventHandler<ActionEvent> returnReportViewHandler) {
+		this.returnReportViewHandler = returnReportViewHandler;
+	}
 //
 //	public void setPreviousWeekHandler(EventHandler<ActionEvent> previousWeekHandler) {
 //		this.previousWeekHandler = previousWeekHandler;
