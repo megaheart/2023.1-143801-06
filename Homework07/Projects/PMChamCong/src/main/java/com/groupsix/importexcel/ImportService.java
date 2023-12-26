@@ -6,8 +6,6 @@ import com.groupsix.attendance.OfficerAttendance;
 import com.groupsix.hrsubsystem.Employee;
 import com.groupsix.hrsubsystem.HRSubsystemFactory;
 import com.groupsix.hrsubsystem.IEmployeeRepository;
-import com.groupsix.user.User;
-import com.groupsix.user.UserService;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -15,7 +13,6 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
