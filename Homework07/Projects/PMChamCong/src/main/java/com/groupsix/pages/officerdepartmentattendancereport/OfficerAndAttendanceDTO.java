@@ -1,5 +1,6 @@
 package com.groupsix.pages.officerdepartmentattendancereport;
 
+import com.groupsix.hrsubsystem.Employee;
 import com.groupsix.report.OfficerAndAttendance;
 
 public class OfficerAndAttendanceDTO {
@@ -12,11 +13,7 @@ public class OfficerAndAttendanceDTO {
     }
 
     public String getEmployeeCode() {
-        return employeeCode;
-    }
-
-    public void setEmployeeCode(String employeeCode) {
-        this.employeeCode = employeeCode;
+        return employee.getEmployeeCode();
     }
 
     public String getDepartmentName() {
@@ -35,12 +32,12 @@ public class OfficerAndAttendanceDTO {
         this.month = month;
     }
 
-    public String getTotalSession() {
-        return totalSession;
+    public String getTotalSessions() {
+        return totalSessions;
     }
 
-    public void setTotalSession(String totalSession) {
-        this.totalSession = totalSession;
+    public void setTotalSessions(String totalSessions) {
+        this.totalSessions = totalSessions;
     }
 
     public String getTotalHoursNotWork() {
@@ -51,27 +48,39 @@ public class OfficerAndAttendanceDTO {
         this.totalHoursNotWork = totalHoursNotWork;
     }
 
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
     private String fullName;
 
-    private String employeeCode;
 
     private String departmentName;
 
     private String month;
 
-    private String totalSession;
+    private String totalSessions;
 
     private String totalHoursNotWork;
+
+    private Employee employee;
+
+    public OfficerAndAttendanceDTO() {
+    }
 
     private static final java.text.DecimalFormat decimalFormat = new java.text.DecimalFormat("#.#");
 
     public OfficerAndAttendanceDTO(OfficerAndAttendance officerAndAttendance) {
         this.fullName = officerAndAttendance.getFullName();
-        this.employeeCode = officerAndAttendance.getEmployeeCode();
+        this.employee = officerAndAttendance.getEmployee();
         this.departmentName = officerAndAttendance.getDepartmentName();
 //        var _month = officerAndAttendance.getMonth();
-        this.month = String.valueOf(officerAndAttendance.getMonth());
-        this.totalSession = String.valueOf(officerAndAttendance.getTotalSession());
+//        this.month = String.valueOf(officerAndAttendance.getMonth());
+        this.totalSessions = String.valueOf(officerAndAttendance.getTotalSession());
         this.totalHoursNotWork = decimalFormat.format(officerAndAttendance.getHoursNotWork());
     }
 }

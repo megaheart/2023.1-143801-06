@@ -175,11 +175,12 @@
             </BorderPane>
                 <TableView fx:id="attendanceLogTable" cache="true" prefHeight="234.0" prefWidth="723.0" GridPane.rowIndex="5">
                     <columns>
-                        <TableColumn fx:id="dateCol" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Ngày" />
-                        <TableColumn fx:id="morningSessionCol" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Sáng" />
-                        <TableColumn fx:id="afternoonSessionCol" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Chiều" />
-                        <TableColumn fx:id="hoursLateCol" prefWidth="75.0" style="-fx-alignment: CENTER-RIGHT;" text="Đi muộn" />
-                        <TableColumn fx:id="hoursEarlyLeaveCol" prefWidth="75.0" style="-fx-alignment: CENTER-RIGHT;" text="Về sớm" />
+                        <TableColumn fx:id="fullnameCol" prefWidth="90.0" text="Họ tên" />
+                        <TableColumn fx:id="employeeCodeCol" prefWidth="50.0" style="-fx-alignment: CENTER;" text="Mã nhân viên" />
+                        <TableColumn fx:id="departmentNameCol" prefWidth="60.0" text="Đơn vị" />
+                        <TableColumn fx:id="totalSessionsCol" prefWidth="60.0" style="-fx-alignment: CENTER-RIGHT;" text="Tổng số buổi đi làm" />
+                        <TableColumn fx:id="totalHoursLateAndLeaveEarlyCol" prefWidth="90.0" style="-fx-alignment: CENTER-RIGHT;" text="Tổng số giờ đi muộn/về sớm" />
+                  <TableColumn fx:id="optionsCol" prefWidth="50.0" style="-fx-alignment: CENTER;" text="Tùy chọn" />
                     </columns>
                     <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
