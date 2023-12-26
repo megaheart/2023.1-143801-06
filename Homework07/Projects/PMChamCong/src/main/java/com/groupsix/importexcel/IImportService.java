@@ -14,7 +14,7 @@ public interface IImportService {
 
     void deleteHistoryImport(int id);
 
-    List<AttendanceLogImport> GetAttendanceLogImportFromFile(File file) throws IOException;
+    List<AttendanceLogImport> GetAttendanceLogImportFromFile(File file) throws Exception;
 
     List<OfficerAttendance> getOfficerAttendancesByHistoryId(int id);
 

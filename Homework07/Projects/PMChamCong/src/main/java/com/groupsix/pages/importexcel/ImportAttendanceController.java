@@ -79,7 +79,7 @@ public class ImportAttendanceController implements Initializable {
             // Khởi tạo trường id và time cho bảng
             importLogTable.getColumns().get(0).setCellValueFactory(new PropertyValueFactory("id"));
             importLogTable.getColumns().get(1).setCellValueFactory(new PropertyValueFactory("time"));
-            importLogTable.getColumns().get(1).setCellValueFactory(new PropertyValueFactory("createdBy"));
+            importLogTable.getColumns().get(2).setCellValueFactory(new PropertyValueFactory("createdBy"));
 
             // Tạo cột, tại mỗi dòng sẽ có 2 button là chi tiết và xóa
             Callback<TableColumn<ImportHistory, String>, TableCell<ImportHistory, String>> cellFactory
