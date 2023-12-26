@@ -7,7 +7,9 @@ import com.groupsix.hrsubsystem.Department;
 import com.groupsix.hrsubsystem.Employee;
 import com.groupsix.hrsubsystem.HRSubsystemFactory;
 import com.groupsix.hrsubsystem.IEmployeeRepository;
+import com.groupsix.report.OfficerAndAttendance;
 import com.groupsix.report.OfficerAttendanceDetailReport;
+import com.groupsix.report.OfficerAttendanceReport;
 import com.groupsix.report.ReportHelper;
 import com.groupsix.user.User;
 import com.groupsix.user.UserService;
@@ -15,7 +17,9 @@ import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -37,24 +41,67 @@ public class DepartmentLeaderHomeController implements Initializable {
         int month = now.getMonthValue();
         int year = now.getYear();
 
-        User user = UserService.getInstance().getCurrentUser();
-        // Get data from database
-        Employee employee = employeeRepository.getEmployeeByCode(user.getEmployeeCode());
-        Department department = new Department();
-        department.setDepartmentCode(employee.getDepartmentCode());
+        var user = UserService.getInstance().getCurrentUser();
+        var employeeRepo = HRSubsystemFactory.getInstance().createEmployeeRepository();
+        var employeeOfUser = employeeRepo.getEmployeeByCode(user.getEmployeeCode());
+        var _department = HRSubsystemFactory.getInstance().createDepartmentRepository()
+                .getDepartmentByCode(employeeOfUser.getDepartmentCode());
 
-        List<Employee> employees = employeeRepository.getEmployeesInDepartment(department);
+        OfficerAttendanceReport report = getReport(_department, month, year, 1);
+        DecimalFormat decimalFormat = new java.text.DecimalFormat("#.#");
+        view.totalHours.setText(String.valueOf(report.getTotalHoursNotWork()));
+        view.totalShifts.setText(String.valueOf(report.getTotalSessions()));
+        view.averageHours.setText(decimalFormat.format(report.getAverageHoursNotWork()));
+        view.averageShifts.setText(decimalFormat.format(report.getAverageSessions()));
+    }
 
-//        double totalHours = 0;
-//        int totalShifts = 0;
-//        double averageHours = 0;
-//        int averageShifts = 0;
+    public OfficerAndAttendance mergeOfficerAndAttendance(Employee officer, Department department,
+                                                          ArrayList<OfficerAttendance> officerAttendances) {
+        OfficerAndAttendance officerAndAttendance = new OfficerAndAttendance();
+        officerAndAttendance.setEmployee(officer);
+        officerAndAttendance.setFullName(officer.getFullName());
+        officerAndAttendance.setDepartmentName(department.getDepartmentName());
 
-        //
-        view.totalHours.setText("18");
-        view.totalShifts.setText("3");
-        view.averageHours.setText("6");
-        view.averageShifts.setText("1");
+        var totalSession = 0;
+        var totalHoursNotWork = 0.0;
+
+        for(var attendance : officerAttendances) {
+            if(attendance.isMorningSession()) {
+                totalSession++;
+            }
+
+            if(attendance.isAfternoonSession()) {
+                totalSession++;
+            }
+
+            totalHoursNotWork += attendance.getHoursEarlyLeave() + attendance.getHoursLate();
+        }
+
+        officerAndAttendance.setTotalSession(totalSession);
+        officerAndAttendance.setHoursNotWork(totalHoursNotWork);
+
+        return officerAndAttendance;
+    }
+
+    public OfficerAttendanceReport getReport(Department department, int month, int year, int monthCount) {
+        var employeeRepo = HRSubsystemFactory.getInstance().createEmployeeRepository();
+        var departmentRepo = HRSubsystemFactory.getInstance().createDepartmentRepository();
+        var attendanceRepo = AttendanceFactory.getInstance().createRepository();
+
+        var officerList = employeeRepo.getEmployeesInDepartment(department);
+        var mergedOfficerAttendances = new ArrayList<OfficerAndAttendance>();
+
+        for(var officer : officerList) {
+            var officerAttendances =
+                    attendanceRepo.getAttendancesOfEmployee(
+                            UserService.getInstance().getCurrentUser(), officer, month, year, monthCount);
+            var mergedOfficerAttendance = mergeOfficerAndAttendance(officer,department, officerAttendances);
+            mergedOfficerAttendances.add(mergedOfficerAttendance);
+        }
+
+        var report = ReportHelper.summarizeReport(department, mergedOfficerAttendances, month, year, monthCount);
+
+        return report;
     }
 
 }
