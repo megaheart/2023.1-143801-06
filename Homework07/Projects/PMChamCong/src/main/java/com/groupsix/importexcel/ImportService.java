@@ -6,6 +6,7 @@ import com.groupsix.attendance.OfficerAttendance;
 import com.groupsix.hrsubsystem.Employee;
 import com.groupsix.hrsubsystem.HRSubsystemFactory;
 import com.groupsix.hrsubsystem.IEmployeeRepository;
+import com.groupsix.pages.importexcel.Session;
 import com.groupsix.user.UserService;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -14,6 +15,7 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -94,7 +96,8 @@ public class ImportService implements IImportService {
         historyImportRepository.deleteById(id);
     }
 
-    public List<AttendanceLogImport> GetAttendanceLogImportFromFile(File file) throws IOException {
+    public List<AttendanceLogImport> GetAttendanceLogImportFromFile(File file) throws Exception {
+        try {
             if (!checkFileValid(file)) return null;
             FileInputStream fileInputStream = new FileInputStream(file);
             Workbook workbook = WorkbookFactory.create(fileInputStream);
@@ -107,12 +110,26 @@ public class ImportService implements IImportService {
                 int index = row.getRowNum();
                 if (index == 0) return;
                 String code = dataFormatter.formatCellValue(row.getCell(1));
-                if(code.isEmpty()) return;
+                if (code.isEmpty()) return;
                 String time = dataFormatter.formatCellValue(row.getCell(0));
 //                String timestamp = simpleDateFormat.format(time);
-                attendanceLogImports.add(new AttendanceLogImport(index, ExcelHelper.getFormatDate(time), code));
+                try {
+                    attendanceLogImports.add(new AttendanceLogImport(index, ExcelHelper.getFormatDate(time), code));
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             });
             return attendanceLogImports;
+        }
+        catch (FileNotFoundException e) {
+            throw new FileNotFoundException("Không tìm thấy file");
+        }
+        catch (IOException e) {
+            throw new IOException("Lỗi đọc file");
+        }
+        catch (Exception e) {
+            throw new Exception("Lỗi đọc file");
+        }
     }
 
     public List<Employee> getListEmployees(List<String> codes) throws Exception {
@@ -126,38 +143,47 @@ public class ImportService implements IImportService {
                 throw new Exception("Không tìm thấy nhân viên có mã: " + String.join(", ", codesNotFound));
             }
             return employees;
+    }
+
+    public Session createSession(String timestamp) throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date date = simpleDateFormat.parse(timestamp);
+        int hour = date.getHours();
+        int minute = date.getMinutes();
+
+        boolean isMorningSession = false;
+        boolean isAfternoonSession = false;
+        double hoursLate = 0;
+        if (hour < 12) {
+            isMorningSession = true;
+            if (hour >= 8){
+                hoursLate = (hour - 8) + (double) minute/60;
+            }
+        } else {
+            isAfternoonSession = true;
+            if (hour >= 14){
+                hoursLate = (hour - 8) + (double) minute/60;
+            }
         }
+        Session session = new Session();
+        session.time = date;
+        session.isAfternoonSession = isAfternoonSession;
+        session.isMorningSession = isMorningSession;
+        session.hoursLate = hoursLate;
+
+        return session;
+    }
 
     public OfficerAttendance createOfficerAttendance(Employee employee, AttendanceLogImport attendanceLogImport)
             throws ParseException {
             OfficerAttendance officerAttendance = new OfficerAttendance();
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-            Date date = simpleDateFormat.parse(attendanceLogImport.getTimestamp());
-
-            int hour = date.getHours();
-            int minute = date.getMinutes();
-
-            boolean isMorningSession = false;
-            boolean isAfternoonSession = false;
-            double hoursLate = 0;
-
-            if (hour < 12) {
-                isMorningSession = true;
-                if (hour >= 8){
-                    hoursLate = (hour - 8) + (double) minute/60;
-                }
-            } else {
-                isAfternoonSession = true;
-                if (hour >= 14){
-                    hoursLate = (hour - 8) + (double) minute/60;
-                }
-            }
-            officerAttendance.setHoursLate(hoursLate);
+            Session session = createSession(attendanceLogImport.getTimestamp());
+            officerAttendance.setHoursLate(session.hoursLate);
             officerAttendance.setEmployeeCode(employee.getEmployeeCode());
-            officerAttendance.setDate(date);
+            officerAttendance.setDate(session.time);
 
-            officerAttendance.setMorningSession(isMorningSession);
-            officerAttendance.setAfternoonSession(isAfternoonSession);
+            officerAttendance.setMorningSession(session.isMorningSession);
+            officerAttendance.setAfternoonSession(session.isAfternoonSession);
 
             return officerAttendance;
     }

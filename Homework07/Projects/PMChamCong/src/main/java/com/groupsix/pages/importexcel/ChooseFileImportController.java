@@ -70,8 +70,7 @@ public class ChooseFileImportController implements Initializable  {
                     table.getItems().addAll(observableList);
 
                 } catch (Exception e) {
-                    System.out.println("ERROR: " + e.getMessage());
-                    e.printStackTrace();
+                    showAlert(e.getMessage());
                 }
             }
         });
