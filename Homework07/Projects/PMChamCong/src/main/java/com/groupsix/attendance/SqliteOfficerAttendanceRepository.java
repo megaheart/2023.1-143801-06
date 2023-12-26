@@ -40,7 +40,7 @@ public class SqliteOfficerAttendanceRepository implements IOfficerAttendanceRepo
 
 			var statement = queryBuilder.prepare();
 
-			System.out.println(statement.getStatement());
+//			System.out.println(statement.getStatement());
 
 			return (ArrayList<OfficerAttendance>) dao.query(statement);
 		} catch (Exception e) {
@@ -71,6 +71,8 @@ public class SqliteOfficerAttendanceRepository implements IOfficerAttendanceRepo
 			}
 
 			sql += String.join(", ", values);
+			sql += String.join(",", values);
+			System.out.println(sql);
 			dao.executeRaw(sql);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
@@ -88,8 +90,61 @@ public class SqliteOfficerAttendanceRepository implements IOfficerAttendanceRepo
 			return dao.query(statement);
 		} catch (Exception e) {
 			System.out.println("ERROR:"+ e.getMessage());
+	public void updateAttendance(boolean morningSession, boolean afternoonSession, double hoursLate, double hoursEarlyLeave, int id) {
+		try{
+			String sql = "UPDATE OfficerAttendance SET morningSession = " + morningSession + ", afternoonSession = "+ afternoonSession +", hoursLate = "+ hoursLate +", hoursEarlyLeave = "+ hoursEarlyLeave +  " WHERE id = " + id;
+			System.out.println(sql);
+			var r = dao.executeRaw(sql);
+			var x = r;
+		}
+		catch (Exception e){
 			throw new RuntimeException(e);
 		}
 	}
 
+	public OfficerAttendance getChangeLog(Employee e, int id){
+		var queryBuilder = dao.queryBuilder();
+		try {
+			queryBuilder.where()
+					.eq("employeeCode", e.getEmployeeCode())
+					.and()
+					.eq("id", id);
+
+			var statement = queryBuilder.prepare();
+
+			return dao.queryForFirst(statement);
+		} catch (Exception ex) {
+			throw new RuntimeException(ex);
+		}
+	}
+	public OfficerAttendance getChangeLog(Employee e, Date date){
+		var queryBuilder = dao.queryBuilder();
+		SelectArg _date = new SelectArg(date);
+		try {
+			queryBuilder.where()
+					.eq("employeeCode", e.getEmployeeCode())
+					.and()
+					.eq("date", _date);
+
+			var statement = queryBuilder.prepare();
+
+			return dao.queryForFirst(statement);
+		} catch (Exception ex) {
+			throw new RuntimeException(ex);
+		}
+	}
+
+	public OfficerAttendance getAttendance(int id) {
+		var queryBuilder = dao.queryBuilder();
+		try {
+			queryBuilder.where()
+					.eq("id", id);
+
+			var statement = queryBuilder.prepare();
+
+			return dao.queryForFirst(statement);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 }

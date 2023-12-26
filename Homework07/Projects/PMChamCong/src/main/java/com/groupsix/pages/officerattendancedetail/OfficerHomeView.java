@@ -37,4 +37,7 @@ public class OfficerHomeView {
     @FXML
     public Label banGhi = new Label();
 
+    @FXML
+    public Button notificationBtn = new Button();
+
 }

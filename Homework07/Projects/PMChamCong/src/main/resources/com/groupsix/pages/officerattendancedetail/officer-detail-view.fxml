@@ -7,19 +7,19 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="722.4" prefWidth="885.6" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupsix.pages.officerattendancedetail.OfficerDetailView">
+<AnchorPane prefHeight="722.4" prefWidth="936.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupsix.pages.officerattendancedetail.OfficerDetailView">
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutY="23.0" prefHeight="25.0" prefWidth="885.0" style="-fx-font-weight: bold;" text="Xem thông tin chấm công chi tiết" textAlignment="CENTER">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutY="23.0" prefHeight="25.0" prefWidth="935.0" style="-fx-font-weight: bold;" text="Xem thông tin chấm công chi tiết" textAlignment="CENTER">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label layoutX="348.0" layoutY="54.0" text="Ngày:">
+      <Label layoutX="363.0" layoutY="54.0" text="Ngày:">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="dateView" alignment="CENTER" contentDisplay="CENTER" layoutX="415.0" layoutY="54.0" prefHeight="20.0" prefWidth="144.0" text="Label">
+      <Label fx:id="dateView" alignment="CENTER" contentDisplay="CENTER" layoutX="430.0" layoutY="54.0" prefHeight="20.0" prefWidth="144.0" text="Label">
          <font>
             <Font size="14.0" />
          </font>
@@ -101,12 +101,12 @@
       </Label>
       <ComboBox fx:id="morningRequest" layoutX="579.0" layoutY="195.0" prefWidth="150.0" />
       <ComboBox fx:id="afternoonRequest" layoutX="579.0" layoutY="230.0" prefWidth="150.0" />
-      <TextField fx:id="reasonRequest" alignment="TOP_LEFT" layoutX="584.0" layoutY="374.0" prefHeight="132.0" prefWidth="275.0" />
-      <Button fx:id="closeBtn" layoutX="354.0" layoutY="547.0" mnemonicParsing="false" text="Quay lại">
+      <TextField fx:id="reasonRequest" alignment="TOP_LEFT" layoutX="584.0" layoutY="374.0" prefHeight="132.0" prefWidth="338.0" />
+      <Button fx:id="closeBtn" layoutX="370.0" layoutY="547.0" mnemonicParsing="false" text="Quay lại">
          <font>
             <Font size="13.0" />
          </font></Button>
-      <Button fx:id="requestBtn" layoutX="437.0" layoutY="548.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="140.0" text="Yêu cầu chỉnh sửa">
+      <Button fx:id="requestBtn" layoutX="453.0" layoutY="548.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="140.0" text="Yêu cầu chỉnh sửa">
          <font>
             <Font size="13.0" />
          </font></Button>
