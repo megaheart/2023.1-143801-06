@@ -1,5 +1,7 @@
 package com.groupsix.importexcel;
 
+import java.util.List;
+
 public class ExcelHelper {
     // get format dd/MM/yyyy HH:mm:ss
     public static String getFormatDate(String timestamp) {
@@ -10,5 +12,8 @@ public class ExcelHelper {
         String minute = time[1];
         String second = time.length == 3 ? time[2] : "00";
         return date[2] + "/" + date[1] + "/" + date[0] + " " + hour + ":" + minute + ":" + second;
+    }
+
+    public static void exportExcel(List<Object> objects, String hello) {
     }
 }
