@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -7,16 +8,16 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="956.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupsix.pages.departmentleaderhome.DepartmentLeaderHome">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="722.5" prefWidth="936.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupsix.pages.departmentleaderhome.DepartmentLeaderHome">
    <children>
-      <AnchorPane layoutX="22.0" layoutY="20.0" prefHeight="561.0" prefWidth="910.0" style="-fx-border-color: #000; -fx-border-radius: 10px;">
+      <AnchorPane layoutX="25.0" layoutY="122.0" prefHeight="497.0" prefWidth="886.0" style="-fx-border-color: #000; -fx-border-radius: 10px;">
          <children>
-            <Label layoutX="13.0" layoutY="31.0" text="Trong tháng này, đơn vị của bạn đang có trạng thái">
+            <Label layoutX="46.0" layoutY="74.0" text="Trong tháng này, đơn vị của bạn đang có trạng thái:">
                <font>
-                  <Font name="System Bold" size="30.0" />
+                  <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <GridPane hgap="5.0" layoutX="13.0" layoutY="218.0" prefHeight="230.0" prefWidth="880.0" vgap="5.0">
+            <GridPane hgap="5.0" layoutX="28.0" layoutY="140.0" prefHeight="230.0" prefWidth="830.0" vgap="5.0">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -27,7 +28,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-border-radius: 10px; -fx-border-color: #000; -fx-background-color: #B9F6CA;">
+                  <AnchorPane prefHeight="230.0" prefWidth="202.0" style="-fx-border-radius: 10px; -fx-border-color: #000; -fx-background-color: #B9F6CA;">
                      <children>
                         <Label alignment="CENTER" layoutX="10.0" layoutY="118.0" prefHeight="100.0" prefWidth="195.0" text="Tổng số giờ đi muộn/về sớm" textAlignment="CENTER" wrapText="true">
                            <font>
@@ -85,6 +86,7 @@
                   </AnchorPane>
                </children>
             </GridPane>
+            <Button layoutX="649.0" layoutY="426.0" mnemonicParsing="false" onAction="#goToOfficerDepartmentAttendanceReportView" text="Xem báo cáo chấm công của đơn vị " />
          </children>
       </AnchorPane>
    </children>
