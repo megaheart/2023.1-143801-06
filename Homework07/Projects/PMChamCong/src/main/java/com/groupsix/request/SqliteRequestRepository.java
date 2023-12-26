@@ -48,36 +48,45 @@ public class SqliteRequestRepository implements IRequestRepository {
         }
     }
 
-    public ArrayList<Request> getRequestOfEmployee(User user, int date, int month, int year, String employee_code) {
+    public ArrayList<Request> getRequestOfEmployee(User user, int date, int month, int year, String employee_code, int status){
         var queryBuilder = dao.queryBuilder();
-        try {
+        LocalDate start_date;
+        LocalDate end_date;
+        try{
             if (date == 0) {
-                LocalDate start_date = LocalDate.of(year, month, 1);
-                LocalDate end_date = start_date.plusMonths(1).minusDays(1);
-                Date _start_date = Date.from(start_date.atStartOfDay(ZoneId.systemDefault()).toInstant());
-                Date _end_date = Date.from(end_date.atStartOfDay(ZoneId.systemDefault()).toInstant());
-                SelectArg start_dateArg = new SelectArg(_start_date);
-                SelectArg end_dateArg = new SelectArg(_end_date);
-                if ((employee_code == null) || (employee_code.equals(""))) {
-                    queryBuilder.where().between("date", start_dateArg, end_dateArg);
-                } else {
+                start_date = LocalDate.of(year, month, 1);
+                end_date = start_date.plusMonths(1).minusDays(1);
+            } else {
+                start_date = LocalDate.of(year, month, date);
+                end_date = LocalDate.of(year, month, date).plusDays(1);
+            }
+            Date _start_date = Date.from(start_date.atStartOfDay(ZoneId.systemDefault()).toInstant());
+            Date _end_date = Date.from(end_date.atStartOfDay(ZoneId.systemDefault()).toInstant());
+            // SelectArg start_dateArg = new SelectArg(_start_date);
+            // SelectArg end_dateArg = new SelectArg(_end_date);
+            Date start_dateArg = _start_date;
+            Date end_dateArg = _end_date;
+            if ((employee_code == null) || (employee_code.equals(""))){
+                if (status == 3){
+                queryBuilder.where().between("date", start_dateArg, end_dateArg);
+                }
+                else {
+                    queryBuilder.where().eq("status", status).and().between("date", start_dateArg, end_dateArg);
+                }
+            }
+            else {
+                if (status == 3){
                     queryBuilder.where().eq("employeeCode", employee_code).and().between("date", start_dateArg, end_dateArg);
                 }
-            } else {
-                LocalDate current_date = LocalDate.of(year, month, date);
-                Date _current_date = Date.from(current_date.atStartOfDay(ZoneId.systemDefault()).toInstant());
-                SelectArg current_dateArg = new SelectArg(_current_date);
-                if ((employee_code == null) || (employee_code.equals(""))) {
-                    queryBuilder.where().eq("date", current_dateArg);
-                } else {
-                    queryBuilder.where().eq("employeeCode", employee_code).and().eq("date", current_dateArg);
+                else {
+                    queryBuilder.where().eq("employeeCode", employee_code).and().eq("status", status).and().between("date", start_dateArg, end_dateArg);
                 }
             }
             var statement = queryBuilder.prepare();
             System.out.println(statement.getStatement());
             return (ArrayList<Request>) dao.query(statement);
-
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
@@ -188,7 +197,7 @@ public class SqliteRequestRepository implements IRequestRepository {
     public void updateRequest(User user, int id, int status, String respond) {
 
         try {
-            String sql = "UPDATE Request SET status = " + status + ", respond = '" + respond + "' WHERE id = " + id;
+            String sql = "UPDATE Request SET status = " + status + ", response = '" + respond + "' WHERE id = " + id;
             System.out.println(sql);
             var r = dao.executeRaw(sql);
             var x = r;
@@ -196,5 +205,20 @@ public class SqliteRequestRepository implements IRequestRepository {
             throw new RuntimeException(e);
         }
 
+    }
+
+
+    public Request getRequest(int id){
+        var queryBuilder = dao.queryBuilder();
+        try {
+            queryBuilder.where()
+                    .eq("id", id);
+
+            var statement = queryBuilder.prepare();
+
+            return dao.queryForFirst(statement);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

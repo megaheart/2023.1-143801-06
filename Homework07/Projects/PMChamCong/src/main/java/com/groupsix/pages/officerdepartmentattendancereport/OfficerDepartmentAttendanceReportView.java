@@ -2,298 +2,317 @@ package com.groupsix.pages.officerdepartmentattendancereport;
 
 import com.groupsix.base.IEventHandler;
 import com.groupsix.base.TimeRange;
-import com.groupsix.pages.employeeattendance.OfficerAttendanceDTO;
-import com.groupsix.report.OfficerAttendanceDetailReport;
+import com.groupsix.hrsubsystem.Employee;
 import com.groupsix.report.OfficerAttendanceReport;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
+import javafx.util.Callback;
 
 public class OfficerDepartmentAttendanceReportView {
-	@FXML
-	private ComboBox<String> timeTypeComboBox = new ComboBox<>();
+    @FXML
+    private ComboBox<String> timeTypeComboBox = new ComboBox<>();
 
-	@FXML
-	private ComboBox<String> monthsComboBox = new ComboBox<>();
-	@FXML
-	private ComboBox<String> quarterComboBox = new ComboBox<>();
+    @FXML
+    private ComboBox<String> monthsComboBox = new ComboBox<>();
+    @FXML
+    private ComboBox<String> quarterComboBox = new ComboBox<>();
 
-	@FXML
-	private ComboBox<String> yearsComboBox = new ComboBox<>();
+    @FXML
+    private ComboBox<String> yearsComboBox = new ComboBox<>();
 
-	@FXML
-	private Label totalSessionsLabel = new Label();
+    @FXML
+    private Label totalSessionsLabel = new Label();
 
-	@FXML
-	private Label totalHoursLateAndLeaveEarlyLabel = new Label();
+    @FXML
+    private Label totalHoursLateAndLeaveEarlyLabel = new Label();
 
-	@FXML
-	private Label averageHoursLateAndLeaveEarlyLabel = new Label();
+    @FXML
+    private Label averageHoursLateAndLeaveEarlyLabel = new Label();
 
-	@FXML
-	private Label averageSessionsLabel = new Label();
+    @FXML
+    private Label averageSessionsLabel = new Label();
 
-	@FXML
-	private Label currentPageLabel = new Label();
+    @FXML
+    private Label totalRecordCountLabel = new Label();
 
-	@FXML
-	private TextField pageWantToGoTxtBox = new TextField();
+    @FXML
+    private Label currentPageLabel = new Label();
 
-	@FXML
-	private TableView<OfficerAttendanceDTO> attendanceLogTable = new TableView<OfficerAttendanceDTO>();
+    @FXML
+    private TextField pageWantToGoTxtBox = new TextField();
 
-	@FXML
-	public TableColumn<OfficerAttendanceDTO, String> dateCol = new TableColumn<>();
-	@FXML
-	public TableColumn<OfficerAttendanceDTO, String> morningSessionCol = new TableColumn<>();
-	@FXML
-	public TableColumn<OfficerAttendanceDTO, String> afternoonSessionCol = new TableColumn<>();
-	@FXML
-	public TableColumn<OfficerAttendanceDTO, String> hoursLateCol = new TableColumn<>();
-	@FXML
-	public TableColumn<OfficerAttendanceDTO, String> hoursEarlyLeaveCol = new TableColumn<>();
+    @FXML
+    private TableView<OfficerAndAttendanceDTO> attendanceLogTable = new TableView<OfficerAndAttendanceDTO>();
 
-	@FXML
-	private Label employeeInfoLabel = new Label();
+    @FXML
+    public TableColumn<OfficerAndAttendanceDTO, String> fullnameCol = new TableColumn<>();
+    @FXML
+    public TableColumn<OfficerAndAttendanceDTO, String> employeeCodeCol = new TableColumn<>();
+    @FXML
+    public TableColumn<OfficerAndAttendanceDTO, String> departmentNameCol = new TableColumn<>();
+    @FXML
+    public TableColumn<OfficerAndAttendanceDTO, String> totalSessionsCol = new TableColumn<>();
+    @FXML
+    public TableColumn<OfficerAndAttendanceDTO, String> totalHoursLateAndLeaveEarlyCol = new TableColumn<>();
 
-	@FXML
-	private Button nextPageBtn = new Button();
+    @FXML
+    public TableColumn<OfficerAndAttendanceDTO, String> optionsCol = new TableColumn<>();
 
-	@FXML
-	private Button previousPageBtn = new Button();
+    @FXML
+    private Button nextPageBtn = new Button();
 
-	private TimeRange timeRange = new TimeRange(1, 1 , 1);
+    @FXML
+    private Button previousPageBtn = new Button();
 
-	@FXML
-	private void initialize() {
-		timeTypeComboBox.getItems().addAll("Tháng", "Quý", "Năm");
-		monthsComboBox.getItems().addAll("Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4",
-				"Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8",
-				"Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12");
-		quarterComboBox.getItems().addAll("Quý I", "Quý II", "Quý III", "Quý IV");
-		yearsComboBox.getItems().addAll("2020", "2021", "2022", "2023", "2024", "2025");
-		setTimeRange(timeRange);
+    @FXML
+    private TextField employeeCodeSearchTxtBox = new TextField();
 
-		dateCol.setCellValueFactory(new PropertyValueFactory("date"));
-		morningSessionCol.setCellValueFactory(new PropertyValueFactory("morningSession"));
-		afternoonSessionCol.setCellValueFactory(new PropertyValueFactory("afternoonSession"));
-		hoursLateCol.setCellValueFactory(new PropertyValueFactory("hoursLate"));
-		hoursEarlyLeaveCol.setCellValueFactory(new PropertyValueFactory("hoursEarlyLeave"));
-	}
+    private TimeRange timeRange = new TimeRange(1, 1, 1);
 
-	@FXML
-	private void onTimeTypeChanged(ActionEvent event) {
-		int index = timeTypeComboBox.getSelectionModel().getSelectedIndex();
-		int monthCount = 0;
-		int month = timeRange.getMonth() - 1;
-		int year = timeRange.getYear();
-		switch (index) {
-			case 0:
-				setTimeRange(new TimeRange(month + 1, year, 1));
-				break;
-			case 1:
-				switch (timeRange.getMonthCount()){
-					case 1:
-					case 3:
-						setTimeRange(new TimeRange((month / 3) * 3 + 1, year, 3));
-						break;
-					case 12:
-						setTimeRange(new TimeRange(1, year, 3));
-						break;
-				}
-				break;
-			case 2:
-				setTimeRange(new TimeRange(1, year, 12));
-				break;
-		}
-		if(onTimeRangeChangedHandler != null) {
-			onTimeRangeChangedHandler.handle(event);
-		}
-	}
+    @FXML
+    private void initialize() {
+        timeTypeComboBox.getItems().addAll("Tháng", "Quý", "Năm");
+        monthsComboBox.getItems().addAll("Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4",
+                "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8",
+                "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12");
+        quarterComboBox.getItems().addAll("Quý I", "Quý II", "Quý III", "Quý IV");
+        yearsComboBox.getItems().addAll("2020", "2021", "2022", "2023", "2024", "2025");
+        setTimeRange(timeRange);
 
-	@FXML
-	private void onMonthChanged(ActionEvent event) {
-		int month = monthsComboBox.getSelectionModel().getSelectedIndex() + 1;
-		setTimeRange(new TimeRange(month, timeRange.getYear(), timeRange.getMonthCount()));
-		if(onTimeRangeChangedHandler != null) {
-			onTimeRangeChangedHandler.handle(event);
-		}
-	}
+        fullnameCol.setCellValueFactory(new PropertyValueFactory<>("fullName"));
+        employeeCodeCol.setCellValueFactory(new PropertyValueFactory<>("employeeCode"));
+        departmentNameCol.setCellValueFactory(new PropertyValueFactory<>("departmentName"));
+        totalSessionsCol.setCellValueFactory(new PropertyValueFactory<>("totalSessions"));
+        totalHoursLateAndLeaveEarlyCol.setCellValueFactory(new PropertyValueFactory<>("totalHoursNotWork"));
+        optionsCol.setCellFactory(cell -> new TableCell<OfficerAndAttendanceDTO, String>() {
+            final Button btn = new Button("Xem chi tiết");
 
-	@FXML
-	private void onQuarterChanged(ActionEvent event) {
-		int quarter = quarterComboBox.getSelectionModel().getSelectedIndex() + 1;
-		setTimeRange(new TimeRange((quarter - 1) * 3 + 1, timeRange.getYear(), 3));
-		if(onTimeRangeChangedHandler != null) {
-			onTimeRangeChangedHandler.handle(event);
-		}
-	}
+            {
+                btn.setOnAction(event -> {
+                    var officerAndAttendance = getTableView().getItems().get(getIndex());
+                    chooseEmployee(officerAndAttendance.getEmployee());
+                });
+            }
 
-	@FXML
-	private void onYearChanged(ActionEvent event) {
-		int year = Integer.parseInt(yearsComboBox.getSelectionModel().getSelectedItem());
-		setTimeRange(new TimeRange(timeRange.getMonth(), year, timeRange.getMonthCount()));
-		if(onTimeRangeChangedHandler != null) {
-			onTimeRangeChangedHandler.handle(event);
-		}
-	}
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(btn);
+                }
+            }
+        });
+    }
 
-	@FXML
-	private void refreshTable(ActionEvent event) {
-		if(refreshTableHandler != null) {
-			refreshTableHandler.handle(event);
-		}
-	}
+    @FXML
+    private void onTimeTypeChanged(ActionEvent event) {
+        int index = timeTypeComboBox.getSelectionModel().getSelectedIndex();
 
-	@FXML
-	private void nextPage(ActionEvent event) {
-		if(report == null) return;
-		int currentPage = Integer.parseInt(currentPageLabel.getText().split("/")[0]);
-		if(currentPage == pageCount) return;
-		currentPage++;
-		currentPageLabel.setText(currentPage + "/" + pageCount);
+        int month = timeRange.getMonth() - 1;
+        int year = timeRange.getYear();
+        switch (index) {
+            case 0:
+                setTimeRange(new TimeRange(month + 1, year, 1));
+                break;
+            case 1:
+                switch (timeRange.getMonthCount()) {
+                    case 1:
+                    case 3:
+                        setTimeRange(new TimeRange((month / 3) * 3 + 1, year, 3));
+                        break;
+                    case 12:
+                        setTimeRange(new TimeRange(1, year, 3));
+                        break;
+                }
+                break;
+            case 2:
+                setTimeRange(new TimeRange(1, year, 12));
+                break;
+        }
+        if (onTimeRangeChangedHandler != null) {
+            onTimeRangeChangedHandler.handle(event);
+        }
+    }
 
-		var fromDate = LocalDate.of(report.getYear(), report.getMonth(), 1);
-		fromDate = fromDate.plusDays(7 * (currentPage - 1));
-		var toDate = fromDate.plusDays(7);
-		var _fromDate = Date.from(fromDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-		var _toDate = Date.from(toDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    @FXML
+    private void onMonthChanged(ActionEvent event) {
+        int month = monthsComboBox.getSelectionModel().getSelectedIndex() + 1;
+        setTimeRange(new TimeRange(month, timeRange.getYear(), timeRange.getMonthCount()));
+        if (onTimeRangeChangedHandler != null) {
+            onTimeRangeChangedHandler.handle(event);
+        }
+    }
 
-		var attendances = report.getAttendances().stream()
-				.filter(attendance -> attendance.getDate().compareTo(_fromDate) >= 0 && attendance.getDate().compareTo(_toDate) < 0)
-				.map(attendance -> new OfficerAttendanceDTO(attendance)).toArray(OfficerAttendanceDTO[]::new);
+    @FXML
+    private void onQuarterChanged(ActionEvent event) {
+        int quarter = quarterComboBox.getSelectionModel().getSelectedIndex() + 1;
+        setTimeRange(new TimeRange((quarter - 1) * 3 + 1, timeRange.getYear(), 3));
+        if (onTimeRangeChangedHandler != null) {
+            onTimeRangeChangedHandler.handle(event);
+        }
+    }
 
-		this.attendanceLogTable.getItems().clear();
-		this.attendanceLogTable.getItems().addAll(attendances);
+    @FXML
+    private void onYearChanged(ActionEvent event) {
+        int year = Integer.parseInt(yearsComboBox.getSelectionModel().getSelectedItem());
+        setTimeRange(new TimeRange(timeRange.getMonth(), year, timeRange.getMonthCount()));
+        if (onTimeRangeChangedHandler != null) {
+            onTimeRangeChangedHandler.handle(event);
+        }
+    }
 
-		if(currentPage == pageCount) {
-			nextPageBtn.setDisable(true);
-		}else {
-			nextPageBtn.setDisable(false);
-		}
+    @FXML
+    private void clickExportExcel(ActionEvent event) {
+        openExportPanel();
+    }
 
-		if(currentPage == 1) {
-			previousPageBtn.setDisable(true);
-		} else {
-			previousPageBtn.setDisable(false);
-		}
-	}
+    @FXML
+    private void searchEmployeeByCode(ActionEvent event) {
+        var employeeCode = employeeCodeSearchTxtBox.getText();
+        if (employeeCode.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Lỗi");
+            alert.setHeaderText("Lỗi nhập liệu");
+            alert.setContentText("Vui lòng nhập mã nhân viên.");
+            alert.showAndWait();
+            employeeCodeSearchTxtBox.requestFocus();
+            return;
+        }
 
-	@FXML
-	private void previousPage(ActionEvent event) {
-		if(report == null) return;
+    }
 
-		int currentPage = Integer.parseInt(currentPageLabel.getText().split("/")[0]);
-		if(currentPage == 1) return;
-		currentPage--;
-		currentPageLabel.setText(currentPage + "/" + pageCount);
+    @FXML
+    private void nextPage(ActionEvent event) {
+        if (report == null) return;
+        int currentPage = Integer.parseInt(currentPageLabel.getText().split("/")[0]);
+        if (currentPage == pageCount) return;
+        currentPage++;
+        currentPageLabel.setText(currentPage + "/" + pageCount);
 
-		var fromDate = LocalDate.of(report.getYear(), report.getMonth(), 1);
-		fromDate = fromDate.plusDays(7 * (currentPage - 1));
-		var toDate = fromDate.plusDays(7);
-		var _fromDate = Date.from(fromDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-		var _toDate = Date.from(toDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-
-		var attendances = report.getAttendances().stream()
-				.filter(attendance -> attendance.getDate().compareTo(_fromDate) >= 0 && attendance.getDate().compareTo(_toDate) < 0)
-				.map(attendance -> new OfficerAttendanceDTO(attendance)).toArray(OfficerAttendanceDTO[]::new);
-
-		this.attendanceLogTable.getItems().clear();
-		this.attendanceLogTable.getItems().addAll(attendances);
-
-		if(currentPage == pageCount) {
-			nextPageBtn.setDisable(true);
-		} else {
-			nextPageBtn.setDisable(false);
-		}
-
-		if(currentPage == 1) {
-			previousPageBtn.setDisable(true);
-		} else {
-			previousPageBtn.setDisable(false);
-		}
-	}
-
-	@FXML
-	private void goToPage(ActionEvent event) {
-		int page = 0;
-		try {
-			page = Integer.parseInt(pageWantToGoTxtBox.getText());
-		} catch (NumberFormatException e) {
-			pageWantToGoTxtBox.setText("");
-			Alert alert = new Alert(Alert.AlertType.ERROR);
-			alert.setTitle("Lỗi");
-			alert.setHeaderText("Lỗi nhập liệu");
-			alert.setContentText("Vui lòng nhập số tuần hợp lệ, không được bỏ trống.");
-			alert.showAndWait();
-			pageWantToGoTxtBox.requestFocus();
-			return;
-		}
-
-		if(page < 1 || page > pageCount){
-			Alert alert = new Alert(Alert.AlertType.ERROR);
-			alert.setTitle("Lỗi");
-			alert.setHeaderText("Lỗi nhập liệu");
-			alert.setContentText("Vui lòng nhập số tuần trong khoảng từ 1 đến " + pageCount);
-			alert.showAndWait();
-			pageWantToGoTxtBox.requestFocus();
-			return;
-		}
-
-		currentPageLabel.setText(page + "/" + pageCount);
-
-		var fromDate = LocalDate.of(report.getYear(), report.getMonth(), 1);
-		fromDate = fromDate.plusDays(7 * (page - 1));
-		var toDate = fromDate.plusDays(7);
-		var _fromDate = Date.from(fromDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-		var _toDate = Date.from(toDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-
-		var attendances = report.getAttendances().stream()
-				.filter(attendance -> attendance.getDate().compareTo(_fromDate) >= 0 && attendance.getDate().compareTo(_toDate) < 0)
-				.map(attendance -> new OfficerAttendanceDTO(attendance)).toArray(OfficerAttendanceDTO[]::new);
+		var attendances = report.getAttendances()
+                .subList((currentPage - 1) * pageSize, Math.min(currentPage * pageSize, report.getAttendances().size()))
+                .stream()
+                .map(OfficerAndAttendanceDTO::new).toArray(OfficerAndAttendanceDTO[]::new);
 
 		this.attendanceLogTable.getItems().clear();
 		this.attendanceLogTable.getItems().addAll(attendances);
 
-		if(page == pageCount) {
-			nextPageBtn.setDisable(true);
-		} else {
-			nextPageBtn.setDisable(false);
-		}
+        if (currentPage == pageCount) {
+            nextPageBtn.setDisable(true);
+        } else {
+            nextPageBtn.setDisable(false);
+        }
 
-		if(page == 1) {
-			previousPageBtn.setDisable(true);
-		} else {
-			previousPageBtn.setDisable(false);
-		}
+        if (currentPage == 1) {
+            previousPageBtn.setDisable(true);
+        } else {
+            previousPageBtn.setDisable(false);
+        }
+    }
 
-	}
+    @FXML
+    private void previousPage(ActionEvent event) {
+        if (report == null) return;
 
-	private EventHandler<ActionEvent> onTimeRangeChangedHandler;
-	private EventHandler<ActionEvent> refreshTableHandler;
-	private EventHandler<ActionEvent> nextPageHandler;
-	private EventHandler<ActionEvent> previousPageHandler;
-	private IEventHandler<ActionEvent, Integer> goToPageHandler;
+        int currentPage = Integer.parseInt(currentPageLabel.getText().split("/")[0]);
+        if (currentPage == 1) return;
+        currentPage--;
+        currentPageLabel.setText(currentPage + "/" + pageCount);
 
-	public void setOnTimeRangeChangedHandler(EventHandler<ActionEvent> onTimeRangeChangedHandler) {
-		this.onTimeRangeChangedHandler = onTimeRangeChangedHandler;
-	}
+		var attendances = report.getAttendances()
+                .subList((currentPage - 1) * pageSize, Math.min(currentPage * pageSize, report.getAttendances().size()))
+                .stream()
+                .map(OfficerAndAttendanceDTO::new).toArray(OfficerAndAttendanceDTO[]::new);
 
-	public void setRefreshTableHandler(EventHandler<ActionEvent> refreshTableHandler) {
-		this.refreshTableHandler = refreshTableHandler;
-	}
+		this.attendanceLogTable.getItems().clear();
+		this.attendanceLogTable.getItems().addAll(attendances);
 
-//	public void setNextPageHandler(EventHandler<ActionEvent> nextPageHandler) {
-//		this.nextPageHandler = nextPageHandler;
-//	}
+        if (currentPage == pageCount) {
+            nextPageBtn.setDisable(true);
+        } else {
+            nextPageBtn.setDisable(false);
+        }
+
+        if (currentPage == 1) {
+            previousPageBtn.setDisable(true);
+        } else {
+            previousPageBtn.setDisable(false);
+        }
+    }
+
+    @FXML
+    private void goToPage(ActionEvent event) {
+        int page = 0;
+        try {
+            page = Integer.parseInt(pageWantToGoTxtBox.getText());
+        } catch (NumberFormatException e) {
+            pageWantToGoTxtBox.setText("");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Lỗi");
+            alert.setHeaderText("Lỗi nhập liệu");
+            alert.setContentText("Vui lòng nhập số trang hợp lệ, không được bỏ trống.");
+            alert.showAndWait();
+            pageWantToGoTxtBox.requestFocus();
+            return;
+        }
+
+        if (page < 1 || page > pageCount) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Lỗi");
+            alert.setHeaderText("Lỗi nhập liệu");
+            alert.setContentText("Vui lòng nhập số trang trong khoảng từ 1 đến " + pageCount);
+            alert.showAndWait();
+            pageWantToGoTxtBox.requestFocus();
+            return;
+        }
+
+        currentPageLabel.setText(page + "/" + pageCount);
+
+		var attendances = report.getAttendances()
+                .subList((page - 1) * pageSize, Math.min(page * pageSize, report.getAttendances().size()))
+                .stream()
+                .map(OfficerAndAttendanceDTO::new).toArray(OfficerAndAttendanceDTO[]::new);
+		this.attendanceLogTable.getItems().clear();
+		this.attendanceLogTable.getItems().addAll(attendances);
+
+        if (page == pageCount) {
+            nextPageBtn.setDisable(true);
+        } else {
+            nextPageBtn.setDisable(false);
+        }
+
+        if (page == 1) {
+            previousPageBtn.setDisable(true);
+        } else {
+            previousPageBtn.setDisable(false);
+        }
+
+    }
+
+    private EventHandler<ActionEvent> onTimeRangeChangedHandler;
+    private EventHandler<ActionEvent> openExportPanelHandler;
+    private IEventHandler<Object, Employee> onEmployeeChooseHandler;
+//	private EventHandler<ActionEvent> previousPageHandler;
+//	private IEventHandler<ActionEvent, Integer> goToPageHandler;
+
+    public void setOnTimeRangeChangedHandler(EventHandler<ActionEvent> onTimeRangeChangedHandler) {
+        this.onTimeRangeChangedHandler = onTimeRangeChangedHandler;
+    }
+
+    public void setOpenExportPanelHandler(EventHandler<ActionEvent> openExportPanelHandler) {
+        this.openExportPanelHandler = openExportPanelHandler;
+    }
+
+    public void setOnEmployeeChooseHandler(IEventHandler<Object, Employee> onEmployeeChooseHandler) {
+        this.onEmployeeChooseHandler = onEmployeeChooseHandler;
+    }
 //
 //	public void setPreviousPageHandler(EventHandler<ActionEvent> previousPageHandler) {
 //		this.previousPageHandler = previousPageHandler;
@@ -303,114 +322,108 @@ public class OfficerDepartmentAttendanceReportView {
 //		this.goToPageHandler = goToPageHandler;
 //	}
 
-	public TimeRange getTimeRange() {
-		return timeRange;
-	}
+    public TimeRange getTimeRange() {
+        return timeRange;
+    }
 
-	public void setTimeRange(TimeRange timeRange) {
-		if(timeRange == null) {
-			throw new IllegalArgumentException("Time range cannot be null");
-		}
-		switch (timeRange.getMonthCount()) {
-			case 1:
-				monthsComboBox.setVisible(true);
-				quarterComboBox.setVisible(false);
-				yearsComboBox.setVisible(true);
-				monthsComboBox.setManaged(true);
-				quarterComboBox.setManaged(false);
-				yearsComboBox.setManaged(true);
-				timeTypeComboBox.getSelectionModel().select(0);
-				monthsComboBox.getSelectionModel().select(timeRange.getMonth() - 1);
-				yearsComboBox.getSelectionModel().select(String.valueOf(timeRange.getYear()));
-				break;
-			case 3:
-				monthsComboBox.setVisible(false);
-				quarterComboBox.setVisible(true);
-				yearsComboBox.setVisible(true);
-				monthsComboBox.setManaged(false);
-				quarterComboBox.setManaged(true);
-				yearsComboBox.setManaged(true);
-				timeTypeComboBox.getSelectionModel().select(1);
-				quarterComboBox.getSelectionModel().select((timeRange.getMonth() - 1) / 3);
-				yearsComboBox.getSelectionModel().select(String.valueOf(timeRange.getYear()));
-				break;
-			case 12:
-				monthsComboBox.setVisible(false);
-				quarterComboBox.setVisible(false);
-				yearsComboBox.setVisible(true);
-				monthsComboBox.setManaged(false);
-				quarterComboBox.setManaged(false);
-				yearsComboBox.setManaged(true);
-				timeTypeComboBox.getSelectionModel().select(2);
-				yearsComboBox.getSelectionModel().select(String.valueOf(timeRange.getYear()));
-				break;
-		}
-		this.timeRange = timeRange;
-	}
+    public void setTimeRange(TimeRange timeRange) {
+        if (timeRange == null) {
+            throw new IllegalArgumentException("Time range cannot be null");
+        }
+        switch (timeRange.getMonthCount()) {
+            case 1:
+                monthsComboBox.setVisible(true);
+                quarterComboBox.setVisible(false);
+                yearsComboBox.setVisible(true);
+                monthsComboBox.setManaged(true);
+                quarterComboBox.setManaged(false);
+                yearsComboBox.setManaged(true);
+                timeTypeComboBox.getSelectionModel().select(0);
+                monthsComboBox.getSelectionModel().select(timeRange.getMonth() - 1);
+                yearsComboBox.getSelectionModel().select(String.valueOf(timeRange.getYear()));
+                break;
+            case 3:
+                monthsComboBox.setVisible(false);
+                quarterComboBox.setVisible(true);
+                yearsComboBox.setVisible(true);
+                monthsComboBox.setManaged(false);
+                quarterComboBox.setManaged(true);
+                yearsComboBox.setManaged(true);
+                timeTypeComboBox.getSelectionModel().select(1);
+                quarterComboBox.getSelectionModel().select((timeRange.getMonth() - 1) / 3);
+                yearsComboBox.getSelectionModel().select(String.valueOf(timeRange.getYear()));
+                break;
+            case 12:
+                monthsComboBox.setVisible(false);
+                quarterComboBox.setVisible(false);
+                yearsComboBox.setVisible(true);
+                monthsComboBox.setManaged(false);
+                quarterComboBox.setManaged(false);
+                yearsComboBox.setManaged(true);
+                timeTypeComboBox.getSelectionModel().select(2);
+                yearsComboBox.getSelectionModel().select(String.valueOf(timeRange.getYear()));
+                break;
+        }
+        this.timeRange = timeRange;
+    }
 
-	private OfficerAttendanceReport report;
-	private int pageCount;
+    private OfficerAttendanceReport report;
+    private int pageCount;
+    private final int pageSize = 14; // 14
 
-	private static final java.text.DecimalFormat decimalFormat = new java.text.DecimalFormat("#.#");
+    private static final java.text.DecimalFormat decimalFormat = new java.text.DecimalFormat("#.#");
 
-	public void show(OfficerAttendanceReport report) {
-		if(report == null) {
-			throw new IllegalArgumentException("Report cannot be null");
-		}
-		this.report = report;
+    public void show(OfficerAttendanceReport report) {
+        if (report == null) {
+            throw new IllegalArgumentException("Report cannot be null");
+        }
+        this.report = report;
 
-		this.totalSessionsLabel.setText(String.valueOf(report.getTotalSessions()));
-		this.totalHoursLateAndLeaveEarlyLabel.setText(decimalFormat.format(report.getTotalHoursNotWork()));
+        this.totalSessionsLabel.setText(String.valueOf(report.getTotalSessions()));
+        this.totalHoursLateAndLeaveEarlyLabel.setText(decimalFormat.format(report.getTotalHoursNotWork()));
+        this.averageHoursLateAndLeaveEarlyLabel.setText(decimalFormat.format(report.getAverageHoursNotWork()));
+        this.averageSessionsLabel.setText(decimalFormat.format(report.getAverageSessions()));
 
-		setTimeRange(new TimeRange(report.getMonth(), report.getYear(), report.getMonthCount()));
+        this.totalRecordCountLabel.setText(String.valueOf(report.getAttendances().size()));
+        pageCount = (int) Math.ceil(report.getAttendances().size() * 1.0 / pageSize);
+        this.currentPageLabel.setText("1/" + pageCount);
 
-		this.employeeInfoLabel.setText(report.getEmployee().getFullName() + " [" + report.getEmployee().getEmployeeCode() + "]");
+        setTimeRange(new TimeRange(report.getMonth(), report.getYear(), report.getMonthCount()));
 
-		var fromDate = LocalDate.of(report.getYear(), report.getMonth(), 1);
-		var toDate = fromDate.plusMonths(report.getMonthCount()).minusDays(1);
-		var fromToRange = Duration.between(fromDate.atStartOfDay(), toDate.atStartOfDay()).toDays();
+        var attendances = report.getAttendances().subList(0, Math.min(pageSize, report.getAttendances().size()))
+                .stream()
+                .map(OfficerAndAttendanceDTO::new).toArray(OfficerAndAttendanceDTO[]::new);
 
-		var pageCount = (int) Math.ceil(fromToRange / 7.0);
-		this.pageCount = pageCount;
-		this.currentPageLabel.setText("1/" + pageCount);
+        var observableAttendances = FXCollections.observableArrayList(attendances);
 
-		var _fromDate = Date.from(fromDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-		var _toDate = Date.from(fromDate.plusDays(7).atStartOfDay(ZoneId.systemDefault()).toInstant());
+        this.attendanceLogTable.getItems().clear();
+        this.attendanceLogTable.getItems().addAll(observableAttendances);
+        nextPageBtn.setDisable(pageCount <= 1);
+        previousPageBtn.setDisable(true);
+    }
 
-		var attendances = report.getAttendances().stream()
-				.filter(attendance -> attendance.getDate().compareTo(_fromDate) >= 0 && attendance.getDate().compareTo(_toDate) < 0)
-				.map(attendance -> new OfficerAttendanceDTO(attendance)).toArray(OfficerAttendanceDTO[]::new);
+    public void openExportPanel() {
+        if (openExportPanelHandler != null) {
+            openExportPanelHandler.handle(new ActionEvent());
+        }
+    }
 
-		var observableAttendances = FXCollections.observableArrayList(attendances);
+    public void chooseEmployee(Employee employee) {
+        if (onEmployeeChooseHandler != null) {
+            onEmployeeChooseHandler.handle(this, employee);
+        }
+    }
 
-		this.attendanceLogTable.getItems().clear();
-		this.attendanceLogTable.getItems().addAll(observableAttendances);
-		nextPageBtn.setDisable(pageCount == 1);
-		previousPageBtn.setDisable(true);
-	}
+    public void chooseMonth(int month, int year) {
+        setTimeRange(new TimeRange(month, year, 1));
+    }
 
-	public void open() {
+    public void chooseQuarter(int quarter, int year) {
+        setTimeRange(new TimeRange((quarter - 1) * 3 + 1, year, 3));
+    }
 
-	}
-
-	public void openExportPanel() {
-
-	}
-
-	public void chooseEmployee(int employee) {
-
-	}
-
-	public void chooseMonth(int month, int year) {
-
-	}
-
-	public void chooseQuarter(int quarter, int year) {
-
-	}
-
-	public void chooseYear(int year) {
-
-	}
+    public void chooseYear(int year) {
+        setTimeRange(new TimeRange(1, year, 12));
+    }
 
 }

@@ -1,5 +1,7 @@
 package com.groupsix.report;
 
+import com.groupsix.hrsubsystem.Employee;
+
 public class OfficerAndAttendance {
 
 	public String getFullName() {
@@ -10,12 +12,12 @@ public class OfficerAndAttendance {
 		this.fullName = fullName;
 	}
 
-	public String getEmployeeCode() {
-		return employeeCode;
+	public Employee getEmployee() {
+		return employee;
 	}
 
-	public void setEmployeeCode(String employeeCode) {
-		this.employeeCode = employeeCode;
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
 	}
 
 	public String getDepartmentName() {
@@ -42,14 +44,6 @@ public class OfficerAndAttendance {
 		this.year = year;
 	}
 
-	public int getSessionCount() {
-		return sessionCount;
-	}
-
-	public void setSessionCount(int sessionCount) {
-		this.sessionCount = sessionCount;
-	}
-
 	public double getHoursNotWork() {
 		return hoursNotWork;
 	}
@@ -58,9 +52,17 @@ public class OfficerAndAttendance {
 		this.hoursNotWork = hoursNotWork;
 	}
 
+	public int getTotalSession() {
+		return totalSession;
+	}
+
+	public void setTotalSession(int totalSession) {
+		this.totalSession = totalSession;
+	}
+
 	private String fullName;
 
-    private String employeeCode;
+    private Employee employee;
 
     private String departmentName;
 
@@ -68,7 +70,7 @@ public class OfficerAndAttendance {
 
     private int year;
 
-    private int sessionCount;
+    private int totalSession;
 
     private double hoursNotWork;
 

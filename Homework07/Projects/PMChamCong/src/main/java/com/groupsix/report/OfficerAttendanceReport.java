@@ -1,5 +1,7 @@
 package com.groupsix.report;
 
+import com.groupsix.hrsubsystem.Department;
+
 import java.util.ArrayList;
 
 public class OfficerAttendanceReport {
@@ -12,11 +14,11 @@ public class OfficerAttendanceReport {
 		this.averageHoursNotWork = averageHoursNotWork;
 	}
 
-	public int getDepartment() {
+	public Department getDepartment() {
 		return department;
 	}
 
-	public void setDepartment(int department) {
+	public void setDepartment(Department department) {
 		this.department = department;
 	}
 
@@ -68,9 +70,17 @@ public class OfficerAttendanceReport {
 		this.totalSessions = totalSessions;
 	}
 
+	public int getMonthCount() {
+		return monthCount;
+	}
+
+	public void setMonthCount(int monthCount) {
+		this.monthCount = monthCount;
+	}
+
 	private double averageHoursNotWork;
 
-    private int department;
+    private Department department;
 
     private int year;
 
@@ -83,5 +93,7 @@ public class OfficerAttendanceReport {
     private int month;
 
     private int totalSessions;
+
+	private int monthCount;
 
 }
