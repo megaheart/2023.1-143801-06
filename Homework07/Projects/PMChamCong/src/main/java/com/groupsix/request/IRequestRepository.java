@@ -24,4 +24,6 @@ public interface IRequestRepository {
 
     Request getOfficerRequest(int logID);
 
+    ArrayList<Request> getSendRequest(Employee e, int month, int year, int monthCount);
+
 }

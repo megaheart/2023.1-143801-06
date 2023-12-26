@@ -101,7 +101,7 @@
       </Label>
       <ComboBox fx:id="morningRequest" layoutX="579.0" layoutY="195.0" prefWidth="150.0" />
       <ComboBox fx:id="afternoonRequest" layoutX="579.0" layoutY="230.0" prefWidth="150.0" />
-      <TextField fx:id="reasonRequest" alignment="TOP_LEFT" layoutX="584.0" layoutY="374.0" prefHeight="132.0" prefWidth="338.0" />
+      <TextField fx:id="reasonRequest" alignment="TOP_LEFT" layoutX="584.0" layoutY="374.0" prefHeight="132.0" prefWidth="317.0" />
       <Button fx:id="closeBtn" layoutX="370.0" layoutY="547.0" mnemonicParsing="false" text="Quay lại">
          <font>
             <Font size="13.0" />

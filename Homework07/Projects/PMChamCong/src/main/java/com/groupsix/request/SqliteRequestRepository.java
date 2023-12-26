@@ -237,4 +237,27 @@ public class SqliteRequestRepository implements IRequestRepository {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public ArrayList<Request> getSendRequest(Employee e, int month, int year, int monthCount){
+        var queryBuilder = dao.queryBuilder();
+        LocalDate fromDate = LocalDate.of(year, month, 1);
+        LocalDate toDate = fromDate.plusMonths(monthCount).minusDays(1);
+
+        Date _fromDate = Date.from(fromDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date _toDate = Date.from(toDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        try {
+            SelectArg fromDateArg = new SelectArg(_fromDate);
+            SelectArg toDateArg = new SelectArg(_toDate);
+            queryBuilder.where().eq("employeeCode", e.getEmployeeCode()).and().between("date", fromDateArg, toDateArg);
+
+            var statement = queryBuilder.prepare();
+
+            System.out.println(statement.getStatement());
+
+            return (ArrayList<Request>) dao.query(statement);
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
 }

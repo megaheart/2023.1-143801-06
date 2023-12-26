@@ -340,7 +340,6 @@ public class OfficerHomeController implements Initializable {
                                         LocalDate dateLocalSearch = LocalDate.of(year, month, day);
                                         Date dateSearch = Date.from(dateLocalSearch.atStartOfDay(ZoneId.systemDefault()).toInstant());
                                         OfficerAttendance attendance = getAttendanceDateRow(dateSearch);
-                                        System.out.println("T that su met mo" + attendance.getId());
                                         ctrl.settup(attendance);
 
 
