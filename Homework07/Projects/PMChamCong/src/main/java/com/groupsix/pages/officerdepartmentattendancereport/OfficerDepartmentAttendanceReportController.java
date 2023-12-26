@@ -12,6 +12,11 @@ import com.groupsix.user.User;
 import com.groupsix.hrsubsystem.Employee;
 import com.groupsix.attendance.OfficerAttendance;
 import com.groupsix.user.UserService;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.stage.Stage;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -50,12 +55,12 @@ public class OfficerDepartmentAttendanceReportController {
 
 	private User user;
 
-	private ArrayList<Employee> employees;
+	private ArrayList<Employee> officerList;
 
 	private AttendanceReportExportPanel exportPanel;
 
 	private void init() {
-		var user = UserService.getInstance().getCurrentUser();
+		user = UserService.getInstance().getCurrentUser();
 		var employeeRepo = HRSubsystemFactory.getInstance().createEmployeeRepository();
 		var employeeOfUser = employeeRepo.getEmployeeByCode(user.getEmployeeCode());
 		var _department = HRSubsystemFactory.getInstance().createDepartmentRepository()
@@ -65,10 +70,6 @@ public class OfficerDepartmentAttendanceReportController {
 		var now = LocalDate.now();
 
 		getReport(_department, now.getMonthValue(), now.getYear(), 1);
-	}
-
-	public void exportReportAsFile(OfficerAttendanceReport report, String path, String format) {
-
 	}
 
 	public OfficerAndAttendance mergeOfficerAndAttendance(Employee officer, ArrayList<OfficerAttendance> officerAttendances) {
@@ -103,7 +104,7 @@ public class OfficerDepartmentAttendanceReportController {
 		var departmentRepo = HRSubsystemFactory.getInstance().createDepartmentRepository();
 		var attendanceRepo = AttendanceFactory.getInstance().createRepository();
 
-		var officerList = employeeRepo.getEmployeesInDepartment(department);
+		officerList = employeeRepo.getEmployeesInDepartment(department);
 		var mergedOfficerAttendances = new ArrayList<OfficerAndAttendance>();
 
 		for(var officer : officerList) {
@@ -122,7 +123,8 @@ public class OfficerDepartmentAttendanceReportController {
 
 	public boolean checkPathExist(String path) {
 		File f = new File(path);
-		return f.exists() && !f.isDirectory();
+		f = f.getParentFile();
+		return f.exists();
 	}
 
 	public void filterAttendancesBy(Department department, String employeeCode, int month, int year, int monthCount) {
@@ -130,6 +132,7 @@ public class OfficerDepartmentAttendanceReportController {
 		var attendanceRepo = AttendanceFactory.getInstance().createRepository();
 
 		var officers = employeeRepo.filterEmployeeByCode(employeeCode, department);
+		officers.sort((a, b) -> a.getFullName().compareTo(b.getFullName()));
 		var mergedOfficerAttendances = new ArrayList<OfficerAndAttendance>();
 
 		for(var officer : officers) {
@@ -159,12 +162,50 @@ public class OfficerDepartmentAttendanceReportController {
 		this.view.show(report);
 	}
 
-	public void showExportPanel() {
+	private Stage exportPanelStage;
 
+	public void showExportPanel() {
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(AttendanceReportExportPanel.class.getResource("attendance-report-export-panel.fxml"));
+		Parent view;
+		try{
+			view = loader.load();
+			exportPanel = loader.getController();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+		Scene scene = new Scene(view);
+		exportPanelStage = new Stage();
+		exportPanelStage.setScene(scene);
+
+		exportPanel.setExportReportHandler((e) -> {
+			exportReportAsFile(report, exportPanel.getFilePath(), exportPanel.getFormat());
+		});
+
+		exportPanelStage.showAndWait();
+		exportPanel = null;
 	}
 
 	public void closeExportPanel() {
+		exportPanelStage.close();
+	}
 
+	public void exportReportAsFile(OfficerAttendanceReport report, String path, String format) {
+		if(!checkPathExist(path)) {
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Vị trí lưu file không tồn tại");
+			alert.setContentText("Vui lòng kiểm tra lại đường dẫn đến vị trí lưu file");
+			alert.showAndWait();
+			return;
+		}
+
+		if(format.equals("csv")) {
+			ReportHelper.writeToCsv(path, report);
+		} else if(format.equals("xlsx")) {
+			ReportHelper.writeToExcel(path, report);
+		}
+		closeExportPanel();
 	}
 
 	public void openEmployeeView(Employee employee, int month, int year, int monthCount) {
