@@ -101,6 +101,7 @@ public class OfficerDetailController implements Initializable {
                     request.setMorningSession(morningSession);
                     request.setAfternoonSession(afternoonSession);
                     request.setReason(reason);
+                    request.setStatus(1);
                     if(attendanceLog != 0){
                         Date now = new Date();
                         request.setDate(now);
@@ -156,11 +157,29 @@ public class OfficerDetailController implements Initializable {
     }
 
     public void settup(OfficerAttendance attendance){
+        System.out.println(attendance);
+        if(attendance != null) {
             this.viewDetail.morningSession.setText(attendance.isMorningSession() ? "Có" : "Không");
             this.viewDetail.afternoonSession.setText(attendance.isAfternoonSession() ? "Có" : "Không");
             this.viewDetail.lateView.setText(String.valueOf(attendance.getHoursLate()));
             this.viewDetail.earlyLeaveView.setText(String.valueOf(attendance.getHoursEarlyLeave()));
             this.attendanceLog = attendance.getId();
+            this.viewDetail.morningRequest.setValue(attendance.isMorningSession() ? "Có" : "Không");
+            this.viewDetail.afternoonRequest.setValue(attendance.isAfternoonSession() ? "Có" : "Không");
+            this.viewDetail.lateRequest.setText(String.valueOf(attendance.getHoursLate()));
+            this.viewDetail.earlyLeaveRequest.setText(String.valueOf(attendance.getHoursEarlyLeave()));
+        }else
+        {
+            this.viewDetail.morningSession.setText("Không");
+            this.viewDetail.afternoonSession.setText("Không");
+            this.viewDetail.lateView.setText("0.0");
+            this.viewDetail.earlyLeaveView.setText("0.0");
+            this.attendanceLog = -1;
+            this.viewDetail.morningRequest.setValue("Không");
+            this.viewDetail.afternoonRequest.setValue("Không");
+            this.viewDetail.lateRequest.setText("0.0");
+            this.viewDetail.earlyLeaveRequest.setText("0.0");
+        }
 
     }
 

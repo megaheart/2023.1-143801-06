@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -114,7 +115,9 @@ public class OfficerHomeController implements Initializable {
       initLabelThongKe(countWork, hoursLate, hoursEarlyLeave);
       ArrayList<AttendanceLogRow> rows = new ArrayList<>();
       for (OfficerAttendance attendance : attendances) {
-          String dateRow = attendance.getDate().getDate() + " - " + (attendance.getDate().getMonth() + 1) + " - " + (attendance.getDate().getYear() + 1900);
+          //String dateRow = attendance.getDate().getDate() + " - " + (attendance.getDate().getMonth() + 1) + " - " + (attendance.getDate().getYear() + 1900);
+          var dateformat = new SimpleDateFormat("dd/MM/yyyy");
+          String dateRow = dateformat.format(attendance.getDate());
           String morningSession = attendance.isMorningSession() ? "Có" : "Không";
           String afternoonSession = attendance.isAfternoonSession() ? "Có" : "Không";
           AttendanceLogRow row = new AttendanceLogRow(dateRow, morningSession, afternoonSession);
@@ -150,7 +153,9 @@ public class OfficerHomeController implements Initializable {
             initLabelThongKe(countWork, hoursLate, hoursEarlyLeave);
             ArrayList<AttendanceLogRow> rows = new ArrayList<>();
             for (OfficerAttendance attendance : attendances) {
-                String dateRow = attendance.getDate().getDate() + " - " + (attendance.getDate().getMonth() + 1) + " - " + (attendance.getDate().getYear() + 1900);
+                //String dateRow = attendance.getDate().getDate() + " - " + (attendance.getDate().getMonth() + 1) + " - " + (attendance.getDate().getYear() + 1900);
+                var dateformat = new SimpleDateFormat("dd/MM/yyyy");
+                String dateRow = dateformat.format(attendance.getDate());
                 String morningSession = attendance.isMorningSession() ? "Có" : "Không";
                 String afternoonSession = attendance.isAfternoonSession() ? "Có" : "Không";
                 AttendanceLogRow row = new AttendanceLogRow(dateRow, morningSession, afternoonSession);
@@ -190,7 +195,9 @@ public class OfficerHomeController implements Initializable {
             initLabelThongKe(countWork, hoursLate, hoursEarlyLeave);
             ArrayList<AttendanceLogRow> rows = new ArrayList<>();
             for (OfficerAttendance attendance : attendances) {
-                String dateRow = attendance.getDate().getDate() + " - " + (attendance.getDate().getMonth() + 1) + " - " + (attendance.getDate().getYear() + 1900);
+                //String dateRow = attendance.getDate().getDate() + " - " + (attendance.getDate().getMonth() + 1) + " - " + (attendance.getDate().getYear() + 1900);
+                var dateformat = new SimpleDateFormat("dd/MM/yyyy");
+                String dateRow = dateformat.format(attendance.getDate());
                 String morningSession = attendance.isMorningSession() ? "Có" : "Không";
                 String afternoonSession = attendance.isAfternoonSession() ? "Có" : "Không";
                 AttendanceLogRow row = new AttendanceLogRow(dateRow, morningSession, afternoonSession);
@@ -218,7 +225,9 @@ public class OfficerHomeController implements Initializable {
             initLabelThongKe(countWork, hoursLate, hoursEarlyLeave);
             ArrayList<AttendanceLogRow> rows = new ArrayList<>();
             for (OfficerAttendance attendance : attendances) {
-                String dateRow = attendance.getDate().getDate() + " - " + (attendance.getDate().getMonth() + 1) + " - " + (attendance.getDate().getYear() + 1900);
+                //String dateRow = attendance.getDate().getDate() + " - " + (attendance.getDate().getMonth() + 1) + " - " + (attendance.getDate().getYear() + 1900);
+                var dateformat = new SimpleDateFormat("dd/MM/yyyy");
+                String dateRow = dateformat.format(attendance.getDate());
                 String morningSession = attendance.isMorningSession() ? "Có" : "Không";
                 String afternoonSession = attendance.isAfternoonSession() ? "Có" : "Không";
                 AttendanceLogRow row = new AttendanceLogRow(dateRow, morningSession, afternoonSession);
@@ -248,10 +257,17 @@ public class OfficerHomeController implements Initializable {
             alert.showAndWait();
         }else{
             //Thêm hàm thống kê vào đây
-            Date dateSearch = new Date(year, month - 1, day);
+            LocalDate dateLocalSearch = LocalDate.of(year, month, day);
+            Date dateSearch = Date.from(dateLocalSearch.atStartOfDay(ZoneId.systemDefault()).toInstant());
+            //Date dateSearch = new Date(year - 1900, month - 1, day);
             OfficerAttendance attendance = getAttendanceDateRow(dateSearch);
+            var dateformat = new SimpleDateFormat("dd/MM/yyyy");
+            String dateRow = dateformat.format(dateSearch);
+            System.out.println(dateRow);
             if(attendance != null){
-                String dateRow = day + " - " + month + " - " + year;
+                /*String dateRow = day + " - " + month + " - " + year;*/
+                //LocalDate _date = new LocalDate(year, month, day);
+
                 String morningSession = attendance.isMorningSession() ? "Có" : "Không";
                 String afternoonSession = attendance.isAfternoonSession() ? "Có" : "Không";
                 AttendanceLogRow row = new AttendanceLogRow(dateRow, morningSession, afternoonSession);
@@ -260,7 +276,6 @@ public class OfficerHomeController implements Initializable {
                 rows.add(row);
                 addRowTable(rows);
             }else{
-                String dateRow = day + " - " + month + " - " + year;
                 AttendanceLogRow row = new AttendanceLogRow(dateRow, "Không", "Không");
                 clearTable();
                 ArrayList<AttendanceLogRow> rows = new ArrayList<>();
@@ -316,15 +331,18 @@ public class OfficerHomeController implements Initializable {
                                         var ctrl = (OfficerDetailController) FXRouter.goTo("officerdetailview");
                                         ctrl.setDateLabel(row.getDate());
 
-                                        String[] dateInfo = row.getDate().split(" - ");
+                                        String[] dateInfo = row.getDate().split("/");
                                         int day = Integer.parseInt(dateInfo[0]);
                                         int month = Integer.parseInt(dateInfo[1]);
                                         int year = Integer.parseInt(dateInfo[2]);
-                                        Date dateSearch = new Date(year, month - 1, day);
+                                        /*System.out.println(day + " " + month + " " + year);
+                                        Date dateSearch = new Date(year, month - 1, day);*/
+                                        LocalDate dateLocalSearch = LocalDate.of(year, month, day);
+                                        Date dateSearch = Date.from(dateLocalSearch.atStartOfDay(ZoneId.systemDefault()).toInstant());
                                         OfficerAttendance attendance = getAttendanceDateRow(dateSearch);
-                                        if(attendance != null) {
-                                            ctrl.settup(attendance);
-                                        }
+                                        System.out.println("T that su met mo" + attendance.getId());
+                                        ctrl.settup(attendance);
+
 
 
 
@@ -359,7 +377,8 @@ public class OfficerHomeController implements Initializable {
 
         int day = date.getDate();
         int month = date.getMonth() + 1;
-        int year = date.getYear();
+        int year = date.getYear() + 1900;
+        //System.out.println(day + " " + month + " " + year);
         var attendances = repo.getAttendancesOfEmployee(user, employee, month, year, 1);
         for (OfficerAttendance attendance : attendances) {
             int dayLog = attendance.getDate().getDate();
@@ -371,6 +390,7 @@ public class OfficerHomeController implements Initializable {
     }
 
     private ArrayList<OfficerAttendance> getAttendanceDateRow(int month, int year, int monthCount) {
+        //System.out.println(month + " " + year);
         var repo = AttendanceFactory.getInstance().createRepository();
         var user = UserService.getInstance().getCurrentUser();
         System.out.println(user.getEmployeeCode());
@@ -446,9 +466,9 @@ public class OfficerHomeController implements Initializable {
                 String content = "";
                 if (request.getLogAttendanceId() == -1){
                     if(request.getStatus() == 0){
-                        content = "Yêu cầu ngày 28/12/2023 bị từ chối";
+                        content = "Yêu cầu ngày 27/12/2023 bị từ chối";
                     }else{
-                        content = "Yêu cầu ngày 28/12/2023 được chấp nhận";
+                        content = "Yêu cầu ngày 27/12/2023 được chấp nhận";
                     }
                 }else{
                     Date date = request.getDate();
