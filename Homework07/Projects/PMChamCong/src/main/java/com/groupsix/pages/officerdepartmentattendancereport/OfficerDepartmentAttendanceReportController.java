@@ -209,8 +209,8 @@ public class OfficerDepartmentAttendanceReportController {
 	}
 
 	public void openEmployeeView(Employee employee, int month, int year, int monthCount) {
-		var employeeAttendanceCrtl = (EmployeeAttendanceController) FXRouter.goTo("employeeattendance");
-		employeeAttendanceCrtl.openView(employee, month, year, monthCount);
+		var employeeAttendanceCtrl = (EmployeeAttendanceController) FXRouter.goTo("employeeattendance");
+		employeeAttendanceCtrl.openView(employee, month, year, monthCount);
 	}
 
 	public void open(int month, int year, int monthCount){
