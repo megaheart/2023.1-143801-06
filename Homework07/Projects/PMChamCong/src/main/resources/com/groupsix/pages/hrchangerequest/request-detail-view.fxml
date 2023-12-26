@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="722.4" prefWidth="936.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupsix.pages.hrchangerequest.RequestDetailView">
+<AnchorPane prefHeight="722.4" prefWidth="936.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupsix.pages.hrchangerequest.RequestDetailView">
    <children>
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="3.0" layoutY="14.0" prefHeight="41.0" prefWidth="942.0" style="-fx-font-weight: bold;" text="Xem thông tin yêu cầu chỉnh sửa" textAlignment="CENTER">
          <font>

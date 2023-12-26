@@ -2,6 +2,7 @@ package com.groupsix.user;
 
 import com.groupsix.base.DatabaseHelper;
 import com.groupsix.user.*;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -54,6 +55,51 @@ public class UserServiceTest {
 
         // Then
         assertEquals(isSuccess, false);
+    }
+
+    @ParameterizedTest
+    @DisplayName("Test authenticate user not null and password same")
+    @CsvSource({
+            "user, 1234"
+    })
+    public void authenticate_UserNotNull_PasswordSame(String username, String password){
+        // Given
+        UserService userService = UserService.getInstance();
+
+        // Then
+        Assertions.assertDoesNotThrow(() -> {
+            userService.authenticate(username, password);
+        });
+    }
+
+    @ParameterizedTest
+    @DisplayName("Test authenticate user null")
+    @CsvSource({
+            "admin, 123456"
+    })
+    public void authenticate_UserNull(String username, String password){
+        // Given
+        UserService userService = UserService.getInstance();
+
+        // Then
+        Assertions.assertDoesNotThrow(() -> {
+            userService.authenticate(username, password);
+        });
+    }
+
+    @ParameterizedTest
+    @DisplayName("Test authenticate user not null and password not same")
+    @CsvSource({
+            "user, 123456"
+    })
+    public void authenticate_UserNotNull_PasswordNotSame(String username, String password){
+        // Given
+        UserService userService = UserService.getInstance();
+
+        // Then
+        Assertions.assertDoesNotThrow(() -> {
+            userService.authenticate(username, password);
+        });
     }
 
 
