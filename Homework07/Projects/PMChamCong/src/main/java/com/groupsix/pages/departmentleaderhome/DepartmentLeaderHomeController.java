@@ -7,6 +7,7 @@ import com.groupsix.hrsubsystem.Department;
 import com.groupsix.hrsubsystem.Employee;
 import com.groupsix.hrsubsystem.HRSubsystemFactory;
 import com.groupsix.hrsubsystem.IEmployeeRepository;
+import com.groupsix.pages.FXRouter;
 import com.groupsix.report.OfficerAndAttendance;
 import com.groupsix.report.OfficerAttendanceDetailReport;
 import com.groupsix.report.OfficerAttendanceReport;
@@ -29,6 +30,9 @@ public class DepartmentLeaderHomeController implements Initializable {
     private IEmployeeRepository employeeRepository;
     public DepartmentLeaderHomeController(DepartmentLeaderHome view){
         this.view = view;
+        view.setGoToOfficerDepartmentAttendanceReportViewHandler((e) -> {
+            FXRouter.goTo("officerdepartmentattendancereport");
+        });
         officerAttendanceRepository = AttendanceFactory.getInstance().createRepository();
         employeeRepository = HRSubsystemFactory.getInstance().createEmployeeRepository();
         initialize(null, null);

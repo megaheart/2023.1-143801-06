@@ -5,6 +5,7 @@ import com.groupsix.attendance.OfficerAttendance;
 import com.groupsix.hrsubsystem.Department;
 import com.groupsix.hrsubsystem.Employee;
 import com.groupsix.hrsubsystem.HRSubsystemFactory;
+import com.groupsix.pages.FXRouter;
 import com.groupsix.report.OfficerAndAttendance;
 import com.groupsix.report.OfficerAttendanceDetailReport;
 import com.groupsix.report.OfficerAttendanceReport;
@@ -22,6 +23,9 @@ public class EmployeeHomeController implements Initializable {
     private EmployeeHome view;
     public EmployeeHomeController(EmployeeHome view) {
         this.view = view;
+        view.setGoToEmployeeAttendanceViewHandler((e) -> {
+            FXRouter.goTo("officerattendancedetail");
+        });
         initialize(null, null);
     }
 

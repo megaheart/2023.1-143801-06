@@ -69,6 +69,6 @@ public class NavBar extends NavBarBase implements INavBar {
     }
     @FXML
     protected void goToOfficerDepartmentAttendanceReportView() throws Exception {
-        FXRouter.goTo("employeeattendance");
+        FXRouter.goTo("officerdepartmentattendancereport");
     }
 }
