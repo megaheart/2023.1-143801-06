@@ -178,14 +178,15 @@ public class OfficerDepartmentAttendanceReportView {
     private void searchEmployeeByCode(ActionEvent event) {
         var employeeCode = employeeCodeSearchTxtBox.getText();
         if (employeeCode.isEmpty()) {
-//            Alert alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setTitle("Lỗi");
-//            alert.setHeaderText("Lỗi nhập liệu");
-//            alert.setContentText("Vui lòng nhập mã nhân viên.");
-//            alert.showAndWait();
-//            employeeCodeSearchTxtBox.requestFocus();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Lỗi");
+            alert.setHeaderText("Lỗi nhập liệu");
+            alert.setContentText("Vui lòng nhập mã nhân viên.");
+            alert.showAndWait();
+            employeeCodeSearchTxtBox.requestFocus();
             clearSearchResultBtn.setVisible(false);
             employeeCodeSearchTxtBox.requestFocus();
+            return;
         }
 
         if (onSearchEmployeeByCodeHandler != null) {
