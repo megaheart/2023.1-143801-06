@@ -12,11 +12,21 @@ import java.util.Date;
 public class ReportHelper {
 
 	public static void writeToExcel(String path, OfficerAttendanceReport report) {
-
+		ExportHelper<OfficerAndAttendance> exportHelper = new ExportHelper();
+		try {
+			exportHelper.exportExcel(report.getAttendances(), "Báo cáo", path, OfficerAndAttendance.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static void writeToCsv(String path, OfficerAttendanceReport report) {
-
+		ExportHelper<OfficerAndAttendance> exportHelper = new ExportHelper();
+		try {
+			exportHelper.exportCsv(report.getAttendances(), "Báo cáo", path, OfficerAndAttendance.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static OfficerAttendanceDetailReport summarizeReport(Employee employee, ArrayList<OfficerAttendance> attendances, int month, int year, int monthCount) {

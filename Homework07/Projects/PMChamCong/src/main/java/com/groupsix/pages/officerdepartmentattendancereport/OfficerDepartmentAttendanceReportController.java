@@ -124,6 +124,9 @@ public class OfficerDepartmentAttendanceReportController {
 	public boolean checkPathExist(String path) {
 		File f = new File(path);
 		f = f.getParentFile();
+		if(f == null) {
+			return false;
+		}
 		return f.exists();
 	}
 

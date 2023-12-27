@@ -48,4 +48,9 @@ public class Employee {
 	@DatabaseField()
 	private String positionName;
 
+	@Override
+	public String toString() {
+		return fullName + " (" + employeeCode + ")";
+	}
+
 }
