@@ -1,0 +1,15 @@
+- Tỉ lệ đóng góp của các thành viên
+	- Trần Phúc Mạnh Linh 20200352: 25%
+	- Nguyễn Thanh Lâm 20200336: 25%
+	- Bùi Trọng Đức 20200157: 25%
+	- Lê Đức Minh 20200395: 25%
+- Use case từng thành viên phụ trách:
+	- Trần Phúc Mạnh Linh 20200352: Xem báo cáo chấm công cho đơn vị nhân viên văn phòng
+	- Nguyễn Thanh Lâm 20200336: Nhập dữ liệu chấm công bằng file excel
+	- Bùi Trọng Đức 20200157: Xem chấm công của bản thân nhân viên văn phòng
+	- Lê Đức Minh 20200395: Sửa thông tin chấm công theo ngày
+- Phần công việc từng thành viên phụ trách
+	- Trần Phúc Mạnh Linh: Làm tất cả class trong các gói hrsubsystem, report, user, pages.employeeattendance, pages.officerdepartmentattendancereport, pages, base, pages.departmentleaderhome
+	- Nguyễn Thanh Lâm: Làm tất cả class trong các gói importexcel, pages.importexcel, pages.hrhome
+	- Bùi Trọng Đức: Làm tất cả class trong các gói attendance, pages.officerattendancedetail, pages.employeehome
+	- Lê Đức Minh: Làm tất cả class trong các gói pages.layouts, request, pages.hrchangerequest
