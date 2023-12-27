@@ -66,10 +66,11 @@ public class UserServiceTest {
         // Given
         UserService userService = UserService.getInstance();
 
+        // When
+        var isSuccess = userService.authenticate(username, password);
+
         // Then
-        Assertions.assertDoesNotThrow(() -> {
-            userService.authenticate(username, password);
-        });
+        assertEquals(isSuccess, true);
     }
 
     @ParameterizedTest
@@ -81,10 +82,11 @@ public class UserServiceTest {
         // Given
         UserService userService = UserService.getInstance();
 
+        // When
+        boolean isSuccess = userService.authenticate(username, password);
+
         // Then
-        Assertions.assertDoesNotThrow(() -> {
-            userService.authenticate(username, password);
-        });
+        assertEquals(isSuccess, false);
     }
 
     @ParameterizedTest
@@ -96,10 +98,11 @@ public class UserServiceTest {
         // Given
         UserService userService = UserService.getInstance();
 
+        // When
+        var isSuccess = userService.authenticate(username, password);
+
         // Then
-        Assertions.assertDoesNotThrow(() -> {
-            userService.authenticate(username, password);
-        });
+        assertEquals(isSuccess, false);
     }
 
 
